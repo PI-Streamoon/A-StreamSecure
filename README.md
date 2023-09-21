@@ -28,7 +28,22 @@ Estaremos fazendo o monitoramento dos seguintes componentes:
   # 💻 | Equipe
   - Caio Arnoni
   - Emily Ferreira 
-  - Lucas Neves
   - Kevyn Rocha
+  - Lucas Neves
   - Thiago Rodrigues
   - Thyago Retuci
+
+<br>
+
+### Clone
+```
+git clone --recurse-submodules https://github.com/PI-Streamoon/A-StreamSecure.git
+```
+### Pull
+
+```
+git submodule update --init --recursive
+```
+```
+git submodule foreach "(git checkout main; git pull)"
+```
