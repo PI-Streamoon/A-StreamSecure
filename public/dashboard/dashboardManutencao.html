@@ -186,7 +186,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item" onclick="log_out()">Sair</a>
                         </div>
                     </div>
                 </div>
@@ -711,6 +711,14 @@
     <!-- Template Javascript -->
     <script src="js/dashboardManutencao.js"></script>
     <script src="js/main.js"></script>
-</body>
 
+    <!-- Log-out -->
+    <script>
+        function log_out() {
+          delete localStorage.ID_USUARIO;
+      
+          window.location = "../index.html";
+        }
+    </script>
+</body>
 </html>
