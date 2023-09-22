@@ -724,15 +724,25 @@
             carregarNome()
 
             function log_out() {
+                
+                delete localStorage.CPF_USUARIO ;
+                delete localStorage.EMAIL_USUARIO;
+                delete localStorage.NOME_USUARIO;
                 delete localStorage.ID_USUARIO;
+                delete localStorage.FK_ADMIN;
+                delete localStorage.FK_EMPRESA;
 
-                window.location = "../index.html";
+                window.location = "../login.html";
             }
 
             function carregarNome() {
+                if (localStorage.ID_USUARIO == undefined) {
+                    window.location = "../login.html"
+                }
                 var nome = nomeUsuario;
                 nome.innerHTML = localStorage.NOME_USUARIO;
             }
+
         </script>
 </body>
 
