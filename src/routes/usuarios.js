@@ -16,5 +16,8 @@ router.get("/listar", function (req, res) {
     usuarioController.listar(req, res);
 });
 
+router.get("/mostrarEmpresas", function (req, res) {
+    usuarioController.mostrarEmpresas(req, res);
+});
 
 module.exports = router;

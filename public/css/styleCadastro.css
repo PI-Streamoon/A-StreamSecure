@@ -100,7 +100,7 @@ body {
   height: 100%;
 }
 
-.container-inputs .part-input .inputs input {
+.container-inputs .part-input .inputs input,select {
   border-bottom: #141414 solid 2px;
   border-bottom: #141414 solid 2px;
   width: 35vh;
@@ -114,10 +114,34 @@ body {
   outline: none;
   transition: 0.3s;
   padding-left: 1vh;
+  appearance: none;
 }
+
+/* .container-inputs .part-input .inputs select {
+  border-bottom: #141414 solid 2px;
+  border-bottom: #141414 solid 2px;
+  width: 35vh;
+  height: 5vh;
+  background-color: #1d1c1c;
+  color: #757575;
+  border-top: #1d1c1c;
+  border-left: #1d1c1c;
+  border-right: #1d1c1c;
+  margin-top: 1vh;
+  outline: none;
+  transition: 0.3s;
+  padding-left: 1vh;
+  appearance: none;
+} */
 
 #cadastro input:focus {
   border-bottom: #6248ae solid 2px;
+}
+
+#cadastro select:focus {
+  border-bottom: #6248ae solid 2px;
+  background: #1d1c1c;
+  color: #ffffff;
 }
 
 #cadastro .inputs p {

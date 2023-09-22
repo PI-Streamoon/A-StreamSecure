@@ -392,3 +392,25 @@ function showFreq() {
 function servidor1() {
     window.location.assign(`dashboardManutencaoSem.html`);
 }
+
+function carregarPagina(idUsuario) {
+    fetch(`/Perfil/Perfil/${idUsuario}`).then(function (resposta) {
+        if (resposta.ok) {
+
+            resposta.json().then(function (resposta) {
+                // console.log("Dados recebidos: ", JSON.stringify(resposta));
+                infos = resposta[0]
+                var nome = document.getElementById("nomeUsuario");
+                nome.innerHTML = infos.nome;
+                var Foto = document.getElementById("usuarioFoto");
+                Foto.src = `assets/img/fotosUsuarios/${infos.foto}`;
+                sessionStorage.FOTO = infos.foto;
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+
+    });
+}
