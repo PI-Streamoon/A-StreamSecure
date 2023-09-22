@@ -14,6 +14,10 @@
       href="features/img/logo.ico"
       type="image/x-icon"
     />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+
   </head>
 
   <body>
@@ -43,11 +47,13 @@
             <div class="part-input">
               <div class="inputs">
                 <p>CPF</p>
-                <input type="text" id="cpfUsuario" placeholder="xxx.xxx.xxx-xxx" />
+                <input type="text" id="cpfUsuario" placeholder="xxx.xxx.xxx-xxx"/>
               </div>
               <div class="inputs">
                 <p>Código da empresa</p>
-                <input type="text" id="codEmpresa" placeholder="xxx-xxx"/>
+                <select name="empresas" id="codEmpresa">
+                  <option value="null" disabled selected>Selecione sua empresa</option>
+                </select>
               </div>
             </div>
 
@@ -75,10 +81,36 @@
     </div>
   </body>
 </html>
+
 <script>
+    $('#cpfUsuario').mask('000.000.000-00');
+    carregarEmpresas()
+
+function carregarEmpresas() {
+    fetch(`/usuarios/mostrarEmpresas`).then(function (resposta) {
+        if (resposta.ok) {
+
+            resposta.json().then(function (resposta) {
+                // console.log("Dados recebidos: ", JSON.stringify(resposta));
+                infos = resposta
+
+                for (let i = 0; i < resposta.length; i++) {
+                  codEmpresa.innerHTML += `<option value="${resposta[i].idEmpresa}" >${resposta[i].nome}</option>`;
+                }
+            
+            });
+        } else {
+            throw ('Houve um erro na API!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+
+    });
+}
+
   function registerUser() {
     var nomeVar = nomeUsuario.value;
-    var cpfVar = cpfUsuario.value;
+    var cpfVar = cpfUsuario.value.replaceAll('.', '').replace('-', '');
     var codEmpresaVar = codEmpresa.value;
     var emailVar = emailUsuario.value; //Obrigatório
     var psswdVar = senhaUsuario.value; //Obrigatório
