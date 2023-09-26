@@ -5,3 +5,4 @@ function openModal() {
 function closeModal() {
   document.querySelector(".modal-container").style.display = "none";
 }
+
