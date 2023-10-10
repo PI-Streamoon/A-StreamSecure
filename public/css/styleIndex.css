@@ -100,6 +100,8 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
+
 .nav img {
   width: 100%;
   height: 100%;
@@ -107,7 +109,7 @@ body {
 
 .box-content-about {
   background-color: #6248ae;
-  width: 70%;
+  width: 100%;
   height: 35vh;
   display: flex;
   align-items: center;
@@ -710,6 +712,10 @@ body {
   padding-top: 2vh;
   background-color: #131313;
   justify-content: space-around;
+
+  position: fixed;
+  left: 0px;
+  z-index: 9999;
 }
 
 .logo-navbar img {
