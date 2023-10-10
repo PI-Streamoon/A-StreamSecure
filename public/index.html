@@ -1,374 +1,490 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="zxx">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Streamoon</title>
-  <link rel="stylesheet" href="css/styleIndex.css" />
-  <link rel="stylesheet" href="css/style-media.css" />
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link rel="shortcut icon" href="features/img/logo.ico" type="image/x-icon" />
+    <meta charset="UTF-8">
+    <meta name="description" content="Videograph Template">
+    <meta name="keywords" content="Videograph, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Streamoon</title>
 
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
 </head>
 
 <body>
-  <!-- ÍNICIO DA NAVBAR E BANNER-->
-  <div class="container-head">
-    <div class="nav">
-      <a href="home.html" class="logo-navbar"><img src="features/img/nome-e-logo 1.png" alt="" id="logo-navbar" /></a>
-      <!-- NAVBAR - VERSÃO MOBILE -->
-      <div class="mobile-menu">
-        <div class="line1"></div>
-        <div class="line2"></div>
-        <div class="line3"></div>
-      </div>
-
-      <!-- NAVBAR VERSÃO DESKTOP -->
-      <ul class="listaNav" id="navbar">
-        <li onclick="inicio()"><a>Início</a></li>
-        <li onclick="sobrenos()"><a>Sobre nós</a></li>
-        <li onclick="equipe()"><a>Equipe</a></li>
-        <li onclick="contato()"><a>Contato</a></li>
-        <li onclick="login()"><a>Login</a></li>
-      </ul>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
     </div>
 
-    <div id="banner">
-      <div class="center">
-        <div id="texto">
-          <p id="txtBanner">
-            Garantindo a segurança dos seus <b>servidores</b> e a diversão dos
-            seus
-            <b>usuários</b>
-          </p>
-          <button id="btnSaibaMais" onclick="openModal()">Saiba Mais</button>
-        </div>
-      </div>
-
-      <!--Model-->
-      <model-viewer
-        alt="Modelo 3D da Lua"
-        src="features/img/3d/moon.glb" ar
-        poster="shared-assets/models/NeilArmstrong.webp" shadow-intensity="1" camera-controls
-        touch-action="pan-x"></model-viewer>
-    </div>
-  </div>
-  <!-- FIM DA NAVBAR E DO BANNER -->
-
-  <!--    INÍCIO >>> QUEM SOMOS | OBJETIVO -->
-  <div class="container">
-    <div class="center">
-      <div class="box-content-about">
-        <div class="img-about">
-          <img src="features/img/a0261b885cfba5a65c675c33327acf5a 1.png" alt="" />
-        </div>
-
-        <div class="text-about">
-          <div class="center">
-            <h2>QUEM SOMOS</h2>
-            <p>
-              A Streamoon é uma Startup movida pela tecnologia e pelo compromisso com a inovação. Nossa empresa é
-              dedicada à fornecer uma solução prática e dinâmica para monitorar e aprimorar a qualidade do seu servidor
-              de streaming.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="box-content-about reverse">
-        <div class="img-about2">
-          <img src="features/img/earth-2026996_960_720 1.png" alt="" />
-        </div>
-
-        <div class="text-about">
-          <div class="center">
-            <h2>NOSSO OBJETIVO</h2>
-            <p>
-              A Streamoon, além de querer sempre o melhor para nossos clientes, visa melhorar e crescer como equiepe e
-              como Startup. Sempre buscando novos desafios, criando novos produtos e melhorando nossas abordagens e
-              ideias.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--    FIM >>> QUEM SOMOS | OBJETIVO -->
-
-  <img id="vetor" src="features/img/Vector.png" />
-
-  <section id="container-principlesUntilTeam">
-    <div class="center">
-      <!-- INÍCIO DOS PRINCIPIOS DA EMPRESA -->
-      <div class="container-principles">
-        <div id="principles-content">
-          <div class="title-principles">
-            <h2>PRINCÍPIOS DA EMPRESA</h2>
-            <div class="underline"></div>
-          </div>
-
-          <div id="card-principles">
-            <div class="card-animated">
-              <img id="missaoImg" src="features/img/missao 2.png" />
-              <p class="title2">Missão</p>
-              <p class="text">Elevar o monitoramento do streaming a um novo
-                patamar.
-              </p>
-            </div>
-
-            <div class="card-animated">
-              <img id="visaoImg" src="features/img/vision 1.png" />
-              <p class="title2">Visão</p>
-              <p class="text">Entregar qualidade e confiabilidade para os usuários</p>
-            </div>
-
-            <div class="card-animated">
-              <img id="valoresImg" src="features/img/icons8-ética-100 3.png" />
-              <p class="title2">Valores</p>
-              <p class="text">Respeito
-                Trabalho em Equipe
-                Comunicação
-                Criatividade
-
-                Inovação </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- FIM DOS PRINCIPIOS DA EMPRESA -->
-
-      <!-- INÍCIO DO CARD DO PRODUTO -->
-      <div class="container-product">
-        <div class="title-product">
-          <h2>PRODUTO</h2>
-          <div class="underline"></div>
-        </div>
-        <div class="card-product" id="open-modal" onclick="openModal()">
-          <div class="content-card">
-            <img src="./features/img/moon-icon.png" alt="" />
-            <h2>StremSecure</h2>
-          </div>
-        </div>
-      </div>
-      <!-- FIM DO CARD DO PRODUTO -->
-
-      <!-- INÍCIO EXIBIÇÃO TIME -->
-      <div id="hasSlides">
-        <div id="team">
-          <div class="title-team">
-            <h2>EQUIPE STREAMOON</h2>
-            <div class="underline"></div>
-          </div>
-
-          <div class="slides">
-            <input type="radio" class="radioIpt" name="slide" id="radio1" checked />
-            <input type="radio" class="radioIpt" name="slide" id="radio2" />
-            <input type="radio" class="radioIpt" name="slide" id="radio3" />
-            <input type="radio" class="radioIpt" name="slide" id="radio4" />
-            <input type="radio" class="radioIpt" name="slide" id="radio5" />
-            <input type="radio" class="radioIpt" name="slide" id="radio6" />
-
-            <div class="slide s1">
-              <img src="./features/img/Lucas.png" alt="" />
-            </div>
-
-            <div class="slide s2">
-              <img src="./features/img/Eduardo.png" alt="" />
-            </div>
-
-            <div class="slide s3">
-              <img src="./features/img/Larissa.png" alt="" />
-            </div>
-
-            <div class="slide s4">
-              <img src="./features/img/Joao.png" alt="" />
-            </div>
-
-            <div class="slide s5">
-              <img src="./features/img/Leandro.png" alt="" />
-            </div>
-
-            <div class="slide s6">
-              <img src="./features/img/Breno.png" alt="" />
-            </div>
-
-            <div class="navigation">
-              <label class="bar" for="radio1"></label>
-              <label class="bar" for="radio2"></label>
-              <label class="bar" for="radio3"></label>
-              <label class="bar" for="radio4"></label>
-              <label class="bar" for="radio5"></label>
-              <label class="bar" for="radio6"></label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- FIM EXIBIÇÃO TIME -->
-    </div>
-  </section>
-
-  <div class="modal-container">
-    <div id="modal" class="hide">
-      <div class="modal-header">
-        <div class="title">
-          <h2>StreamSecure</h2>
-          <div class="underline"></div>
-        </div>
-        <button id="close-modal" onclick="closeModal()">X</button>
-      </div>
-
-      <div id="modal-body" class="modalBody">
-        <div id="container1">
-          <div id="div-server" class="divServer">
-            <model-viewer class="modelo" src="./features/img/3d/server_v2_console.glb" ar-modes="webxr scene-viewer"
-              camera-controls poster="poster.webp" shadow-intensity="1" autoplay>
-            </model-viewer>
-          </div>
-
-          <div id="descricaoProduto">
-            <p id="textoModal">
-              A Streamsecure é um produto dedicado para monitorar os sistemas dos servidores de nossos clientes e gerar
-              dados de análise. Ela foi projetada para capturar as principais informações, armazená-las, e exibí-las
-              graficamente de forma dinâmica e eficiente para sua gestão. Relatórios e revisões globais são geradas e
-              moldadas de acordo com o histórico de alertas e com circunstâncias de possíveis sobrecargas nos
-              servidores.
-              De forma abrangente, o principal foco do produto é auxiliar o cliente à monitorar as informações de
-              hardware, e a tomar melhores decisões em relação ao desempenho dos servidores e seus possíveis riscos e
-              sobrecargas.
-            </p>
-          </div>
-        </div>
-
-        <div id="container2">
-          <div id="div-graficos">
-
-            <div class="grafico">
-              <div class="card-graph">
-                <h4>Processador (CPU)</h4>
-                <div class="img-graph">
-                  <img class="img-vetor" src="features/img/onda-cpu-graph.png" alt="" />
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="img/logo/nome-e-logo 1.png" alt=""></a>
+                    </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="grafico">
-              <div class="card-graph">
-                <h4>Memória</h4>
-                <div class="img-graph">
-                  <img class="img-vetor" src="features/img/graph-mem.png" alt="" />
+                <div class="col-lg-10">
+                    <div class="header__nav__option">
+                        <nav class="header__nav__menu mobile-menu">
+                            <ul>
+                                <li class="active"><a href="./index.html">Home</a></li>
+                                <li><a href="#sobreNos">Sobre nós</a></li>
+                                <li><a href="#Produto">Produto</a></li>
+                                <li><a href="#Servicos">Serviços</a></li>
+                                <li><a href="#NossaEquipe">Nossa Equipe</a></li>
+                                <li><a href="#Contato">Contato</a></li>
+                            </ul>
+                        </nav>
+                        <div class="header__nav__social">
+                            <a href="login.html"><img width="30" height="30" src="https://img.icons8.com/ios/50/ffffff/astronaut.png" alt="login"/></a>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
 
-            <div class="grafico">
-              <div class="card-graph">
-                <h4>Disco</h4>
-                <div class="img-graph">
-                  <img class="img-vetor" src="features/img/grpah-disck.png" alt="" />
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__item set-bg" data-setbg="img/hero/foto-banner.png">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <span>Streaming Monitoring System</span>
+                                <h2>Streamoon</h2>
+                                <a href="#Produto" class="primary-btn">Saiba mais</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Services Section Begin -->
+    <section class="services spad" id="sobreNos">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="services__title">
+                        <div class="section-title">
+                            <span>Nossos serviços</span>
+                            <h2>O que a Streamoon faz?</h2>
+                        </div>
+                        <p>If you hire a videographer of our team you will get a video professional to make a custom
+                            video for your business and, once the project is over.</p>
+                        <a href="#" class="primary-btn">View all services</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="services__item">
+                                <div class="services__item__icon">
+                                    <img src="img/icons/si-1.png" alt="">
+                                </div>
+                                <h4>Motion graphics</h4>
+                                <p>Whether you’re halfway through the editing process, or you haven’t even started, our
+                                    post production services can put the finishing touches.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="services__item">
+                                <div class="services__item__icon">
+                                    <img src="img/icons/si-2.png" alt="">
+                                </div>
+                                <h4>Scriptwriting and editing</h4>
+                                <p>Whether you’re halfway through the editing process, or you haven’t even started, our
+                                    post production services can put the finishing touches.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="services__item">
+                                <div class="services__item__icon">
+                                    <img src="img/icons/si-3.png" alt="">
+                                </div>
+                                <h4>Video distribution</h4>
+                                <p>Whether you’re halfway through the editing process, or you haven’t even started, our
+                                    post production services can put the finishing touches.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="services__item">
+                                <div class="services__item__icon">
+                                    <img src="img/icons/si-4.png" alt="">
+                                </div>
+                                <h4>Video hosting</h4>
+                                <p>Whether you’re halfway through the editing process, or you haven’t even started, our
+                                    post production services can put the finishing touches.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section End -->
+
+    <!-- product Section Begin -->
+    <section class="product" id="Produto">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="callto__text">
+                        <h2>STREAMSECURE</h2>
+                        <p>
+                            A Streamsecure é um produto dedicado para monitorar os sistemas dos servidores de nossos clientes e gerar
+                            dados de análise. Ela foi projetada para capturar as principais informações, armazená-las, e exibí-las
+                            graficamente de forma dinâmica e eficiente para sua gestão. Relatórios e revisões globais são geradas e
+                            moldadas de acordo com o histórico de alertas e com circunstâncias de possíveis sobrecargas nos
+                            servidores.
+
+                        </p>
+                        <a href="#Contato">Entre em Contato</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <model-viewer class="w-100 h-100" src="./features/img/3d/server_v2_console.glb" ar-modes="webxr scene-viewer"
+                    camera-controls poster="poster.webp" shadow-intensity="1" autoplay>
+                    </model-viewer>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product Section End -->
+
+    <!-- Counter Section Begin -->
+    <section class="counter" id="Servicos">
+        <div class="container">
+            <div class="counter__content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="counter__item">
+                            <div class="counter__item__text">
+                                <img src="img/icons/ci-1.png" alt="">
+                                <h2 class="counter_num">230</h2>
+                                <p>Compled Projects</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="counter__item second__item">
+                            <div class="counter__item__text">
+                                <img src="img/icons/ci-2.png" alt="">
+                                <h2 class="counter_num">1068</h2>
+                                <p>Happy clients</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="counter__item third__item">
+                            <div class="counter__item__text">
+                                <img src="img/icons/ci-3.png" alt="">
+                                <h2 class="counter_num">230</h2>
+                                <p>Perspective clients</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="counter__item four__item">
+                            <div class="counter__item__text">
+                                <img src="img/icons/ci-4.png" alt="">
+                                <h2 class="counter_num">230</h2>
+                                <p>Compled Projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Counter Section End -->
+
+    <!-- Team Section Begin -->
+    <section class="team spad set-bg" data-setbg="img/team-bg.jpg" id="NossaEquipe">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title team__title">
+                        <span>Prazer em te conhecer</span>
+                        <h2>Nossa Equipe</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center mt-5">
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="team__item team__item--first set-bg" data-setbg="img/team/emily.jpeg">
+                        <div class="team__item__text">
+                            <h4>EMILY FERREIRA</h4>
+                            <p>DESENVOLVEDORA</p>
+                            <div class="team__item__social">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="team__item team__item--second set-bg" data-setbg="img/team/kevyn.png">
+                        <div class="team__item__text">
+                            <h4>KEVYN ROCHA</h4>
+                            <p>DESENVOLVEDOR</p>
+                            <div class="team__item__social">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="team__item team__item--third set-bg" data-setbg="img/team/lucas.jpeg">
+                        <div class="team__item__text">
+                            <h4>LUCAS NEVES</h4>
+                            <p>DESENVOLVEDOR</p>
+                            <div class="team__item__social">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
 
-          </div>
+            <div class="row justify-content-md-center mt-5">
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="team__item team__item--four set-bg" data-setbg="img/team/thiago.jpg">
+                        <div class="team__item__text">
+                            <h4>THIAGO MENDONÇA</h4>
+                            <p>DESENVOLVEDOR</p>
+                            <div class="team__item__social">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="team__item team__item--five set-bg" data-setbg="img/team/thyago.png">
+                        <div class="team__item__text">
+                            <h4>THYAGO RETUCI</h4>
+                            <p>DESENVOLVEDOR</p>
+                            <div class="team__item__social">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="team__item team__item--six set-bg" data-setbg="img/team/caio.jpeg">
+                        <div class="team__item__text">
+                            <h4>CAIO ARNONI</h4>
+                            <p>DESENVOLVEDOR</p>
+                            <div class="team__item__social">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </section>
+    <!-- Team Section End -->
 
-  <div id="container-contact">
-    <img id="vetor1" src="features/img/Vector.png" style="transform: rotate(180deg)" />
-    <div class="center">
-      <div id="image-contact">
-        <img src="features/img/astronautinha.png" alt="" />
-      </div>
-
-      <form id="form-contact" method="post" action="https://formspree.io/f/mdorwrqp" target="_blank">
-        <div class="title-contact">
-          <h2>CONTATE-NOS</h2>
-          <div class="underline"></div>
+    <!-- Contact Section Begin -->
+    <section class="contact-widget spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-md-6 col-md-3">
+                    <div class="contact__widget__item">
+                        <div class="contact__widget__item__icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div class="contact__widget__item__text">
+                            <h4>Endereço</h4>
+                            <p>Rua Haddock Lobo, 595 - Cerqueira César, São Paulo - SP</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-md-6 col-md-3">
+                    <div class="contact__widget__item">
+                        <div class="contact__widget__item__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="contact__widget__item__text">
+                            <h4>Telefone</h4>
+                            <p>4002-8922 • +55 (11)94657-2284</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-md-6 col-md-3">
+                    <div class="contact__widget__item">
+                        <div class="contact__widget__item__icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div class="contact__widget__item__text">
+                            <h4>Email</h4>
+                            <p>suportestreamoon@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <!-- Contact Section End -->
 
-        <div id="container-emailPhone">
-          <div class="input-emailPhone">
-            <p>Email</p>
-            <input id="ipt_email" name="email" type="email" class="inputContato" placeholder="Digite seu e-mail" />
-          </div>
-
-          <div class="input-emailPhone">
-            <p>Assunto</p>
-            <input id="ipt_assunto" name="assunto" type="text" class="inputContato" placeholder="Digite o assunto" />
-          </div>
+    <!-- Call To Action Section Begin -->
+    <section class="contact spad" id="Contato">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact__map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.2874821816913!2d-46.66418892526546!3d-23.558116361471875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59d2b063f663%3A0xc567c0d16d0bc582!2sS%C3%A3o%20Paulo%20Tech%20School!5e0!3m2!1spt-BR!2sbr!4v1696956996198!5m2!1spt-BR!2sbr"
+                            height="450" style="border:0;"></iframe>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact__form">
+                        <h3>Fale Conosco</h3>
+                        <form action="#">
+                            <input type="text" placeholder="Nome">
+                            <input type="text" placeholder="Email">
+                            <input type="text" placeholder="Assunto">
+                            <textarea placeholder="Mensagem"></textarea>
+                            <button type="submit" class="site-btn">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div id="container-message">
-          <p>Descrição</p>
-          <textarea id="ipt_message" name="message" type="textarea" class="inputContato"
-            placeholder="Digite sua mensagem"></textarea>
+    <!-- Call To Action Section Begin -->
+    <section class="callto spad set-bg" data-setbg="img/nasa-Q1p7bh3SHj8-unsplash.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="callto__text">
+                        <h2>O seu streaming sempre funcionando, sem preocupações.</h2>
+                        <p>Seja um parceiro da Streamoon</p>
+                        <a href="login.html">Começar jornada</a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <!-- Call To Action Section End -->
 
-        <button type="submit" class="botao" onclick="sendEmail()">Enviar</button>
-      </form>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div class="center">
-      <div class="logoNovidades">
-        <img src="features/img/nome-e-logo%202.png" alt="" />
-        <div id="inputNovidades">
-          <p>Receba Novidades</p>
-          <input type="text" class="inputContato" placeholder="Digite seu e-mail" />
-          <button id="btnEnviar">Enviar</button>
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__top">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="footer__top__logo">
+                            <a href="#"><img src="img/logo/nome-e-logo 1.png" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="footer__top__social">
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__option">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="footer__option__item">
+                            <h5>Sobre a Streamoon</h5>
+                            <p>Fudada em 2023, a Streamoon é uma empresa de monitoramento de servidores de Streaming ao redor do mundo.</p>
+                            <a href="#" class="read__more">Read more <span class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-3">
+                        <div class="footer__option__item">
+                            <h5>Quem nós somos</h5>
+                            <ul>
+                                <li><a href="#NossaEquipe">Nossa Equipe</a></li>
+                                <li><a href="#Contato">Contato</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-3">
+                        <div class="footer__option__item">
+                            <h5>Nossos serviços</h5>
+                            <ul>
+                                <li><a href="#">Feature</a></li>
+                                <li><a href="#">Latest</a></li>
+                                <li><a href="#">Browse Archive</a></li>
+                                <li><a href="#">Video for web</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="footer__option__item">
+                            <h5>Newsletter</h5>
+                            <p>Videoprah is an award-winning, full-service production company specializing.</p>
+                            <form action="#">
+                                <input type="text" placeholder="Email">
+                                <button type="submit"><i class="fa fa-send"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__copyright">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p class="footer__copyright__text">Copyright &copy;
+                            Todos os direitos reservados | Streamoon
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </footer>
+    <!-- Footer Section End -->
 
-      <div class="redesSociais">
-        <a href="">
-          <img src="features/img/icons8-linkedin-90%201.png" alt="LinkedIn" />
-        </a>
-        <a href="">
-          <img src="features/img/icons8-facebook-90%201.png" alt="Facebook" />
-        </a>
-        <a href=""><img src="features/img/icons8-github-90%201.png" alt="GitHub" />
-        </a>
-      </div>
-    </div>
-  </div>
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
-
-<script src="js/navbarMobile.js"></script>
-<script src="js/product.js"></script>
-<script>
-  function sendEmail() {
-    setTimeout(() => {
-      document.getElementById('ipt_email').value = '';
-      document.getElementById('ipt_assunto').value = '';
-      document.getElementById('ipt_message').value = '';
-    }, '2000');
-  }
-
-  function inicio() {
-    window.location = "#";
-  }
-
-  function sobrenos() {
-    window.location = "#principles-content";
-  }
-
-  function equipe() {
-    window.location = "#team";
-  }
-
-  function contato() {
-    window.location = "#form-contact";
-  }
-
-  function login() {
-    window.location = "login.html";
-  }
-</script>
