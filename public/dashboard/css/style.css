@@ -119,6 +119,10 @@
 
 
 /*** Navbar ***/
+.sidebar .navbar .navbar-nav {
+    gap: 10px;
+}
+
 .sidebar .navbar .navbar-nav .nav-link {
     padding: 7px 20px;
     color: var(--light);

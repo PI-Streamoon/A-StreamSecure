@@ -7,6 +7,7 @@
     <title>Login - Streamoon</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link
       rel="shortcut icon"
       href="./img/logo.ico"
@@ -42,7 +43,27 @@
 </body>
 
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3500",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
 
     function verify(){
        var email = emailUser.value;
@@ -50,13 +71,13 @@
         var erro = false;
 
         if(email.startsWith('@gmail.com') || email.startsWith('@outlook.com') || email.startsWith('@hotmail.com') || email.startsWith('@sptech.school') || email.length < 10){
-            alert("Por favor, insira um email válido")
+            toastr.error("<b style='font-family: arial;'>Insira um email válido</b>")
             erro = true;
-        }
-        // else if(senha.length < 6){
-        //     alert("Insira um senha válida");
-        //     erro = true;
-        // }
+        } 
+         if(senha == '' || senha.length < 6){
+            toastr.error("<b style='font-family: arial;'>Insira um senha válida</b>")
+            erro = true;
+         }
 
         else if(!erro){
             login_auth();
