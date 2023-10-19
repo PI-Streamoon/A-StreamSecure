@@ -334,3 +334,31 @@
     padding-left: 2%;
     text-align: start;
 }
+
+.button-dash{
+    width: 50px;
+    height: 50px;
+
+    background-color: #6248AE;
+
+    border-radius: 50%;
+    border: solid 1px #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.button-dash span{
+    color: #fff;
+    font-size: 200%;
+    font-weight: 900;
+
+    transition: 500ms;
+}
+
+.button-dash:hover span {
+    transform: rotate(180deg);
+}
