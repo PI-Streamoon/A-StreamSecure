@@ -46,7 +46,8 @@ function auth(req, res) {
 }
 
 function listar(req, res) {
-    usuarioModel.listar()
+    let fkAdmin = req.query.fkAdmin;
+    usuarioModel.listar(fkAdmin)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);

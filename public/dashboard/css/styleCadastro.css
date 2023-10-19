@@ -16,14 +16,24 @@ body {
   align-items: center;
 }
 
-#cadastro {
+.modal-cadastro {
   display: flex;
   justify-content: center;
-  height: 80vh;
-  position: relative;
+  align-items: center;
+  
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+
+  position: fixed;
+  z-index: 9999;
+
+  top: 0px;
 }
 
-#cadastro #container {
+.modal-cadastro #container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -39,7 +49,11 @@ body {
   box-sizing: border-box;
 }
 
-#cadastro #astronautaImg {
+.right-container{
+  position: relative;
+}
+
+.modal-cadastro #astronautaImg {
   object-fit: cover;
   height: 90vh;
   width: 35vw;
@@ -47,7 +61,7 @@ body {
   border-bottom-right-radius: 2vh;
 }
 
-#cadastro #imagemLogo {
+.modal-cadastro #imagemLogo {
   display: flex;
   justify-content: flex-start;
   width: 100%;
@@ -55,13 +69,13 @@ body {
   margin-bottom: 2vh;
 }
 
-#cadastro #logo {
+.modal-cadastro #logo {
   margin-left: 1.5vw;
   background-size: cover;
   height: 6vh;
 }
 
-#cadastro h1 {
+.modal-cadastro h1 {
   color: #ffffff;
   margin: 0;
   font-size: 4vh;
@@ -69,7 +83,7 @@ body {
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-#cadastro #textUnderline {
+.modal-cadastro #textUnderline {
   background-color: #a32da3;
   width: 65px;
   height: 5px;
@@ -134,17 +148,17 @@ body {
   appearance: none;
 } */
 
-#cadastro input:focus {
+.modal-cadastro input:focus {
   border-bottom: #6248ae solid 2px;
 }
 
-#cadastro select:focus {
+.modal-cadastro select:focus {
   border-bottom: #6248ae solid 2px;
   background: #1d1c1c;
   color: #ffffff;
 }
 
-#cadastro .inputs p {
+.modal-cadastro .inputs p {
   margin: 0;
   color: #ffffff;
   margin-bottom: 0.1vh;
@@ -153,7 +167,7 @@ body {
   font-family: AbeeZee;
 }
 
-#cadastro button {
+.modal-cadastro .button-cadastrar {
   background-color: #6248ae;
   color: #ffffff;
   border-radius: 5px;
@@ -163,23 +177,38 @@ body {
   transition: 0.3s;
 }
 
-#cadastro button:hover {
+.modal-cadastro .button-cadastrar:hover {
   cursor: pointer;
   background-color: #6f5bad;
 }
 
-#cadastro p {
+.modal-cadastro p {
   color: #ffffff;
   margin-top: 3vh;
   font-family: AbeeZee;
   font-size: 2vh;
 }
 
-#cadastro a {
+.modal-cadastro a {
   color: #ffffff;
   text-decoration-color: #6248ae;
   font-family: AbeeZee;
   font-size: 2vh;
+}
+
+
+.button-close{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
+.button-close span{
+  vertical-align:middle;
+}
+
+.button-close svg{
+  filter: invert(1);
 }
 /* Fim cadastro */
 
@@ -195,7 +224,7 @@ body {
     flex-direction: column;
   }
 
-  #cadastro {
+  .modal-cadastro {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,7 +234,7 @@ body {
     position: relative;
   }
 
-  #cadastro #container {
+  .modal-cadastro #container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -218,14 +247,14 @@ body {
     box-sizing: border-box;
   }
 
-  #cadastro #astronautaImg {
+  .modal-cadastro #astronautaImg {
     object-fit: cover;
     height: 10%;
     width: 90%;
     border-radius: 2vh 2vh 0 0;
   }
 
-  #cadastro #imagemLogo {
+  .modal-cadastro #imagemLogo {
     display: flex;
     justify-content: flex-start;
     width: 100%;
@@ -233,20 +262,20 @@ body {
     margin-bottom: 1vh;
   }
 
-  #cadastro #logo {
+  .modal-cadastro #logo {
     margin-left: 1vw;
     background-size: cover;
     height: 4vh;
   }
 
-  #cadastro h1 {
+  .modal-cadastro h1 {
     color: #FFFFFF;
     margin: 0;
     font-size: 3vh;
     font-family: 'Amiko', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
-  #cadastro #textUnderline {
+  .modal-cadastro #textUnderline {
     background-color: #A32DA3;
     width: 40px;
     height: 4px;
@@ -293,18 +322,18 @@ body {
     padding-left: 1vh;
   }
 
-  #cadastro input:focus {
+  .modal-cadastro input:focus {
     border-bottom: #6248ae solid 2px;
   }
 
-  #cadastro .inputs p {
+  .modal-cadastro .inputs p {
     margin: 0;
     color: #ffffff;
     font-size: 2.2vh;
     font-family: AbeeZee;
   }
 
-  #cadastro button {
+  .modal-cadastro .button-cadastrar {
     background-color: #6248ae;
     color: #ffffff;
     border-radius: 5px;
@@ -315,31 +344,33 @@ body {
     margin: 2vh 0;
   }
 
-  #cadastro button:hover {
+  .modal-cadastro .button-cadastrar:hover {
     cursor: pointer;
     background-color: #6f5bad;
   }
 
-  #cadastro p {
+  .modal-cadastro p {
     color: #ffffff;
     margin-top: 3vh;
     font-family: AbeeZee;
     font-size: 2vh;
   }
 
-  #cadastro .centralizar{
+  .modal-cadastro .centralizar{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  #cadastro a {
+  .modal-cadastro a {
     color: #ffffff;
     text-decoration-color: #6248ae;
     font-family: AbeeZee;
     font-size: 2vh;
   }
 }
+
+
 
 /* == FIM MOBILE CADASTRO == */
