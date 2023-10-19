@@ -14,9 +14,7 @@
       href="./img/logo.ico"
       type="image/x-icon"
     />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+    <link href="toastr.css" rel="stylesheet"/>
 
   </head>
 
@@ -36,18 +34,18 @@
             <div class="part-input">
               <div class="inputs">
                 <p>Email</p>
-                <input type="text" id="emailUsuario" placeholder="myemail@example.com"/>
+                <input type="text" id="emailUsuario"/>
               </div>
               <div class="inputs">
                 <p>Nome</p>
-                <input type="text" id="nomeUsuario" placeholder="My Name"/>
+                <input type="text" id="nomeUsuario"/>
               </div>
             </div>
 
             <div class="part-input">
               <div class="inputs">
                 <p>CPF</p>
-                <input type="text" id="cpfUsuario" placeholder="xxx.xxx.xxx-xxx"/>
+                <input type="text" id="cpfUsuario"/>
               </div>
               <div class="inputs">
                 <p>Código da empresa</p>
@@ -60,11 +58,11 @@
             <div class="part-input">
               <div class="inputs">
                 <p>Senha</p>
-                <input type="password" id="senhaUsuario" placeholder="*****"/>
+                <input type="password" id="senhaUsuario"/>
               </div>
               <div class="inputs">
                 <p>Confirmação de Senha</p>
-                <input type="password" id="confSenha" placeholder="*****"/>
+                <input type="password" id="confSenha"/>
               </div>
 
             </div>
@@ -81,8 +79,26 @@
     </div>
   </body>
 </html>
-
+<script src="toastr.js"></script>
 <script>
+    toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3500",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
     $('#cpfUsuario').mask('000.000.000-00');
     carregarEmpresas()
 
@@ -130,19 +146,19 @@ function carregarEmpresas() {
     //Verificações
     if (verif_blank) {
       //Nenhum campo preenchido
-      alert("Todos os campos estão vazios, preencha-os corretamente!");
+      toastr.error("<b style='font-family: arial;'>Todos os campos estão vazios, preencha-os corretamente!</b>")
       return false;
     } else {
       if (verif_emailUser) {
-        alert("O e-mail deve ser preenchido corretamente");
+        toastr.error("<b style='font-family: arial;'>O e-mail deve ser preenchido corretamente</b>")
         return false;
       }
       if (verifCpf) {
-        alert("O CPF é inválido");
+        toastr.error("<b style='font-family: arial;'>O CPF é inválido</b>")
         return false;
       }
       if (verif_Psswd) {
-        alert("As senhas não correspondem!");
+        toastr.error("<b style='font-family: arial;'>As senhas não correspondem!</b>")
         return false;
       }
     }
