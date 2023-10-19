@@ -34,9 +34,6 @@ function buscarFuncionarios() {
         });
 }
 
-var anim
-openModalCadastro()
-
 function openModalCadastro() {
     document["body"].innerHTML += `
     <div id="modal" class="modal-cadastro">
@@ -66,24 +63,12 @@ function openModalCadastro() {
                     <p>CPF</p>
                     <input type="text" id="cpfUsuario" />
                 </div>
-                <div class="inputs">
-                    <p>Código da empresa</p>
-                    <select name="empresas" id="codEmpresa">
-                        <option value="null" disabled selected>Selecione sua empresa</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="part-input">
                 <div class="inputs">
                     <p>Senha</p>
                     <input type="password" id="senhaUsuario" />
                 </div>
-                <div class="inputs">
-                    <p>Confirmação de Senha</p>
-                    <input type="password" id="confSenha" />
-                </div>
-<
+               
             </div>
         </div>
         <button class="mb-5 button-cadastrar" onclick="registerUser()">Cadastrar</button>
@@ -110,7 +95,7 @@ function openModalCadastro() {
         path : './js/close.json'
     };
 
-    anim = bodymovin.loadAnimation(animData);
+    var anim = bodymovin.loadAnimation(animData);
 
     anim.gotoFrame(10)
 
