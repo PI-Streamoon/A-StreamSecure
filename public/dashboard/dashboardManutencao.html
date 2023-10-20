@@ -32,10 +32,11 @@
     <link rel="stylesheet" href="css/styleManutencao.css">
 </head>
 
-<body>
+<body onload="carregarNome()">
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -52,9 +53,11 @@
                     </div>
                 </a>
                 <div class="navbar-nav w-100">
-                    <a href="dashboardManutencao.html" class="nav-item nav-link active"><i class="fa fa-chart-bar me-2"></i>Dashboards</a>
-                    <a href="cadastrarManutencao.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Equipe</a>
-                    </div>
+                    <a href="dashboardManutencao.html" class="nav-item nav-link active"><i
+                            class="fa fa-clock me-2"></i>Tempo Real</a>
+                    <a href="#" class="nav-item nav-link"><i class="fa fa-history me-2"></i>Histórico</a>
+                    <a href="cadastrarManutencao.html" class="nav-item nav-link"><i
+                            class="fa fa-people-carry me-2"></i>Equipe</a>
                 </div>
             </nav>
         </div>
@@ -65,7 +68,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0 bordaBaixo">
-                
+
                 <!-- <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a> -->
@@ -175,8 +178,8 @@
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="bordaBaixo">
+                            <tbody id="listagemDosServidores">
+                                <!-- <tr class="bordaBaixo">
                                     <th scope="row">1</th>
                                     <td>Servidor 1</td>
                                     <td>Califórnia, Estados Unidos</td>
@@ -265,7 +268,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -329,15 +332,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos">
-                            <i class="fa fa-fan fa-3x gpu"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">GPU</p>
-                                <h6 class="mb-0">20%</h6>
-                            </div>
-                        </div>
-                    </div> -->
                         <div class="col-sm-6 col-xl-3">
                             <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
                                 onclick="change(), showFreq()">
@@ -376,7 +370,7 @@
                                 <canvas id="dashboardDownload" class="invisivel"></canvas>
                                 <canvas id="dashboardFreq" class="invisivel"></canvas>
                             </div>
-                            <!-- </div>
+                            </div>
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxMemory">
                             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -416,7 +410,7 @@
                             </div>
                             <canvas id="dashboardFreq"></canvas>
                         </div>
-                    </div> -->
+                    </div>
                         </div>
                     </div>
 
@@ -686,11 +680,9 @@
 
         <!-- Log-out -->
         <script>
-            carregarNome()
-
             function log_out() {
-                
-                delete localStorage.CPF_USUARIO ;
+
+                delete localStorage.CPF_USUARIO;
                 delete localStorage.EMAIL_USUARIO;
                 delete localStorage.NOME_USUARIO;
                 delete localStorage.ID_USUARIO;
@@ -709,9 +701,57 @@
             }
 
         </script>
+
+        <!-- Listagem dos servidores e suas devidas localidades -->
+        <script>
+            listarServidores()
+            
+            function listarServidores() {
+                alert("Chamando Fetch (alerta está no dashboard linha 710)");
+
+                fetch("/servidor/pegarLocal", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({}),
+                })
+                    .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+                        alert("Está caindo no fetch (alerta está no dashboard linha 721)")
+                        if (!resposta.ok) {
+                            alert("Fetch Ok (alerta está no dashboard linha 723)")
+                            for (let i = 0; i < resposta.length; i++){
+
+                                listagemDosServidores.innerHTML += `
+                                <tr class="bordaBaixo">
+                                    <th scope="row">${i}</th>
+                                    <td>Servidor ${i}</td>
+                                    <td>${resposta[i]}</td>
+                                    <td class="normal">Normal</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>`
+                            }
+
+
+                            alert("Listagem realizada com sucesso!");
+                        } else {
+                            alert("Fetch não está ok (alerta está no dashboard linha 741)")
+                            throw "Houve um erro ao tentar listar os servidores!";
+                        }
+                    })
+                    .catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                    });
+
+                
+
+            }
+        </script>
 </body>
 
 </html>
 
 </html>
-

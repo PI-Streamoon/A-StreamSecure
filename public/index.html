@@ -363,11 +363,14 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="contact__form">
                         <h3>Fale Conosco</h3>
-                        <form action="#">
-                            <input type="text" placeholder="Nome">
-                            <input type="text" placeholder="Email">
+                        <form
+                            action="https://formspree.io/f/mvojlpep"
+                            method="POST" target="_blank">
+                        
+                            <input type="name" name="name" placeholder="Nome">
+                            <input type="email" name="email" placeholder="Email">
                             <input type="text" placeholder="Assunto">
-                            <textarea placeholder="Mensagem"></textarea>
+                            <textarea name="message" placeholder="Mensagem"></textarea>
                             <button type="submit" class="site-btn">Enviar Mensagem</button>
                         </form>
                     </div>
