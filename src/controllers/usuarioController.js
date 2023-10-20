@@ -67,6 +67,7 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var cpf = req.body.cpfServer;
     var empresa = req.body.empresaServer;
+    var admin = req.body.fkAdminServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
@@ -85,7 +86,7 @@ function cadastrar(req, res) {
 
         bcrypt.hash(senha, saltRounds, (err, senha_criptografada) => {
             // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-            usuarioModel.cadastrar(nome, cpf, empresa, email, senha_criptografada)
+            usuarioModel.cadastrar(nome, cpf, empresa, admin, email, senha_criptografada)
                 .then(
                     function (resultado) {
                         res.json(resultado);

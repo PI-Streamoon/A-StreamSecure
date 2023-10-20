@@ -1,3 +1,30 @@
+const tbodyFuncionarios = document.getElementById('tbody_funcionarios');
+const modal = document.getElementById('modal');
+const navNomeUsuario = document.getElementById('nomeUsuario');
+const closeButton = document.getElementById('close-button');
+
+var animData = {
+    container: closeButton,
+    renderer: 'svg',
+    loop: false,
+    autoplay: false,
+    path : './js/close.json'
+};
+
+var anim = bodymovin.loadAnimation(animData);
+
+anim.gotoFrame(10)
+
+closeButton.onmouseover = ()=>{
+    if(anim.isPaused){
+        anim.playSegments([0, 28], true)
+    }
+}
+
+closeButton.onclick = ()=>{
+    closeModalCadastro()
+}
+
 toastr.options = {
     "closeButton": false,
     "debug": false,
@@ -17,20 +44,22 @@ toastr.options = {
   }
 
 buscarFuncionarios()
-const tbodyFuncionarios = document.getElementById('tbody_funcionarios');
+
 
 function buscarFuncionarios() {
+    tbodyFuncionarios.innerHTML = "";
+
     fetch(`/usuarios/listar?fkAdmin=${localStorage.ID_USUARIO}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
                 resposta.forEach(linha => {
-                    tbodyFuncionarios.innerHTML = "";
 
                     let tr = document.createElement('tr');
 
                     let tdUID = document.createElement('td');
                     let tdNome = document.createElement('td');
                     let tdEmail = document.createElement('td');
+                    let tdNivel = document.createElement('td');
 
                     tdUID.innerText = linha['idUsuario'];
                     tdNome.innerText = linha['nome'];
@@ -53,90 +82,18 @@ function buscarFuncionarios() {
 }
 
 function openModalCadastro() {
-    document["body"].innerHTML += `
-    <div id="modal" class="modal-cadastro">
-    <div id="container">
-        <div id="imagemLogo">
-            <a href="./index.html"><img id="logo" src="./img/logo.png" alt="" /></a>
-        </div>
-        <div id="title">
-            <h1>NOVO CADASTRO</h1>
-            <div id="textUnderline"></div>
-        </div>
-
-        <div class="container-inputs">
-            <div class="part-input">
-                <div class="inputs">
-                    <p>Email</p>
-                    <input type="text" id="emailUsuario" />
-                </div>
-                <div class="inputs">
-                    <p>Nome</p>
-                    <input type="text" id="nomeUsuario" />
-                </div>
-            </div>
-
-            <div class="part-input">
-                <div class="inputs">
-                    <p>CPF</p>
-                    <input type="text" id="cpfUsuario" />
-                </div>
-
-                <div class="inputs">
-                    <p>Senha</p>
-                    <input type="password" id="senhaUsuario" />
-                </div>
-               
-            </div>
-        </div>
-        <button class="mb-5 button-cadastrar" onclick="registerUser()">Cadastrar</button>
-
-        
-    </div>
-    <div class="right-container">
-        <img id="astronautaImg" src="img/img-cadastro.jpg" alt="" />
-        <button class="button-dash button-close" id="close-button"></button>
-    </div>
-
-</div>
-
-    `
-
-    var closeButton = document.getElementById('close-button');
-      // Set up our animation 
-
-    var animData = {
-        container: closeButton,
-        renderer: 'svg',
-        loop: false,
-        autoplay: false,
-        path : './js/close.json'
-    };
-
-    var anim = bodymovin.loadAnimation(animData);
-
-    anim.gotoFrame(10)
-
-    closeButton.onmouseover = ()=>{
-        if(anim.isPaused){
-            anim.playSegments([0, 28], true)
-        }
-    }
-
-    closeButton.onclick = ()=>{
-        closeModalCadastro()
-    }
+    modal.style.display = "flex";
 }
 
 function closeModalCadastro(){
-    document["body"].removeChild(document.getElementById('modal'))
+    modal.style.display = "none";
 }
 
 function registerUser() {
-    var nomeVar = nomeUsuario.value;
-    var cpfVar = cpfUsuario.value.replaceAll('.', '').replace('-', '');
-    var emailVar = emailUsuario.value; //Obrigatório
-    var psswdVar = senhaUsuario.value; //Obrigatório
+    var nomeVar = iptNomeUsuario.value;
+    var cpfVar = iptCpfUsuario.value.replaceAll('.', '').replace('-', '');
+    var emailVar = iptEmailUsuario.value; //Obrigatório
+    var psswdVar = iptSenhaUsuario.value; //Obrigatório
 
     var verif_blank =
       psswdVar == "" &&
@@ -161,6 +118,16 @@ function registerUser() {
         return false;
       }
     }
+
+    console.log({
+        nomeServer: nomeVar,
+        cpfServer: cpfVar,
+        empresaServer: localStorage.FK_EMPRESA,
+        fkAdminServer: localStorage.ID_USUARIO,
+        emailServer: emailVar,
+        senhaServer: psswdVar,
+      })
+
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
@@ -170,7 +137,8 @@ function registerUser() {
       body: JSON.stringify({
         nomeServer: nomeVar,
         cpfServer: cpfVar,
-        empresaServer: codEmpresaVar,
+        empresaServer: localStorage.FK_EMPRESA,
+        fkAdminServer: localStorage.ID_USUARIO,
         emailServer: emailVar,
         senhaServer: psswdVar,
       }),
@@ -179,9 +147,10 @@ function registerUser() {
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          alert("Cadastro realizado com sucesso! Redirecionando para o Login");
 
-          setTimeout((window.location = "login.html"), 2000);
+            toastr.success("Cadastro realizado com sucesso!");
+
+            buscarFuncionarios();
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
