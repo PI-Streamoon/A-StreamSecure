@@ -1,3 +1,21 @@
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3500",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
 buscarFuncionarios()
 const tbodyFuncionarios = document.getElementById('tbody_funcionarios');
 
@@ -113,3 +131,64 @@ function openModalCadastro() {
 function closeModalCadastro(){
     document["body"].removeChild(document.getElementById('modal'))
 }
+
+function registerUser() {
+    var nomeVar = nomeUsuario.value;
+    var cpfVar = cpfUsuario.value.replaceAll('.', '').replace('-', '');
+    var emailVar = emailUsuario.value; //Obrigatório
+    var psswdVar = senhaUsuario.value; //Obrigatório
+
+    var verif_blank =
+      psswdVar == "" &&
+      emailVar == "" &&
+      nomeVar == "" &&
+      cpfVar == ""
+    var verif_emailUser = emailVar.indexOf("@") == -1 || emailVar == "";
+    var verifCpf = cpfVar.length < 11;
+
+    //Verificações
+    if (verif_blank) {
+      //Nenhum campo preenchido
+      toastr.error("<b style='font-family: arial;'>Todos os campos estão vazios, preencha-os corretamente!</b>")
+      return false;
+    } else {
+      if (verif_emailUser) {
+        toastr.error("<b style='font-family: arial;'>O e-mail deve ser preenchido corretamente</b>")
+        return false;
+      }
+      if (verifCpf) {
+        toastr.error("<b style='font-family: arial;'>O CPF é inválido</b>")
+        return false;
+      }
+    }
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeServer: nomeVar,
+        cpfServer: cpfVar,
+        empresaServer: codEmpresaVar,
+        emailServer: emailVar,
+        senhaServer: psswdVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          alert("Cadastro realizado com sucesso! Redirecionando para o Login");
+
+          setTimeout((window.location = "login.html"), 2000);
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+  }
