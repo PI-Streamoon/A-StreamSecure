@@ -20,4 +20,8 @@ router.get("/mostrarEmpresas", function (req, res) {
     usuarioController.mostrarEmpresas(req, res);
 });
 
+router.put("/changePermission", function (req, res) {
+    usuarioController.changePermission(req, res);
+});
+
 module.exports = router;

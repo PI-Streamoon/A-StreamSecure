@@ -12,7 +12,7 @@ function auth(email, senha) {
 function listar(fkAdmin) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     var instrucao = `
-        SELECT * FROM usuario WHERE fkAdmin = ${fkAdmin}; 
+        SELECT * FROM usuario WHERE idUsuario != ${fkAdmin}; 
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -39,9 +39,18 @@ function mostrarEmpresas() {
     return database.executar(instrucao);
 }
 
+function changePermission(fkAdmin, idUsuario){
+    var instrucao = `
+        UPDATE usuario SET fkAdmin = ${fkAdmin} WHERE idUsuario = ${idUsuario};
+    `;
+
+    return database.executar(instrucao);
+}
+
 module.exports = {
     auth,
     cadastrar,
     listar,
-    mostrarEmpresas
+    mostrarEmpresas,
+    changePermission
 };

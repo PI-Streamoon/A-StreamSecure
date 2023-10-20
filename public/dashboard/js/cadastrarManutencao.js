@@ -46,6 +46,26 @@ toastr.options = {
 buscarFuncionarios()
 
 
+function changePermission(fkAdmin, idUsuario) {
+    fetch("/usuarios/changePermission", {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        idUsuarioServer: idUsuario,
+        fkAdminServer: fkAdmin
+    }),
+    })
+    .then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if(resposta.ok){
+            toastr.warning("Permissão Modificada!");
+        }
+    })
+}
+
+
 function buscarFuncionarios() {
     tbodyFuncionarios.innerHTML = "";
 
@@ -61,19 +81,29 @@ function buscarFuncionarios() {
                     let tdEmail = document.createElement('td');
                     let tdNivel = document.createElement('td');
                     let checkBox = document.createElement('input');
+                    
+                    console.log(linha['fkAdmin'])
 
                     checkBox.type = 'checkbox';
-                    checkBox.checked = resposta['fkAdmin'] == 'null';
-                    checkBox.onclick =
+
+                    if (linha['fkAdmin'] == null){
+                        checkBox.checked = true;
+                        checkBox.onclick = ()=>{changePermission(localStorage.ID_USUARIO, linha['idUsuario'])}
+                    }else{
+                        checkBox.onclick = ()=>{changePermission(null, linha['idUsuario'])}
+                    }
+
 
                     tdUID.innerText = linha['idUsuario'];
                     tdNome.innerText = linha['nome'];
                     tdEmail.innerHTML = `<a href="mailto: ${linha['email']}"> ${linha['email']} </a>`;
                     
-
+                    tdNivel.appendChild(checkBox);
+                    
                     tr.appendChild(tdUID);
                     tr.appendChild(tdNome);
                     tr.appendChild(tdEmail);
+                    tr.append(tdNivel);
 
                     tbodyFuncionarios.appendChild(tr);
                 });
