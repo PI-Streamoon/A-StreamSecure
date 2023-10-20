@@ -1,12 +1,9 @@
 var database = require("../database/config");
 
 function plotarGrafico() {
-    var instrucao = ``;
-   
-    instrucao = `select registro as cpuPorcentagem, DATE_FORMAT((dtHora), '%d-%m-%Y %H:%i:%s') as dtHora from registro join componenteServidor on fkComponenteServidor = idComponenteServidor 
-     join componente on fkComponente = idComponente 
-     join unidadeMedida on fkUnidadeMedida = idUnidadeMedida
-     where DAY(registro.dtHora) = DAY(NOW()) and componente.nome = 'CPU' and unidadeMedida.nomeMedida = '%' order by dtHora desc LIMIT 1;`;
+    const intrucao = `
+        SELECT *, DATE_FORMAT(MomentoRegisto, '%d-%m-%Y %H:%i:%s') FROM stream.registrocolunar;
+    `
 
     return database.executar(instrucao);
     } 

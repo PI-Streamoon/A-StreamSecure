@@ -60,10 +60,16 @@ function buscarFuncionarios() {
                     let tdNome = document.createElement('td');
                     let tdEmail = document.createElement('td');
                     let tdNivel = document.createElement('td');
+                    let checkBox = document.createElement('input');
+
+                    checkBox.type = 'checkbox';
+                    checkBox.checked = resposta['fkAdmin'] == 'null';
+                    checkBox.onclick =
 
                     tdUID.innerText = linha['idUsuario'];
                     tdNome.innerText = linha['nome'];
                     tdEmail.innerHTML = `<a href="mailto: ${linha['email']}"> ${linha['email']} </a>`;
+                    
 
                     tr.appendChild(tdUID);
                     tr.appendChild(tdNome);
@@ -92,8 +98,8 @@ function closeModalCadastro(){
 function registerUser() {
     var nomeVar = iptNomeUsuario.value;
     var cpfVar = iptCpfUsuario.value.replaceAll('.', '').replace('-', '');
-    var emailVar = iptEmailUsuario.value; //Obrigatório
-    var psswdVar = iptSenhaUsuario.value; //Obrigatório
+    var emailVar = iptEmailUsuario.value;
+    var psswdVar = iptSenhaUsuario.value;
 
     var verif_blank =
       psswdVar == "" &&

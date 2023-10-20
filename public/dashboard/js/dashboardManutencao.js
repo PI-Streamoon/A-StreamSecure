@@ -1,3 +1,10 @@
+const dashboardCpu = document.getElementById('dashboardCpu');
+const dashboardMemory = document.getElementById('dashboardMemory');
+const dashboardDisk = document.getElementById('dashboardDisk');
+const dashboardUpload = document.getElementById('dashboardUpload');
+const dashboardDownload = document.getElementById('dashboardDownload');
+const dashboardFreq = document.getElementById('dashboardFreq');
+
 var labelsGeral = [];
 var dadosGeral = [];
 var dashboardGeral;
@@ -6,6 +13,10 @@ var labelsCpuPorcentagem = []
 var dadosCpuPorcentagem = []
 var dashboardCpuPorcentagem;
 
+var labelsRamPorcentagem = []
+var dadosRamPorcentagem = []
+var dashboardRamPorcentagem;
+
 (function ($) {
     "use strict";
 
@@ -13,6 +24,7 @@ var dashboardCpuPorcentagem;
 
     setInterval(atualizarGraficoGeral, 6000)
     setInterval(atualizarGraficoCpuPorcentagem, 3000)
+    setInterval(atualizarGraficoRamPorcentagem, 3000)
 
     function atualizarGraficoGeral() {
         fetch(`/medidas/geral`, { cache: 'no-store' }).then(function (response) {
@@ -57,7 +69,7 @@ var dashboardCpuPorcentagem;
                     for (var i = 0; i < resposta.length; i++) {
                         var registro = resposta[i];
                         labelsCpuPorcentagem.push(registro.dtHora);
-                        dadosCpuPorcentagem.datasets[0].data.push(registro.cpuPorcentagem);
+                        dadosCpuPorcentagem.datasets[0].data.push(registro.CPU);
                     }
 
                     if (labelsCpuPorcentagem.length > 10) {
@@ -66,6 +78,37 @@ var dashboardCpuPorcentagem;
                     } 
 
                     dashboardCpuPorcentagem.update()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function atualizarGraficoRamPorcentagem() {
+        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+    
+                    console.log(resposta)
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        labelsRamPorcentagem.push(registro.dtHora);
+                        dadosRamPorcentagem.datasets[0].data.push(registro.Memoria);
+                    }
+
+                    if (labelsRamPorcentagem.length > 10) {
+                        labelsRamPorcentagem.shift()
+                        dadosRamPorcentagem.datasets[0].data.shift()
+                    } 
+
+                    dashboardRamPorcentagem.update()
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -140,25 +183,28 @@ var dashboardCpuPorcentagem;
     });
 
     // Dashboard Memoria
-    new Chart(dashboardMemory, {
+
+    labelsRamPorcentagem = []
+    dadosRamPorcentagem = {
+        labels: labelsRamPorcentagem,
+        datasets: [{
+            label: "RAM Porcentagem",
+            data: [],
+            backgroundColor: "#000000",
+            borderColor: "#6248AE"
+        }]
+    }
+
+    dashboardRamPorcentagem = new Chart(dashboardMemory, {
         type: "line",
-        data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-            datasets: [{
-                    label: "Salse",
-                    data: [15, 30, 55, 45, 70, 65, 85],
-                    backgroundColor: "rgba(163,45,163, .7)",
-                    fill: true
-                },
-                {
-                    label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgba(163,45,163, .5)",
-                    fill: true
-                }
-            ]
-            },
+        data: dadosRamPorcentagem,
         options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100
+                }
+            },
             responsive: true
         }
     });
@@ -259,93 +305,6 @@ var dashboardCpuPorcentagem;
         }
     });
     
-    
-    // Single Line Chart
-    // var ctx3 = $("#line-chart").get(0).getContext("2d");
-    // var myChart3 = new Chart(ctx3, {
-    //     type: "line",
-    //     data: {
-    //         labels: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
-    //         datasets: [{
-    //             label: "Salse",
-    //             fill: false,
-    //             backgroundColor: "rgba(163,45,163, .7)",
-    //             data: [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15]
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true
-    //     }
-    // });
-
-
-    // Single Bar Chart
-    // var ctx4 = $("#bar-chart").get(0).getContext("2d");
-    // var myChart4 = new Chart(ctx4, {
-    //     type: "bar",
-    //     data: {
-    //         labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-    //         datasets: [{
-    //             backgroundColor: [
-    //                 "rgba(163,45,163, .7)",
-    //                 "rgba(163,45,163, .6)",
-    //                 "rgba(163,45,163, .5)",
-    //                 "rgba(163,45,163, .4)",
-    //                 "rgba(163,45,163, .3)"
-    //             ],
-    //             data: [55, 49, 44, 24, 15]
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true
-    //     }
-    // });
-
-
-    // Pie Chart
-    // var ctx5 = $("#pie-chart").get(0).getContext("2d");
-    // var myChart5 = new Chart(ctx5, {
-    //     type: "pie",
-    //     data: {
-    //         labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-    //         datasets: [{
-    //             backgroundColor: [
-    //                 "rgba(163,45,163, .7)",
-    //                 "rgba(163,45,163, .6)",
-    //                 "rgba(163,45,163, .5)",
-    //                 "rgba(163,45,163, .4)",
-    //                 "rgba(163,45,163, .3)"
-    //             ],
-    //             data: [55, 49, 44, 24, 15]
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true
-    //     }
-    // });
-
-
-    // Doughnut Chart
-    // var ctx6 = $("#doughnut-chart").get(0).getContext("2d");
-    // var myChart6 = new Chart(ctx6, {
-    //     type: "doughnut",
-    //     data: {
-    //         labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-    //         datasets: [{
-    //             backgroundColor: [
-    //                 "rgba(147,115,239, .7)",
-    //                 "rgba(147,115,239, .6)",
-    //                 "rgba(147,115,239, .5)",
-    //                 "rgba(147,115,239, .4)",
-    //                 "rgba(147,115,239, .3)"
-    //             ],
-    //             data: [55, 49, 44, 24, 15]
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true
-    //     }
-    // });
 
     
 })(jQuery);
