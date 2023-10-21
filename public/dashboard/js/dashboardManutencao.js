@@ -70,6 +70,12 @@ var dashboardRamPorcentagem;
                         var registro = resposta[i];
                         labelsCpuPorcentagem.push(registro.dtHora);
                         dadosCpuPorcentagem.datasets[0].data.push(registro.CPU);
+                        infoCPU.innerHTML = registro.CPU+"%";
+                        infoRAM.innerHTML = registro.Memoria+"%";
+                        infoDisco.innerHTML = registro.Disco+"%";
+                        infoUpload.innerHTML = registro.Upload+" Kb/s";
+                        infoDownload.innerHTML = registro.Download+" Kb/s";
+                        infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
                     }
 
                     if (labelsCpuPorcentagem.length > 10) {
