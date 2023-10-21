@@ -82,8 +82,6 @@ function buscarFuncionarios() {
                     let tdNivel = document.createElement('td');
                     let checkBox = document.createElement('input');
                     
-                    console.log(linha['fkAdmin'])
-
                     checkBox.type = 'checkbox';
 
                     if (linha['fkAdmin'] == null){
@@ -118,11 +116,17 @@ function buscarFuncionarios() {
 }
 
 function openModalCadastro() {
-    modal.style.display = "flex";
+  modal.style.display = "flex";
 }
 
 function closeModalCadastro(){
-    modal.style.display = "none";
+  const inputsModal = modal.querySelectorAll('input');
+
+  inputsModal.forEach((element)=>{
+    element.value = '';
+  })
+
+  modal.style.display = "none";
 }
 
 function registerUser() {
@@ -155,14 +159,7 @@ function registerUser() {
       }
     }
 
-    console.log({
-        nomeServer: nomeVar,
-        cpfServer: cpfVar,
-        empresaServer: localStorage.FK_EMPRESA,
-        fkAdminServer: localStorage.ID_USUARIO,
-        emailServer: emailVar,
-        senhaServer: psswdVar,
-      })
+    
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
@@ -187,6 +184,8 @@ function registerUser() {
             toastr.success("Cadastro realizado com sucesso!");
 
             buscarFuncionarios();
+
+            closeModalCadastro()
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
