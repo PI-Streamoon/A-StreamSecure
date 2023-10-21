@@ -420,15 +420,15 @@
                             class="vh-100 bg-secondary justify-content-center mx-0 bordaTudo rounded detalhesServidor table-responsive">
                             <div class="conteudoTexto">
                                 <h3>Detalhes do Servidor</h3>
-                                <p>Uso global da CPU:</p>
-                                <p>Frequência atual da CPU:</p>
-                                <p>Uso do disco:</p>
-                                <p>Uso da memória:</p>
-                                <p>Tamanho da memória:</p>
-                                <p>Espaço em uso da memória:</p>
-                                <p>Espaço livre da memória:</p>
-                                <p>Velocidade de download:</p>
-                                <p>Velocidade de upload:</p>
+                                <p>Uso global da CPU: <span id="CpuTotal"></span></p>
+                                <p>Frequência atual da CPU: <span id="Freq"></span></p>
+                                <p>Uso do disco:  <span id="Disco"></span></p>
+                                <p>Uso da memória: <span id="MemPercent"></span></p>
+                                <p>Tamanho da memória: <samp id="MenTotal"></samp></p>
+                                <p>Espaço em uso da memória: <span id="MenUsada"></span></p>
+                                <p>Espaço livre da memória: <span id="MenLivre"></span></p>
+                                <p>Velocidade de download: <span id="Download"></span></p>
+                                <p>Velocidade de upload: <span id="Upload"></span></p>
                             </div>
                         </div>
                     </div>
@@ -699,7 +699,7 @@
         <!-- Listagem dos servidores e suas devidas localidades -->
         <script>
             listarServidores()
-            
+
             function listarServidores() {
                 alert("Chamando Fetch (alerta está no dashboard linha 710)");
 

@@ -66,8 +66,8 @@ var dashboardRamPorcentagem;
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
     
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
+                    
+                        var registro = resposta[0];
                         labelsCpuPorcentagem.push(registro.dtHora);
                         dadosCpuPorcentagem.datasets[0].data.push(registro.CPU);
                         infoCPU.innerHTML = registro.CPU+"%";
@@ -76,7 +76,8 @@ var dashboardRamPorcentagem;
                         infoUpload.innerHTML = registro.Upload+" Kb/s";
                         infoDownload.innerHTML = registro.Download+" Kb/s";
                         infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
-                    }
+                    
+                        gerarRelatorio()
 
                     if (labelsCpuPorcentagem.length > 10) {
                         labelsCpuPorcentagem.shift()
@@ -356,6 +357,35 @@ function showFreq() {
 
 function servidor1() {
     window.location.assign(`dashboardManutencaoSem.html`);
+}
+
+function gerarRelatorio() {
+    fetch(`/medidas/ultimas`).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();    
+                        
+                var registro = resposta[0];
+                
+                CpuTotal.innerHTML = `${registro.CPU}%`;
+                Freq.innerHTML = `${registro.FrequenciaCPU} MHz`;
+                Disco.innerHTML = `${registro.Disco}%`;
+                MemPercent.innerHTML = `${registro.Memoria}%`;
+                MenTotal.innerHTML = `${registro.MemoriaTotal} GB`;
+                MenUsada.innerHTML = `${registro.MemoriaUsada} GB`;
+                MenLivre.innerHTML = `${Number((registro.MemoriaTotal - registro.MemoriaUsada).toFixed(1))} GB`
+                Download.innerHTML = `${registro.Download} Kb/s`;
+                Upload.innerHTML = `${registro.Upload} Kb/s`;                 
+               
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
 }
 
 function carregarPagina(idUsuario) {
