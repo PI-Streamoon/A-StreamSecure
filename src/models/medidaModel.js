@@ -1,8 +1,17 @@
 var database = require("../database/config");
 
 function plotarGrafico() {
-    const intrucao = `
-        SELECT *, DATE_FORMAT(MomentoRegisto, '%d-%m-%Y %H:%i:%s') FROM stream.registrocolunar;
+    const instrucao = `
+    SELECT DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
+       CPU,
+       FrequenciaCPU,
+       Memoria,
+       MemoriaUsada,
+       MemoriaTotal,
+       Disco,
+       Upload,
+       Download
+        FROM streamoon.registrocolunar ORDER BY dtHora DESC LIMIT 1;
     `
 
     return database.executar(instrucao);
@@ -82,8 +91,8 @@ function geral() {
         instrucao = `
         SELECT DATE_FORMAT((dtHora), '%d-%m-%Y %H:%i:%s') as dtHora,
         max(CASE WHEN fkComponenteServidor = 1 THEN registro END) AS 'cpu',
-        max(CASE WHEN fkComponenteServidor = 2 THEN registro END) AS 'memoria',
-        max(CASE WHEN fkComponenteServidor = 5 THEN registro END) AS 'disco'
+        max(CASE WHEN fkComponenteServidor = 3 THEN registro END) AS 'memoria',
+        max(CASE WHEN fkComponenteServidor = 6 THEN registro END) AS 'disco'
         FROM registro GROUP BY dtHora ORDER BY dtHora DESC LIMIT 1;
         `;
     } else {
