@@ -376,7 +376,14 @@ function gerarRelatorio() {
                 MenUsada.innerHTML = `${registro.MemoriaUsada} GB`;
                 MenLivre.innerHTML = `${Number((registro.MemoriaTotal - registro.MemoriaUsada).toFixed(1))} GB`
                 Download.innerHTML = `${registro.Download} Kb/s`;
-                Upload.innerHTML = `${registro.Upload} Kb/s`;                 
+                Upload.innerHTML = `${registro.Upload} Kb/s`;
+
+                registroCPU = registro.CPU
+                registroDisco = registro.Disco
+                registroMemoria = registro.Memoria
+                registroDownload = registro.Download
+                registroUpload = registro.Upload
+                atualizarEstadoDoServidor(registroCPU, registroDisco, registroMemoria)
                
             });
         } else {
@@ -408,4 +415,42 @@ function carregarPagina(idUsuario) {
         console.error(resposta);
 
     });
+}
+
+function atualizarEstadoDoServidor(registroCPU, registroDisco, registroMemoria){
+
+    var mediaServidor = (registroCPU + registroDisco + registroMemoria) / 3
+    if(mediaServidor <= 55){
+        estadoServidor0.innerHTML = `Normal`;
+        document.getElementById(`estadoServidor0`).classList.remove("alerta")
+        document.getElementById("estadoServidor0").classList.remove("critico")
+        document.getElementById("estadoServidor0").classList.add("normal")
+    } else if(mediaServidor <= 58){
+        estadoServidor0.innerHTML = `Alerta`;
+        document.getElementById("estadoServidor0").classList.remove("normal")
+        document.getElementById("estadoServidor0").classList.remove("critico")
+        document.getElementById("estadoServidor0").classList.add("alerta")
+    } else {
+        estadoServidor0.innerHTML = `Crítico`;
+        document.getElementById("estadoServidor0").classList.remove("alerta")
+        document.getElementById("estadoServidor0").classList.remove("normal")
+        document.getElementById("estadoServidor0").classList.add("critico")
+    }
+
+    if(mediaServidor*0.90 <= 55){
+        estadoServidor1.innerHTML = `Normal`;
+        document.getElementById(`estadoServidor1`).classList.remove("alerta")
+        document.getElementById("estadoServidor1").classList.remove("critico")
+        document.getElementById("estadoServidor1").classList.add("normal")
+    } else if(mediaServidor*0.90 <= 58){
+        estadoServidor1.innerHTML = `Alerta`;
+        document.getElementById("estadoServidor1").classList.remove("normal")
+        document.getElementById("estadoServidor1").classList.remove("critico")
+        document.getElementById("estadoServidor1").classList.add("alerta")
+    } else {
+        estadoServidor1.innerHTML = `Crítico`;
+        document.getElementById("estadoServidor1").classList.remove("alerta")
+        document.getElementById("estadoServidor1").classList.remove("normal")
+        document.getElementById("estadoServidor1").classList.add("critico")
+    }
 }
