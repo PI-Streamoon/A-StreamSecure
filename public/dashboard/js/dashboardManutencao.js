@@ -5,6 +5,8 @@ const dashboardUpload = document.getElementById('dashboardUpload');
 const dashboardDownload = document.getElementById('dashboardDownload');
 const dashboardFreq = document.getElementById('dashboardFreq');
 
+var idServidorSelecionado;
+
 var labelsGeral = [];
 var dadosGeral = [];
 var dashboardGeral;
@@ -48,7 +50,7 @@ var dashboardFrequenciaMegahertz;
     setInterval(atualizarGraficoFrequencia, 3000)
 
     function atualizarGraficoGeral() {
-        fetch(`/medidas/geral`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/geral?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -57,9 +59,9 @@ var dashboardFrequenciaMegahertz;
                     for (var i = 0; i < resposta.length; i++) {
                         var registro = resposta[i];
                         labelsGeral.push(registro.dtHora);
-                        dadosGeral.datasets[0].data.push(registro.cpu);
-                        dadosGeral.datasets[1].data.push(registro.memoria);
-                        dadosGeral.datasets[2].data.push(registro.disco);
+                        dadosGeral.datasets[0].data.push(registro.CPU);
+                        dadosGeral.datasets[1].data.push(registro.Memoria);
+                        dadosGeral.datasets[2].data.push(registro.Disco);
                     }
 
                     if (labelsGeral.length > 5) {
@@ -81,7 +83,7 @@ var dashboardFrequenciaMegahertz;
     }
 
     function atualizarGraficoCpuPorcentagem() {
-        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -117,7 +119,7 @@ var dashboardFrequenciaMegahertz;
     }
 
     function atualizarGraficoRamPorcentagem() {
-        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -148,7 +150,7 @@ var dashboardFrequenciaMegahertz;
     }
 
     function atualizarGraficoDiscoPorcentagem() {
-        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -179,7 +181,7 @@ var dashboardFrequenciaMegahertz;
     }
 
     function atualizarGraficoUpload() {
-        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -210,7 +212,7 @@ var dashboardFrequenciaMegahertz;
     } 
 
     function atualizarGraficoDownload() {
-        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -241,7 +243,7 @@ var dashboardFrequenciaMegahertz;
     }
 
     function atualizarGraficoFrequencia() {
-        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -455,32 +457,32 @@ function change() {
 
 function showCpu() {
     dashboardCpu.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Uso da CPU (%)"
+    dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Uso da CPU (%)`
 }
 
 function showMemory() {
     dashboardMemory.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Uso da Memória (%)"
+    dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Uso da Memória (%)`
 }
 
 function showDisk() {
     dashboardDisk.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Uso do Disco (%)"
+    dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Uso do Disco (%)`
 }
 
 function showUpload() {
     dashboardUpload.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Velocidade de Upload (Kb / s)"
+    dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Velocidade de Upload (Kb / s)`
 }
 
 function showDownload() {
     dashboardDownload.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Velocidade de Download (Kb / s)"
+    dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Velocidade de Download (Kb / s)`
 }
 
 function showFreq() {
     dashboardFreq.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Frequência da CPU (Mhz)"
+    dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Frequência da CPU (Mhz)`
 }
 
 function servidor1() {
@@ -488,7 +490,7 @@ function servidor1() {
 }
 
 function gerarRelatorio() {
-    fetch(`/medidas/ultimas`).then(function (response) {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
                 // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -581,4 +583,93 @@ function atualizarEstadoDoServidor(registroCPU, registroDisco, registroMemoria){
         document.getElementById("estadoServidor1").classList.remove("normal")
         document.getElementById("estadoServidor1").classList.add("critico")
     }
+}
+
+function trocarNomesServidor(nomeAtual, nomeFuturo){
+    var nomesServidor = document.querySelectorAll('[data-id="nomeServidor"]')
+
+    nomesServidor.forEach((textosTag) => {
+        textosTag.innerText = textosTag.innerText.replace(nomeAtual, nomeFuturo);
+    })
+}
+
+function trocarServidor(element){
+    var firstTd = element.querySelector("td");
+
+
+    let idServidor = firstTd.dataset.idServidor;
+
+    trocarNomesServidor(`Servidor ${idServidorSelecionado}`, `Servidor ${idServidor}`);
+
+    idServidorSelecionado = idServidor;
+}
+
+
+function listarServidores() {
+
+    fetch(`/servidor/pegarLocal`)
+        .then(function (response) {
+
+            if (response.ok) {
+                response.json().then(function (resposta) {
+
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    var listaIdServidores = resposta
+                    for (let i = 0; i < listaIdServidores.length; i++) {
+                        listagemDosServidores.innerHTML += `
+                            <tr class="bordaBaixo" onclick="trocarServidor(this)">
+                                <th scope="row">${i + 1}</th>
+                                <td id="idServidor${i}"></td>
+                                <td>${listaIdServidores[i].localidade}</td>
+                                <td id="estadoServidor${i}" class=""></td>
+                            </tr>`
+                    }
+
+                    listarIdServidores();
+                });
+            } else {
+                console.error("Nenhum dado encontrado");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+            );
+        });
+        
+}  
+
+function listarIdServidores() {
+
+    fetch(`/servidor/pegarId`)
+        .then(function (response) {
+
+            if (response.ok) {
+                response.json().then(function (resposta) {
+
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    var listaId = resposta
+
+                    idServidorSelecionado = listaId[0].idServidor;
+
+                    trocarNomesServidor("Servidor 1", `Servidor ${idServidorSelecionado}`);
+
+                    for (let i = 0; i < listaId.length; i++) {
+                        const idServidorAtual = document.getElementById(`idServidor${i}`)
+                        idServidorAtual.innerHTML = `Servidor ${listaId[i].idServidor}`
+                        idServidorAtual.dataset.idServidor = listaId[i].idServidor;
+                    }
+                });
+            } else {
+                console.error("Nenhum dado encontrado");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p/ ID's dos servidores: ${error.message}`
+            );
+        });
+
 }
