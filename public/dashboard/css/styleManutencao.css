@@ -78,6 +78,7 @@
 
 .table-responsive tbody tr:hover {
     background-color: #dde0e3;
+    color: #000000;
     cursor: pointer;
     border: 1.5px solid #6248AE;
 }
