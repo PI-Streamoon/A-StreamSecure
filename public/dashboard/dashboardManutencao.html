@@ -170,15 +170,13 @@
                             <thead class="bg-meu tituloServidor">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Servidor</th>
+                                    <th scope="col">ID Servidor</th>
                                     <th scope="col">Local</th>
                                     <th scope="col">Estado do Servidor</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody id="listagemDosServidores"></tbody>
+                            <tbody id="listagemDosServidores">
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -277,169 +275,200 @@
                                 <canvas id="dashboardDownload" class="invisivel"></canvas>
                                 <canvas id="dashboardFreq" class="invisivel"></canvas>
                             </div>
-                            </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxMemory">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Servidor 1 - Memória</h6>
-                            </div>
-                            <canvas id="dashboardMemory"></canvas>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDisk">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Servidor 1 - Disco</h6>
-                            </div>
-                            <canvas id="dashboardDisk"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxUpload">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Servidor 1 - Upload</h6>
-                            </div>
-                            <canvas id="dashboardUpload"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDownload">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Servidor 1 - Download</h6>
-                            </div>
-                            <canvas id="dashboardDownload"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxFreq">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Servidor 1 - Frequência CPU</h6>
-                            </div>
-                            <canvas id="dashboardFreq"></canvas>
-                        </div>
-                    </div>
-                        </div>
-                    </div>
-
-                    <!-- Detalhes do Servidor Começo -->
-                    <div class="container-fluid pt-4 px-4">
-                        <div
-                            class="vh-100 bg-secondary justify-content-center mx-0 bordaTudo rounded detalhesServidor table-responsive">
-                            <div class="conteudoTexto">
-                                <h3>Detalhes do Servidor</h3>
-                                <p>Uso global da CPU: <span id="CpuTotal"></span></p>
-                                <p>Frequência atual da CPU: <span id="Freq"></span></p>
-                                <p>Uso do disco:  <span id="Disco"></span></p>
-                                <p>Uso da memória: <span id="MemPercent"></span></p>
-                                <p>Tamanho da memória: <samp id="MenTotal"></samp></p>
-                                <p>Espaço em uso da memória: <span id="MenUsada"></span></p>
-                                <p>Espaço livre da memória: <span id="MenLivre"></span></p>
-                                <p>Velocidade de download: <span id="Download"></span></p>
-                                <p>Velocidade de upload: <span id="Upload"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Detalhes do Servidor Fim -->
-
-                    <!-- Footer Start -->
-                    <div class="container-fluid pt-4 px-4">
-                        <div class="bg-secondary rounded-top p-4 bordaTudo">
-                            <div class="row">
-                                <div class="col-12 col-sm-6 text-center text-sm-start">
-                                    &copy; <a href="#">Streamoon</a>, Todos os direitos reservados.
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxMemory">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Servidor 1 - Memória</h6>
                                 </div>
-                                <div class="col-12 col-sm-6 text-center text-sm-end">
-                                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                    Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                                    <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                                <canvas id="dashboardMemory"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDisk">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Servidor 1 - Disco</h6>
                                 </div>
+                                <canvas id="dashboardDisk"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxUpload">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Servidor 1 - Upload</h6>
+                                </div>
+                                <canvas id="dashboardUpload"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDownload">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Servidor 1 - Download</h6>
+                                </div>
+                                <canvas id="dashboardDownload"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxFreq">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Servidor 1 - Frequência CPU</h6>
+                                </div>
+                                <canvas id="dashboardFreq"></canvas>
                             </div>
                         </div>
                     </div>
-                    <!-- Footer End -->
                 </div>
-                <!-- Content End -->
 
+                <!-- Detalhes do Servidor Começo -->
+                <div class="container-fluid pt-4 px-4">
+                    <div
+                        class="vh-100 bg-secondary justify-content-center mx-0 bordaTudo rounded detalhesServidor table-responsive">
+                        <div class="conteudoTexto">
+                            <h3>Detalhes do Servidor</h3>
+                            <p>Uso global da CPU: <span id="CpuTotal"></span></p>
+                            <p>Frequência atual da CPU: <span id="Freq"></span></p>
+                            <p>Uso do disco: <span id="Disco"></span></p>
+                            <p>Uso da memória: <span id="MemPercent"></span></p>
+                            <p>Tamanho da memória: <samp id="MenTotal"></samp></p>
+                            <p>Espaço em uso da memória: <span id="MenUsada"></span></p>
+                            <p>Espaço livre da memória: <span id="MenLivre"></span></p>
+                            <p>Velocidade de download: <span id="Download"></span></p>
+                            <p>Velocidade de upload: <span id="Upload"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Detalhes do Servidor Fim -->
 
-                <!-- Back to Top -->
-                <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
+                <!-- Footer Start -->
+                <div class="container-fluid pt-4 px-4">
+                    <div class="bg-secondary rounded-top p-4 bordaTudo">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 text-center text-sm-start">
+                                &copy; <a href="#">Streamoon</a>, Todos os direitos reservados.
+                            </div>
+                            <div class="col-12 col-sm-6 text-center text-sm-end">
+                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                                <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer End -->
         </div>
+        <!-- Content End -->
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/chart/chart.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Template Javascript -->
-        <script src="js/dashboardManutencao.js"></script>
-        <script src="js/main.js"></script>
+        <!-- Back to Top -->
+        <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
+    </div>
 
-        <!-- Log-out -->
-        <script>
-            function log_out() {
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-                delete localStorage.CPF_USUARIO;
-                delete localStorage.EMAIL_USUARIO;
-                delete localStorage.NOME_USUARIO;
-                delete localStorage.ID_USUARIO;
-                delete localStorage.FK_ADMIN;
-                delete localStorage.FK_EMPRESA;
+    <!-- Template Javascript -->
+    <script src="js/dashboardManutencao.js"></script>
+    <script src="js/main.js"></script>
 
-                window.location = "dashboardManutencao.html";
+    <!-- Log-out -->
+    <script>
+        function log_out() {
+
+            delete localStorage.CPF_USUARIO;
+            delete localStorage.EMAIL_USUARIO;
+            delete localStorage.NOME_USUARIO;
+            delete localStorage.ID_USUARIO;
+            delete localStorage.FK_ADMIN;
+            delete localStorage.FK_EMPRESA;
+
+            window.location = "dashboardManutencao.html";
+        }
+
+        function carregarNome() {
+            if (localStorage.ID_USUARIO == undefined) {
+                window.location = "../login.html"
             }
+            var nome = nomeUsuario;
+            nome.innerHTML = localStorage.NOME_USUARIO;
+        }
 
-            function carregarNome() {
-                if (localStorage.ID_USUARIO == undefined) {
-                    window.location = "../login.html"
-                }
-                var nome = nomeUsuario;
-                nome.innerHTML = localStorage.NOME_USUARIO;
-            }
+    </script>
 
-        </script>
+    <!-- Listagem dos servidores e suas devidas localidades -->
+    <script>
 
-        <!-- Listagem dos servidores e suas devidas localidades -->
-        <script>
+        function listarServidores() {
 
-            function listarServidores() {
+            fetch(`/servidor/pegarLocal`)
+                .then(function (response) {
 
-                fetch(`/servidor/pegarLocal`)
-                    .then(function (response) {
-                        
-                        if (response.ok) {
-                            response.json().then(function (resposta) {
-                                
-                                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                                
-                                var listaLocais = resposta
-                                for (let i = 0; i <= listaLocais.length; i++){
-                                    listagemDosServidores.innerHTML += `
+                    if (response.ok) {
+                        response.json().then(function (resposta) {
+
+                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                            var listaIdServidores = resposta
+                            for (let i = 0; i <= listaIdServidores.length; i++) {
+                                listagemDosServidores.innerHTML += `
                                     <tr class="bordaBaixo">
                                         <th scope="row">${i + 1}</th>
-                                        <td>Servidor ${i + 1}</td>
-                                        <td>${listaLocais[i].localidade}</td>
-                                        <td class="normal">Normal</td>
+                                        <td><span id="idServidor${i}"></span></td>
+                                        <td>${listaIdServidores[i].localidade}</td>
+                                        <td id="estadoServidor${i}" class=""></td>
                                     </tr>`
-                                }
-                            });
-                        } else {
-                            console.error("Nenhum dado encontrado");
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error(
-                            `Erro na obtenção dos dados p oscais dos servidores: ${ error.message }`
-                        );
-                    });
-            }
+                            }
+                        });
+                    } else {
+                        console.error("Nenhum dado encontrado");
+                    }
+                })
+                .catch(function (error) {
+                    console.error(
+                        `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+                    );
+                });
+                
+        }
 
-        </script>
+        function listarIdServidores() {
+
+            fetch(`/servidor/pegarId`)
+                .then(function (response) {
+
+                    if (response.ok) {
+                        response.json().then(function (resposta) {
+
+                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                            var listaId = resposta
+                            for (let i = 0; i <= listaId.length; i++) {
+                                const idServidorAtual = document.getElementById(`idServidor${i}`)
+                                idServidorAtual.innerHTML = `Servidor ${listaId[i].idServidor}`
+                            }
+                        });
+                    } else {
+                        console.error("Nenhum dado encontrado");
+                    }
+                })
+                .catch(function (error) {
+                    console.error(
+                        `Erro na obtenção dos dados p/ ID's dos servidores: ${error.message}`
+                    );
+                });
+
+        }
+
+        setTimeout(()=>listarIdServidores(),25)
+
+    </script>
 </body>
 
 </html>

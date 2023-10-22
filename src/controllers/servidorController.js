@@ -5,7 +5,6 @@ function pegarLocal(req, res) {
 
         if (resultado.length > 0) {
             res.status(200).json(resultado);
-            // return resultado;
         } else {
             res.status(204).send("Nenhum resultado encontrado!")
         }
@@ -16,24 +15,22 @@ function pegarLocal(req, res) {
     });
 }
 
-function pegarEstado(req, res) {
-    servidorModel.pegarEstado().then(function (resultado) {
+function pegarId(req, res) {
+    servidorModel.pegarId().then(function (resultado) {
+
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
-            res.status(204).send("Nenhum resultado encontrado!");
+            res.status(204).send("Nenhum resultado encontrado!")
         }
     }).catch(function (erro) {
         console.log(erro);
-        console.log(
-            "Houve um erro ao buscar os estados: ",
-            erro.sqlMessage
-        );
+        console.log("Houve um erro ao buscar os ID's: ", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
     });
 }
 
 module.exports = {
     pegarLocal,
-    pegarEstado
+    pegarId
 }

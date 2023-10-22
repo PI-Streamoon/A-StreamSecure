@@ -9,7 +9,7 @@ router.get("/pegarLocal", function (req, res) {
     servidorController.pegarLocal(req, res);
 });
 
-// router.get("/pegarEstado", function (req, res) {
-//     servidorController.pegarEstado(req, res);
-// });
+router.get("/pegarId", function (req, res) {
+    servidorController.pegarId(req, res);
+});
 module.exports = router;
