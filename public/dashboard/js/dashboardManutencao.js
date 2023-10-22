@@ -17,6 +17,23 @@ var labelsRamPorcentagem = []
 var dadosRamPorcentagem = []
 var dashboardRamPorcentagem;
 
+var labelsDiscoPorcentagem = []
+var dadosDiscoPorcentagem = []
+var dashboardDiscoPorcentagem; 
+
+var labelsUploadKilobytes = []
+var dadosUploadKilobytes = []
+var dashboardUploadKilobytes;
+
+var labelsDownloadKilobytes = []
+var dadosDownloadKilobytes = []
+var dashboardDownloadKilobytes;
+
+var labelsFrequenciaMegahertz = []
+var dadosFrequenciaMegahertz = []
+var dashboardFrequenciaMegahertz;
+
+
 (function ($) {
     "use strict";
 
@@ -25,6 +42,10 @@ var dashboardRamPorcentagem;
     setInterval(atualizarGraficoGeral, 6000)
     setInterval(atualizarGraficoCpuPorcentagem, 3000)
     setInterval(atualizarGraficoRamPorcentagem, 3000)
+    setInterval(atualizarGraficoDiscoPorcentagem, 3000)
+    setInterval(atualizarGraficoUpload, 3000)
+    setInterval(atualizarGraficoDownload, 3000)
+    setInterval(atualizarGraficoFrequencia, 3000)
 
     function atualizarGraficoGeral() {
         fetch(`/medidas/geral`, { cache: 'no-store' }).then(function (response) {
@@ -126,6 +147,129 @@ var dashboardRamPorcentagem;
             });
     }
 
+    function atualizarGraficoDiscoPorcentagem() {
+        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+    
+                    console.log(resposta)
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        labelsDiscoPorcentagem.push(registro.dtHora);
+                        dadosDiscoPorcentagem.datasets[0].data.push(registro.Disco);
+                    }
+
+                    if (labelsDiscoPorcentagem.length > 10) {
+                        labelsDiscoPorcentagem.shift()
+                        dadosDiscoPorcentagem.datasets[0].data.shift()
+                    } 
+
+                    dashboardDiscoPorcentagem.update()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function atualizarGraficoUpload() {
+        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+    
+                    console.log(resposta)
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        labelsUploadKilobytes.push(registro.dtHora);
+                        dadosUploadKilobytes.datasets[0].data.push(registro.Upload);
+                    }
+
+                    if (labelsUploadKilobytes.length > 10) {
+                        labelsUploadKilobytes.shift()
+                        dadosUploadKilobytes.datasets[0].data.shift()
+                    } 
+
+                    dashboardUploadKilobytes.update()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    } 
+
+    function atualizarGraficoDownload() {
+        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+    
+                    console.log(resposta)
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        labelsDownloadKilobytes.push(registro.dtHora);
+                        dadosDownloadKilobytes.datasets[0].data.push(registro.Download);
+                    }
+
+                    if (labelsDownloadKilobytes.length > 10) {
+                        labelsDownloadKilobytes.shift()
+                        dadosDownloadKilobytes.datasets[0].data.shift()
+                    } 
+
+                    dashboardDownloadKilobytes.update()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function atualizarGraficoFrequencia() {
+        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+    
+                    console.log(resposta)
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        labelsFrequenciaMegahertz.push(registro.dtHora);
+                        dadosFrequenciaMegahertz.datasets[0].data.push(registro.FrequenciaCPU);
+                    }
+
+                    if (labelsFrequenciaMegahertz.length > 10) {
+                        labelsFrequenciaMegahertz.shift()
+                        dadosFrequenciaMegahertz.datasets[0].data.shift()
+                    } 
+
+                    dashboardFrequenciaMegahertz.update()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
     // Dashboard Geral
 
     labelsGeral = []
@@ -217,96 +361,80 @@ var dashboardRamPorcentagem;
     });
 
     // Dashboard Disco
-    new Chart(dashboardDisk, {
+    labelsDiscoPorcentagem = []
+    dadosDiscoPorcentagem = {
+        labels: labelsDiscoPorcentagem,
+        datasets: [{
+            label: "Disco Porcentagem",
+            data: [],
+            backgroundColor: "#000000",
+            borderColor: "#6248AE"
+        }]
+    }
+
+    dashboardDiscoPorcentagem = new Chart(dashboardDisk, {
         type: "line",
-        data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-            datasets: [{
-                    label: "Salse",
-                    data: [15, 30, 55, 45, 70, 65, 85],
-                    backgroundColor: "rgba(163,45,163, .7)",
-                    fill: true
-                },
-                {
-                    label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgba(163,45,163, .5)",
-                    fill: true
-                }
-            ]
-            },
+        data: dadosDiscoPorcentagem,
         options: {
             responsive: true
         }
     });
 
     // Dashboard Upload
-     new Chart(dashboardUpload, {
+    labelsUploadKilobytes = []
+    dadosUploadKilobytes = {
+        labels: labelsUploadKilobytes,
+        datasets: [{
+            label: "Upload KiloBytes",
+            data: [],
+            backgroundColor: "#000000",
+            borderColor: "#6248AE"
+        }]
+    }
+
+    dashboardUploadKilobytes = new Chart(dashboardUpload, {
         type: "line",
-        data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-            datasets: [{
-                    label: "Salse",
-                    data: [15, 30, 55, 45, 70, 65, 85],
-                    backgroundColor: "rgba(163,45,163, .7)",
-                    fill: true
-                },
-                {
-                    label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgba(163,45,163, .5)",
-                    fill: true
-                }
-            ]
-            },
+        data: dadosUploadKilobytes,
         options: {
             responsive: true
         }
     });
 
     // Dashboard Download
-    new Chart(dashboardDownload, {
+    labelsDownloadKilobytes = []
+    dadosDownloadKilobytes = {
+        labels: labelsDownloadKilobytes,
+        datasets: [{
+            label: "Download KiloBytes",
+            data: [],
+            backgroundColor: "#000000",
+            borderColor: "#6248AE"
+        }]
+    }
+
+    dashboardDownloadKilobytes = new Chart(dashboardDownload, {
         type: "line",
-        data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-            datasets: [{
-                    label: "Salse",
-                    data: [15, 30, 55, 45, 70, 65, 85],
-                    backgroundColor: "rgba(163,45,163, .7)",
-                    fill: true
-                },
-                {
-                    label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgba(163,45,163, .5)",
-                    fill: true
-                }
-            ]
-            },
+        data: dadosDownloadKilobytes,
         options: {
             responsive: true
         }
     });
 
     // Dashboard Frequência
-    new Chart(dashboardFreq, {
+    labelsFrequenciaMegahertz = []
+    dadosFrequenciaMegahertz = {
+        labels: labelsFrequenciaMegahertz,
+        datasets: [{
+            label: "Frequência Megahertz",
+            data: [],
+            backgroundColor: "#000000",
+            borderColor: "#6248AE"
+        }]
+    }
+
+    dashboardFrequenciaMegahertz = new Chart(dashboardFreq, {
         type: "line",
-        data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2023"],
-            datasets: [{
-                    label: "Salse",
-                    data: [15, 30, 55, 45, 70, 65, 85],
-                    backgroundColor: "rgba(163,45,163, .7)",
-                    fill: true
-                },
-                {
-                    label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgba(163,45,163, .5)",
-                    fill: true
-                }
-            ]
-            },
+        data: dadosFrequenciaMegahertz,
         options: {
             responsive: true
         }
@@ -352,7 +480,7 @@ function showDownload() {
 
 function showFreq() {
     dashboardFreq.classList.remove(`invisivel`)
-    dashboardTitle.innerHTML = "Servidor - Frequência da CPU (Ghz)"
+    dashboardTitle.innerHTML = "Servidor - Frequência da CPU (Mhz)"
 }
 
 function servidor1() {
@@ -368,10 +496,10 @@ function gerarRelatorio() {
                         
                 var registro = resposta[0];
                 
-                CpuTotal.innerHTML = `${registro.CPU}%`;
+                CpuTotal.innerHTML = `${registro.CPU} %`;
                 Freq.innerHTML = `${registro.FrequenciaCPU} MHz`;
-                Disco.innerHTML = `${registro.Disco}%`;
-                MemPercent.innerHTML = `${registro.Memoria}%`;
+                Disco.innerHTML = `${registro.Disco} %`;
+                MemPercent.innerHTML = `${registro.Memoria} %`;
                 MenTotal.innerHTML = `${registro.MemoriaTotal} GB`;
                 MenUsada.innerHTML = `${registro.MemoriaUsada} GB`;
                 MenLivre.innerHTML = `${Number((registro.MemoriaTotal - registro.MemoriaUsada).toFixed(1))} GB`
