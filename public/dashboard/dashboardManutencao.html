@@ -184,7 +184,7 @@
             <!-- Lista dos Servidores Final -->
 
             <!-- Título -->
-            <h6 class="text-center tituloServidor">Servidor 1</h1>
+            <h6 class="text-center tituloServidor" data-id="nomeServidor">Servidor 1</h1>
 
                 <!-- KPI's componentes Começo -->
                 <div class="container-fluid pt- px-4">
@@ -258,7 +258,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Servidor 1 - Visão Geral (%)</h6>
+                                    <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Visão Geral (%)</h6>
                                 </div>
                                 <canvas id="dashboardGeral"></canvas>
                             </div>
@@ -266,7 +266,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo" id="boxCpu">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0" id="dashboardTitle">Servidor 1 - CPU</h6>
+                                    <h6 class="mb-0" id="dashboardTitle" data-id="nomeServidor">Servidor 1 - CPU</h6>
                                 </div>
                                 <canvas id="dashboardCpu" class=""></canvas>
                                 <canvas id="dashboardMemory" class="invisivel"></canvas>
@@ -279,7 +279,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxMemory">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Servidor 1 - Memória</h6>
+                                    <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Memória</h6>
                                 </div>
                                 <canvas id="dashboardMemory"></canvas>
                             </div>
@@ -287,7 +287,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDisk">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Servidor 1 - Disco</h6>
+                                    <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Disco</h6>
                                 </div>
                                 <canvas id="dashboardDisk"></canvas>
                             </div>
@@ -295,7 +295,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxUpload">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Servidor 1 - Upload</h6>
+                                    <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Upload</h6>
                                 </div>
                                 <canvas id="dashboardUpload"></canvas>
                             </div>
@@ -303,7 +303,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDownload">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Servidor 1 - Download</h6>
+                                    <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Download</h6>
                                 </div>
                                 <canvas id="dashboardDownload"></canvas>
                             </div>
@@ -311,7 +311,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxFreq">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Servidor 1 - Frequência CPU</h6>
+                                    <h6 class="mb-0"  data-id="nomeServidor">Servidor 1 - Frequência CPU</h6>
                                 </div>
                                 <canvas id="dashboardFreq"></canvas>
                             </div>
@@ -405,68 +405,6 @@
     <!-- Listagem dos servidores e suas devidas localidades -->
     <script>
 
-        function listarServidores() {
-
-            fetch(`/servidor/pegarLocal`)
-                .then(function (response) {
-
-                    if (response.ok) {
-                        response.json().then(function (resposta) {
-
-                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                            var listaIdServidores = resposta
-                            for (let i = 0; i <= listaIdServidores.length; i++) {
-                                listagemDosServidores.innerHTML += `
-                                    <tr class="bordaBaixo">
-                                        <th scope="row">${i + 1}</th>
-                                        <td><span id="idServidor${i}"></span></td>
-                                        <td>${listaIdServidores[i].localidade}</td>
-                                        <td id="estadoServidor${i}" class=""></td>
-                                    </tr>`
-                            }
-                        });
-                    } else {
-                        console.error("Nenhum dado encontrado");
-                    }
-                })
-                .catch(function (error) {
-                    console.error(
-                        `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
-                    );
-                });
-                
-        }
-
-        function listarIdServidores() {
-
-            fetch(`/servidor/pegarId`)
-                .then(function (response) {
-
-                    if (response.ok) {
-                        response.json().then(function (resposta) {
-
-                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                            var listaId = resposta
-                            for (let i = 0; i <= listaId.length; i++) {
-                                const idServidorAtual = document.getElementById(`idServidor${i}`)
-                                idServidorAtual.innerHTML = `Servidor ${listaId[i].idServidor}`
-                            }
-                        });
-                    } else {
-                        console.error("Nenhum dado encontrado");
-                    }
-                })
-                .catch(function (error) {
-                    console.error(
-                        `Erro na obtenção dos dados p/ ID's dos servidores: ${error.message}`
-                    );
-                });
-
-        }
-
-        setTimeout(()=>listarIdServidores(),25)
 
     </script>
 </body>

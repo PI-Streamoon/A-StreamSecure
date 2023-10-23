@@ -1,7 +1,9 @@
 var medidaModel = require("../models/medidaModel");
 
 function plotarGrafico(req, res) {
-    medidaModel.plotarGrafico().then(function (resultado) {
+    var idServidor = req.query.idServidor;
+
+    medidaModel.plotarGrafico(idServidor).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -15,9 +17,11 @@ function plotarGrafico(req, res) {
 }
 
 function geral(req, res) {
+    var idServidor = req.query.idServidor;
+
     console.log(`Recuperando medidas em tempo real`);
 
-    medidaModel.geral().then(function (resultado) {
+    medidaModel.geral(idServidor).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
