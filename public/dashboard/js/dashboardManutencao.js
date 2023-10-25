@@ -4,6 +4,12 @@ const dashboardDisk = document.getElementById('dashboardDisk');
 const dashboardUpload = document.getElementById('dashboardUpload');
 const dashboardDownload = document.getElementById('dashboardDownload');
 const dashboardFreq = document.getElementById('dashboardFreq');
+const cpuBanner = document.getElementById('cpuBanner');
+const memoryBanner = document.getElementById('memoryBanner');
+const diskBanner = document.getElementById('diskBanner');
+const uploadBanner = document.getElementById('uploadBanner');
+const downloadBanner = document.getElementById('downloadBanner');
+const freqBanner = document.getElementById('freqBanner');
 
 var idServidorSelecionado;
 
@@ -485,9 +491,6 @@ function showFreq() {
     dashboardTitle.innerHTML = `Servidor ${idServidorSelecionado} - Frequência da CPU (Mhz)`
 }
 
-function servidor1() {
-    window.location.assign(`dashboardManutencaoSem.html`);
-}
 
 function gerarRelatorio() {
     fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`).then(function (response) {
@@ -513,6 +516,7 @@ function gerarRelatorio() {
                 registroMemoria = registro.Memoria
                 registroDownload = registro.Download
                 registroUpload = registro.Upload
+
                 atualizarEstadoDoServidor(registroCPU, registroDisco, registroMemoria)
                
             });
@@ -547,42 +551,107 @@ function carregarPagina(idUsuario) {
     });
 }
 
-function atualizarEstadoDoServidor(registroCPU, registroDisco, registroMemoria){
-
-    var mediaServidor = (registroCPU + registroDisco + registroMemoria) / 3
-    if(mediaServidor <= 55){
-        estadoServidor0.innerHTML = `Normal`;
-        document.getElementById(`estadoServidor0`).classList.remove("alerta")
-        document.getElementById("estadoServidor0").classList.remove("critico")
-        document.getElementById("estadoServidor0").classList.add("normal")
-    } else if(mediaServidor <= 58){
-        estadoServidor0.innerHTML = `Alerta`;
-        document.getElementById("estadoServidor0").classList.remove("normal")
-        document.getElementById("estadoServidor0").classList.remove("critico")
-        document.getElementById("estadoServidor0").classList.add("alerta")
-    } else {
-        estadoServidor0.innerHTML = `Crítico`;
-        document.getElementById("estadoServidor0").classList.remove("alerta")
-        document.getElementById("estadoServidor0").classList.remove("normal")
-        document.getElementById("estadoServidor0").classList.add("critico")
+function atualizarEstadoDoServidor(){
+    const setServerStatus = (element, estado)=>{
+        element.innerHTML = estado
+        element.classList.add(estado)
+    }
+    
+    const delAllStatus = ()=>{
+        cpuBanner.classList.remove("banner-critico", "banner-alerta")
+        memoryBanner.classList.remove("banner-critico", "banner-alerta")
+        diskBanner.classList.remove("banner-critico", "banner-alerta")
+        uploadBanner.classList.remove("banner-critico", "banner-alerta")
+        downloadBanner.classList.remove("banner-critico", "banner-alerta")
     }
 
-    if(mediaServidor*0.90 <= 55){
-        estadoServidor1.innerHTML = `Normal`;
-        document.getElementById(`estadoServidor1`).classList.remove("alerta")
-        document.getElementById("estadoServidor1").classList.remove("critico")
-        document.getElementById("estadoServidor1").classList.add("normal")
-    } else if(mediaServidor*0.90 <= 58){
-        estadoServidor1.innerHTML = `Alerta`;
-        document.getElementById("estadoServidor1").classList.remove("normal")
-        document.getElementById("estadoServidor1").classList.remove("critico")
-        document.getElementById("estadoServidor1").classList.add("alerta")
-    } else {
-        estadoServidor1.innerHTML = `Crítico`;
-        document.getElementById("estadoServidor1").classList.remove("alerta")
-        document.getElementById("estadoServidor1").classList.remove("normal")
-        document.getElementById("estadoServidor1").classList.add("critico")
+    const setBannerStatus = (linha)=>{
+        let estado = 'normal';
+
+        delAllStatus();
+
+        if (linha.CPU >= 90){
+            estado = "critico"
+            cpuBanner.classList.add("banner-critico")
+        }else if(linha.CPU >= 70){
+            estado = estado != "critico" ? "alerta" : estado
+            cpuBanner.classList.add("banner-alerta")
+        }else{
+            cpuBanner.classList.remove("banner-critico")
+            cpuBanner.classList.remove("banner-alerta")
+        }
+
+        if (linha.Memoria >= 90){
+            estado = "critico"
+            memoryBanner.classList.add("banner-critico")
+        }else if(linha.Memoria >= 70){
+            estado = estado != "critico" ? "alerta" : estado
+            memoryBanner.classList.add("banner-alerta")
+        }else{
+            memoryBanner.classList.remove("banner-critico")
+            memoryBanner.classList.remove("banner-alerta")
+        }
+
+        if (linha.Disco >= 90){
+            estado = "critico"
+            diskBanner.classList.add("banner-critico")
+        }else if(linha.Disco >= 70){
+            estado = estado != "critico" ? "alerta" : estado
+            diskBanner.classList.add('banner-alerta')
+        }else{
+            diskBanner.classList.remove("banner-critico")
+            diskBanner.classList.remove("banner-alerta")
+        }
+
+            
+        if (linha.Upload >= 100){
+            estado = "critico" 
+            uploadBanner.classList.add("banner-critico")
+        }else if(linha.Upload >= 80){
+            estado = estado != "critico" ? "alerta" : estado
+            uploadBanner.classList.add("banner-alerta")
+        }else{
+            uploadBanner.classList.remove("banner-critico")
+            uploadBanner.classList.remove("banner-alerta")
+        }
+
+            
+        if (linha.Download >= 400){
+            estado = "critico"
+            downloadBanner.classList.add("banner-critico")
+        }else if(linha.Download >= 350){
+            estado = estado != "critico" ? "alerta" : estado
+            downloadBanner.classList.add("banner-alerta")
+        }else{
+            downloadBanner.classList.remove("banner-critico")
+            downloadBanner.classList.remove("banner-alerta")
+        }
+
+        return estado;
     }
+
+    fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                resposta.reverse();
+
+                resposta.forEach((linha)=>{
+                    // Crítico
+                    let estadoServidor = document.getElementById(`estadoServidor-${linha.idServidor}`);
+
+                    console.warn(linha)
+                    
+                    let estado = setBannerStatus(linha);
+                    setServerStatus(estadoServidor, estado);
+                })
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
 }
 
 function trocarNomesServidor(nomeAtual, nomeFuturo){
@@ -593,12 +662,7 @@ function trocarNomesServidor(nomeAtual, nomeFuturo){
     })
 }
 
-function trocarServidor(element){
-    var firstTd = element.querySelector("td");
-
-
-    let idServidor = firstTd.dataset.idServidor;
-
+function trocarServidor(idServidor){
     trocarNomesServidor(`Servidor ${idServidorSelecionado}`, `Servidor ${idServidor}`);
 
     idServidorSelecionado = idServidor;
@@ -606,8 +670,7 @@ function trocarServidor(element){
 
 
 function listarServidores() {
-
-    fetch(`/servidor/pegarLocal`)
+    fetch(`/servidor/listarServidores`)
         .then(function (response) {
 
             if (response.ok) {
@@ -616,17 +679,22 @@ function listarServidores() {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
                     var listaIdServidores = resposta
+
+                    idServidorSelecionado = listaIdServidores[0].idServidor;
+
+                    trocarNomesServidor("Servidor 1", `Servidor ${idServidorSelecionado}`);
+
                     for (let i = 0; i < listaIdServidores.length; i++) {
+                        let idServidor = listaIdServidores[i].idServidor;
+
                         listagemDosServidores.innerHTML += `
-                            <tr class="bordaBaixo" onclick="trocarServidor(this)">
+                            <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
                                 <th scope="row">${i + 1}</th>
-                                <td id="idServidor${i}"></td>
+                                <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
                                 <td>${listaIdServidores[i].localidade}</td>
-                                <td id="estadoServidor${i}" class=""></td>
+                                <td id="estadoServidor-${idServidor}" class="normal">Normal</td>
                             </tr>`
                     }
-
-                    listarIdServidores();
                 });
             } else {
                 console.error("Nenhum dado encontrado");
@@ -639,37 +707,3 @@ function listarServidores() {
         });
         
 }  
-
-function listarIdServidores() {
-
-    fetch(`/servidor/pegarId`)
-        .then(function (response) {
-
-            if (response.ok) {
-                response.json().then(function (resposta) {
-
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                    var listaId = resposta
-
-                    idServidorSelecionado = listaId[0].idServidor;
-
-                    trocarNomesServidor("Servidor 1", `Servidor ${idServidorSelecionado}`);
-
-                    for (let i = 0; i < listaId.length; i++) {
-                        const idServidorAtual = document.getElementById(`idServidor${i}`)
-                        idServidorAtual.innerHTML = `Servidor ${listaId[i].idServidor}`
-                        idServidorAtual.dataset.idServidor = listaId[i].idServidor;
-                    }
-                });
-            } else {
-                console.error("Nenhum dado encontrado");
-            }
-        })
-        .catch(function (error) {
-            console.error(
-                `Erro na obtenção dos dados p/ ID's dos servidores: ${error.message}`
-            );
-        });
-
-}
