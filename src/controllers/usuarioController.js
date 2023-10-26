@@ -22,8 +22,10 @@ function auth(req, res) {
                     if (resultado.length == 1) {
                         bcrypt.compare(senha, usuario['senha'], function (err, result) {
                             if (result) {
-                                console.log(resultado);
-                                res.json(resultado[0]);
+                                let redirecionamento = usuario['fkAdmin'] == null ? 'dashboard/dashboardAnalista.html' : 'dashboard/dashboardManutencao.html';
+                                usuario['redirecionamento'] = redirecionamento;
+                                console.log(usuario);
+                                res.json(usuario);
                             }
 
                         });

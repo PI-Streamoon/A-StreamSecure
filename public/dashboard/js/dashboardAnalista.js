@@ -1,3 +1,5 @@
+const { Int } = require("mssql");
+
 const dashboardCpu = document.getElementById('dashboardCpu');
 const dashboardMemory = document.getElementById('dashboardMemory');
 const dashboardDisk = document.getElementById('dashboardDisk');
@@ -554,7 +556,6 @@ function carregarPagina(idUsuario) {
 function atualizarEstadoDoServidor(){
     const setServerStatus = (element, estado)=>{
         element.innerHTML = estado
-        element.classList.remove('normal', 'critico', 'alerta');
         element.classList.add(estado)
     }
     
@@ -670,30 +671,42 @@ function trocarServidor(idServidor){
 }
 
 
-function listarServidores() {
-    fetch(`/servidor/listarServidores`)
-        .then(function (response) {
+function listarFalhasServidores() {
+    
 
+    fetch(`/alertas/seteDias/total`)
+        .then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
-
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-                    var listaIdServidores = resposta
+                    for (let i = 0; i < resposta.length; i++) {
+                        let linha = resposta[i];
 
-                    idServidorSelecionado = listaIdServidores[0].idServidor;
+                        let idServidor = linha.idServidor
 
-                    trocarNomesServidor("Servidor 1", `Servidor ${idServidorSelecionado}`);
+                        let totalFalhas = 0;
+                        let totalFalhasCriticos = 0;
+                        
 
-                    for (let i = 0; i < listaIdServidores.length; i++) {
-                        let idServidor = listaIdServidores[i].idServidor;
+                        totalFalhas +=  parseInt(linha.QuantFalhasCPU);
+                        totalFalhas += parseInt(linha.QuantFalhasMemoria);
+                        totalFalhas += parseInt(linha.QuantFalhasDisco);
+                        totalFalhas += parseInt(linha.QuantFalhasUpload);
+                        totalFalhas += parseInt(linha.QuantFalhasDownload);
 
+                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoCPU);
+                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoMemoria);
+                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDisco);
+                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoUpload);
+                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDownload);
+                        
                         listagemDosServidores.innerHTML += `
                             <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
                                 <th scope="row">${i + 1}</th>
                                 <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
-                                <td>${listaIdServidores[i].localidade}</td>
-                                <td id="estadoServidor-${idServidor}" class="normal">Normal</td>
+                                <td class="alerta">${totalFalhas}</td>
+                                <td class="critico">${totalFalhasCriticos}</td>
                             </tr>`
                     }
                 });
@@ -706,5 +719,9 @@ function listarServidores() {
                 `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
             );
         });
+
+    
+        
+    
         
 }  
