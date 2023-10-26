@@ -554,6 +554,7 @@ function carregarPagina(idUsuario) {
 function atualizarEstadoDoServidor(){
     const setServerStatus = (element, estado)=>{
         element.innerHTML = estado
+        element.classList.remove('normal', 'critico', 'alerta');
         element.classList.add(estado)
     }
     
