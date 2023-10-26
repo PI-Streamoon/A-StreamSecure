@@ -108,8 +108,9 @@ toastr.options = {
                             localStorage.ID_USUARIO = json.idUsuario;
                             localStorage.FK_ADMIN = json.fkAdmin;
                             localStorage.FK_EMPRESA = json.fkEmpresa;
+                            let redirecionamento = json.redirecionamento;
         
-                            window.location = 'dashboard/dashboardManutencao.html';
+                            window.location = redirecionamento;
         
                         });
         
