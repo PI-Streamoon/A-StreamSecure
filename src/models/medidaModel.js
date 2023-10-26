@@ -1,20 +1,23 @@
 var database = require("../database/config");
 
-function plotarGrafico(idServidor) {
+function plotarGrafico(idServidor = "0 OR TRUE") {
     const instrucao = `
-    SELECT DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
-       CPU,
-       FrequenciaCPU,
-       Memoria,
-       MemoriaUsada,
-       MemoriaTotal,
-       Disco,
-       Upload,
-       Download
+    SELECT idServidor,
+        DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
+        CPU,
+        FrequenciaCPU,
+        Memoria,
+        MemoriaUsada,
+        MemoriaTotal,
+        Disco,
+        Upload,
+        Download
         FROM streamoon.registrocolunar
         WHERE idServidor = ${idServidor}
         ORDER BY dtHora DESC LIMIT 1;
     `
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
 
     return database.executar(instrucao);
 } 
