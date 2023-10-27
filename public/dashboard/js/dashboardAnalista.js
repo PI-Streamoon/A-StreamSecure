@@ -12,8 +12,9 @@ const downloadBanner = document.getElementById('downloadBanner');
 const freqBanner = document.getElementById('freqBanner');
 const filtroDataInic = document.getElementById('filtroDataInic');
 const filtroDataFinal = document.getElementById('filtroDataFinal');
+const dashTitle = document.getElementById('dashTitle');
 
-var idServidorSelecionado;
+var idServidorSelecionado = 1;
 
 var labelsGeral = [];
 var dadosGeral = [];
@@ -49,13 +50,13 @@ var dashboardFrequenciaMegahertz;
 
     Chart.defaults.color = "#ffffff";
 
-    setInterval(atualizarGraficoGeral, 6000)
-    setInterval(atualizarGraficoCpuPorcentagem, 3000)
-    setInterval(atualizarGraficoRamPorcentagem, 3000)
-    setInterval(atualizarGraficoDiscoPorcentagem, 3000)
-    setInterval(atualizarGraficoUpload, 3000)
-    setInterval(atualizarGraficoDownload, 3000)
-    setInterval(atualizarGraficoFrequencia, 3000)
+    // setInterval(atualizarGraficoGeral, 6000)
+    // setInterval(atualizarGraficoCpuPorcentagem, 3000)
+    // setInterval(atualizarGraficoRamPorcentagem, 3000)
+    // setInterval(atualizarGraficoDiscoPorcentagem, 3000)
+    // setInterval(atualizarGraficoUpload, 3000)
+    // setInterval(atualizarGraficoDownload, 3000)
+    // setInterval(atualizarGraficoFrequencia, 3000)
 
     function atualizarGraficoGeral() {
         fetch(`/medidas/geral?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
@@ -537,7 +538,7 @@ function carregarPagina() {
         const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
         const ano = dataAtual.getFullYear();
         
-        const dataFormatada = `${dia}-${mes}-${ano}`;
+        const dataFormatada = `${ano}-${mes}-${dia}`;
 
         return dataFormatada;
     }
@@ -547,9 +548,17 @@ function carregarPagina() {
     var dataMenosUmaSemana = new Date()
     dataMenosUmaSemana.setTime(dataAtual.getTime() - 604800000)
     
-    filtroDataFinal.value = formatarData(dataAtual);
-    filtroDataInic.value = formatarData(dataMenosUmaSemana);
+    dataMenosUmaSemana = formatarData(dataMenosUmaSemana)
+    dataAtual = formatarData(dataAtual);
+
+    filtroDataInic.value = humanVisible(dataMenosUmaSemana);
+    filtroDataFinal.value = humanVisible(dataAtual);
     
+    listarFalhasServidores(dataMenosUmaSemana, dataAtual);
+}
+
+function humanVisible(data){
+    return data.split('-').reverse().join('-');
 }
 
 function atualizarEstadoDoServidor(){
@@ -655,30 +664,38 @@ function atualizarEstadoDoServidor(){
     });
 }
 
-function trocarNomesServidor(nomeAtual, nomeFuturo){
+function trocarNomesServidor(nomeFuturo){
     var nomesServidor = document.querySelectorAll('[data-id="nomeServidor"]')
 
     nomesServidor.forEach((textosTag) => {
-        textosTag.innerText = textosTag.innerText.replace(nomeAtual, nomeFuturo);
+        textosTag.innerText = `${nomeFuturo}: ${filtroDataInic.value} à ${filtroDataFinal.value}`;
     })
 }
 
 function trocarServidor(idServidor){
-    trocarNomesServidor(`Servidor ${idServidorSelecionado}`, `Servidor ${idServidor}`);
+    trocarNomesServidor(`Servidor ${idServidor}`);
 
     idServidorSelecionado = idServidor;
 }
 
 
-function listarFalhasServidores() {
-    var dataInic = filtroDataInic.value.split('-').reverse().join('-');
-    var dataFinal = filtroDataFinal.value.split('-').reverse().join('-');
+function listarFalhasServidores(dataInic, dataFinal) {
+    dashTitle.innerText = `Lista de Servidores e Falhas Entre ${humanVisible(dataInic)} - ${humanVisible(dataFinal)}`;
+    trocarNomesServidor(`Servidor ${idServidorSelecionado}`);
 
+    listagemDosServidores.innerHTML = "";
     fetch(`/alertas/total?dataInic=${dataInic}&dataFinal=${dataFinal}`)
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    var listaIdServidores = resposta
+
+                    if(idServidorSelecionado == 1){
+                        trocarServidor(listaIdServidores[0].idServidor);
+                    }
+
 
                     for (let i = 0; i < resposta.length; i++) {
                         let linha = resposta[i];
@@ -719,9 +736,20 @@ function listarFalhasServidores() {
                 `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
             );
         });
+       
+}
 
-    
-        
-    
-        
+
+function filtroDataEvent(){
+    let dataInic = filtroDataInic.value.split('-').reverse().join('-');
+    let dataFinal = filtroDataFinal.value.split('-').reverse().join('-');
+
+    timeInic = Date.parse(dataInic);
+    timeFinal = Date.parse(dataFinal);
+
+    if(!isNaN(timeInic) && !isNaN(timeFinal) && timeInic < timeFinal){
+        listarFalhasServidores(dataInic, dataFinal);
+        //Carregar Gráficos
+
+    }
 }

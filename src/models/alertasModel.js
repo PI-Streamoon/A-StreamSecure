@@ -36,7 +36,7 @@ function total(dataInic, dataFinal){
     SUM(nivelFalhaUpload = 2) AS QuantFalhasCriticoUpload,
     SUM(nivelFalhaDownload = 2) AS QuantFalhasCriticoDownload
     FROM falhascolunas
-    WHERE MomentoRegistro >= '2023-10-19 23:59:59' AND MomentoRegistro <= '2023-10-26 23:59:59'
+    WHERE MomentoRegistro >= '${dataInic} 23:59:59' AND MomentoRegistro <= '${dataFinal} 23:59:59'
     GROUP BY idServidor, DATE(MomentoRegistro);
 
     `;

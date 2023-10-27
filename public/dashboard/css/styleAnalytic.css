@@ -39,3 +39,11 @@ body{
 .consultaDia input:focus{
     outline: none;
 }
+
+.search-button {
+    background-color: white;
+    border-radius: 15px;
+    width: 50px;
+
+    color: #7B7B7B;
+}
