@@ -30,9 +30,10 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styleManutencao.css">
+    <link rel="stylesheet" href="css/styleAnalytic.css">
 </head>
 
-<body onload="carregarNome(), listarFalhasServidores()">
+<body onload="carregarNome(), carregarPagina(), listarFalhasServidores()">
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner"
@@ -47,13 +48,13 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3 bordaDireita">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="dashboardManutencao.html" class="navbar-brand mx-4 mb-3">
+                <a href="dashboardAnalista.html" class="navbar-brand mx-4 mb-3">
                     <div class="navbar-brand">
                         <h3 class="text-primary"><img src="img/logo33x33.png" class="me-2"></i>Streamoon</h3>
                     </div>
                 </a>
                 <div class="navbar-nav w-100">
-                    <a href="dashboardManutencao.html" class="nav-item nav-link active"><i
+                    <a href="dashboardAnalista.html" class="nav-item nav-link active"><i
                             class="fa fa-exclamation-circle me-2"></i>Falhas</a>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-history me-2"></i>Histórico</a>
                     <a href="cadastrarManutencao.html" class="nav-item nav-link"><i
@@ -164,7 +165,15 @@
             <!-- Lista dos Servidores Começo -->
             <div class="col-12 bordaBaixo">
                 <div class="bg-secondary rounded h-100 p-4">
-                    <h2 class="mb-4">Lista de Servidores e Falhas Últimos 7 dias</h2>
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h2 class="mb-4">Lista de Servidores e Falhas Últimos 7 dias</h2>
+
+                        <div class="consultaDia">
+                            <input id="filtroDataInic" placeholder="dd-MM-AAAA">
+                            <span>-</span>
+                            <input id="filtroDataFinal" placeholder="dd-MM-AAAA">
+                        </div>
+                    </div>
                     <div class="table-responsive listaServidor bordas">
                         <table class="table">
                             <thead class="bg-meu tituloServidor">
@@ -360,6 +369,12 @@
     <script src="js/dashboardAnalista.js"></script>
     <script src="js/main.js"></script>
 
+    <script src="js/jquery.mask.min.js"></script>
+    <script>
+        $('#filtroDataInic').mask('00-00-0000');
+        $('#filtroDataFinal').mask('00-00-0000');
+    </script>
+
     <!-- Log-out -->
     <script>
         function log_out() {
@@ -371,7 +386,7 @@
             delete localStorage.FK_ADMIN;
             delete localStorage.FK_EMPRESA;
 
-            window.location = "dashboardManutencao.html";
+            window.location = "../login.html";
         }
 
         function carregarNome() {

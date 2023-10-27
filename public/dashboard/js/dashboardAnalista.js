@@ -1,5 +1,3 @@
-const { Int } = require("mssql");
-
 const dashboardCpu = document.getElementById('dashboardCpu');
 const dashboardMemory = document.getElementById('dashboardMemory');
 const dashboardDisk = document.getElementById('dashboardDisk');
@@ -12,6 +10,8 @@ const diskBanner = document.getElementById('diskBanner');
 const uploadBanner = document.getElementById('uploadBanner');
 const downloadBanner = document.getElementById('downloadBanner');
 const freqBanner = document.getElementById('freqBanner');
+const filtroDataInic = document.getElementById('filtroDataInic');
+const filtroDataFinal = document.getElementById('filtroDataFinal');
 
 var idServidorSelecionado;
 
@@ -531,26 +531,25 @@ function gerarRelatorio() {
         });
 }
 
-function carregarPagina(idUsuario) {
-    fetch(`/Perfil/Perfil/${idUsuario}`).then(function (resposta) {
-        if (resposta.ok) {
+function carregarPagina() {
+    const formatarData = (dataAtual)=>{
+        const dia = String(dataAtual.getDate()).padStart(2, '0');
+        const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+        const ano = dataAtual.getFullYear();
+        
+        const dataFormatada = `${dia}-${mes}-${ano}`;
 
-            resposta.json().then(function (resposta) {
-                // console.log("Dados recebidos: ", JSON.stringify(resposta));
-                infos = resposta[0]
-                var nome = document.getElementById("nomeUsuario");
-                nome.innerHTML = infos.nome;
-                var Foto = document.getElementById("usuarioFoto");
-                Foto.src = `assets/img/fotosUsuarios/${infos.foto}`;
-                sessionStorage.FOTO = infos.foto;
-            });
-        } else {
-            throw ('Houve um erro na API!');
-        }
-    }).catch(function (resposta) {
-        console.error(resposta);
+        return dataFormatada;
+    }
 
-    });
+
+    var dataAtual = new Date();
+    var dataMenosUmaSemana = new Date()
+    dataMenosUmaSemana.setTime(dataAtual.getTime() - 604800000)
+    
+    filtroDataFinal.value = formatarData(dataAtual);
+    filtroDataInic.value = formatarData(dataMenosUmaSemana);
+    
 }
 
 function atualizarEstadoDoServidor(){
@@ -672,9 +671,10 @@ function trocarServidor(idServidor){
 
 
 function listarFalhasServidores() {
-    
+    var dataInic = filtroDataInic.value.split('-').reverse().join('-');
+    var dataFinal = filtroDataFinal.value.split('-').reverse().join('-');
 
-    fetch(`/alertas/seteDias/total`)
+    fetch(`/alertas/total?dataInic=${dataInic}&dataFinal=${dataFinal}`)
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
@@ -724,4 +724,4 @@ function listarFalhasServidores() {
         
     
         
-}  
+}

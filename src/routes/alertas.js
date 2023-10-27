@@ -11,8 +11,8 @@ router.get("/seteDias/criticos", function (req, res) {
     falhasController.seteDias(req, res, 2);
 })
 
-router.get("/seteDias/total", function (req, res) {
-    falhasController.seteDiasTotal(req, res);
+router.get("/total", function (req, res) {
+    falhasController.total(req, res);
 })
 
 

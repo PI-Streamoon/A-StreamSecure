@@ -16,11 +16,11 @@ function seteDias(req, res, nivelFalhas){
     });
 }
 
-function seteDiasTotal(req, res){
-    let idServidor = req.query.idServidor;
+function total(req, res){
+    let dataInic = req.query.dataInic;
+    let dataFinal = req.query.dataFinal;
 
-
-    falhasModel.seteDiasTotal(idServidor).then(function (resultado) {
+    falhasModel.total(dataInic, dataFinal).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -35,5 +35,5 @@ function seteDiasTotal(req, res){
 
 module.exports = {
     seteDias,
-    seteDiasTotal
+    total
 }
