@@ -9,31 +9,41 @@
 body{
     background-color: #1e1e1e;
 }
-.kpis{
-    width: 100%;
-    height: 27vh;
-    display: flex;
-    justify-content: space-around;
-}
-.kpis #kpi{
-    width: 18%;
-    height: 100%;
-    background-color: #282828;
-    border-radius: 10px;
-    text-align: center;
-    color: #fff;
-    padding: 2%;
-}
-#user{
-    margin-top: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 3rem;
-    width: 10vw;
-    float: right;
+.consultaDia {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    background-color: white;
+    border-radius: 15px;
+    justify-content: center;
+    width: 300px;
+    padding: 10px;
 }
-#dados{
-    color: #fff;
+
+.consultaDia span{
+    color: #7B7B7B;
+
+    font-weight: 900;
+}
+
+.consultaDia input {
+    background-color: white;
+    border: white;
+    width: 100%;
+    height: 20px;
+    font-weight: 900;
+    color: #7B7B7B;
+    text-align: center;
+    padding: 10px;
+}
+
+.consultaDia input:focus{
+    outline: none;
+}
+
+.search-button {
+    background-color: white;
+    border-radius: 15px;
+    width: 50px;
+
+    color: #7B7B7B;
 }
