@@ -134,17 +134,17 @@
     background-color: #000000;
 }
 
-.normal {
+.Normal {
     color: #00FF01 !important;
     font-weight: bolder !important;
 }
 
-.alerta {
+.Alerta {
     color: #FDDD02;
     font-weight: bolder;
 }
 
-.critico {
+.Critico {
     color: #FC151F !important;
     font-weight: bolder !important;
 }
