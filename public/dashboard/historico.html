@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="css/styleManutencao.css">
 </head>
 
-<body onload="carregarNome(), listarServidores()">
+<body onload="carregarNome(), status()">
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner"
@@ -163,6 +163,11 @@
             <div class="col-12 bordaBaixo">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h6 class="mb-4">Histórico Do servidor</h6>
+                        <select name="" id="" class="filtro">
+                            <option value="">Diário</option>
+                            <option value="">Mensal</option>
+                            <option value="">Anual</option>
+                        </select>
                     <div class="table-responsive listaServidor bordas">
                         <table class="table">
                             <thead class="bg-meu tituloServidor">
@@ -178,58 +183,95 @@
                     </div>
                 </div>
             </div>
-            
-        <!-- Content End -->
+
+            <!-- Content End -->
 
 
-        <!-- Back to Top -->
-        <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
-    </div>
+            <!-- Back to Top -->
+            <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
+        </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/chart/chart.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
-    <!-- <script src="js/dashboardManutencao.js"></script> -->
-    <script src="js/main.js"></script>
+        <!-- Template Javascript -->
+        <!-- <script src="js/dashboardManutencao.js"></script> -->
+        <script src="js/main.js"></script>
 
-    <!-- Log-out -->
-    <script>
-        function log_out() {
+        <!-- Log-out -->
+        <script>
+            function log_out() {
 
-            delete localStorage.CPF_USUARIO;
-            delete localStorage.EMAIL_USUARIO;
-            delete localStorage.NOME_USUARIO;
-            delete localStorage.ID_USUARIO;
-            delete localStorage.FK_ADMIN;
-            delete localStorage.FK_EMPRESA;
+                delete localStorage.CPF_USUARIO;
+                delete localStorage.EMAIL_USUARIO;
+                delete localStorage.NOME_USUARIO;
+                delete localStorage.ID_USUARIO;
+                delete localStorage.FK_ADMIN;
+                delete localStorage.FK_EMPRESA;
 
-            window.location = "dashboardManutencao.html";
-        }
-
-        function carregarNome() {
-            if (localStorage.ID_USUARIO == undefined) {
-                window.location = "../login.html"
+                window.location = "dashboardManutencao.html";
             }
-            var nome = nomeUsuario;
-            nome.innerHTML = localStorage.NOME_USUARIO;
-        }
 
-    </script>
+            function carregarNome() {
+                if (localStorage.ID_USUARIO == undefined) {
+                    window.location = "../login.html"
+                }
+                var nome = nomeUsuario;
+                nome.innerHTML = localStorage.NOME_USUARIO;
+            }
 
-    <!-- Listagem dos servidores e suas devidas localidades -->
-    <script>
+            function status() {
+                fetch(`/servidor/status`)
+                    .then(function (response) {
+
+                        if (response.ok) {
+                            response.json().then(function (resposta) {
+
+                                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                                var listaIdServidores = resposta
+
+                                idServidorSelecionado = listaIdServidores[0].idServidor;
 
 
-    </script>
+                                for (let i = 0; i < listaIdServidores.length; i++) {
+                                    let idServidor = listaIdServidores[i].idServidor;
+
+                                    listagemDosServidores.innerHTML += `
+                            <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
+                                <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
+                                <td>${listaIdServidores[i].MomentoRegistro}</td>
+                                <td id="estadoServidor-${idServidor}" class="${listaIdServidores[i].Status}">${listaIdServidores[i].Status}</td>
+                            </tr>`
+                                }
+                            });
+                        } else {
+                            console.error("Nenhum dado encontrado");
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error(
+                            `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+                        );
+                    });
+
+            }
+
+        </script>
+
+        <!-- Listagem dos servidores e suas devidas localidades -->
+        <script>
+
+
+        </script>
 </body>
 
 </html>

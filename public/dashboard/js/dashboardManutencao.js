@@ -554,7 +554,7 @@ function carregarPagina(idUsuario) {
 function atualizarEstadoDoServidor(){
     const setServerStatus = (element, estado)=>{
         element.innerHTML = estado
-        element.classList.remove('normal', 'critico', 'alerta');
+        element.classList.remove('Normal', 'Critico', 'Alerta');
         element.classList.add(estado)
     }
     
@@ -567,15 +567,15 @@ function atualizarEstadoDoServidor(){
     }
 
     const setBannerStatus = (linha)=>{
-        let estado = 'normal';
+        let estado = 'Normal';
 
         delAllStatus();
 
         if (linha.CPU >= 90){
-            estado = "critico"
+            estado = "Critico"
             cpuBanner.classList.add("banner-critico")
         }else if(linha.CPU >= 70){
-            estado = estado != "critico" ? "alerta" : estado
+            estado = estado != "Critico" ? "Alerta" : estado
             cpuBanner.classList.add("banner-alerta")
         }else{
             cpuBanner.classList.remove("banner-critico")
@@ -583,10 +583,10 @@ function atualizarEstadoDoServidor(){
         }
 
         if (linha.Memoria >= 90){
-            estado = "critico"
+            estado = "Critico"
             memoryBanner.classList.add("banner-critico")
         }else if(linha.Memoria >= 70){
-            estado = estado != "critico" ? "alerta" : estado
+            estado = estado != "Critico" ? "Alerta" : estado
             memoryBanner.classList.add("banner-alerta")
         }else{
             memoryBanner.classList.remove("banner-critico")
@@ -594,10 +594,10 @@ function atualizarEstadoDoServidor(){
         }
 
         if (linha.Disco >= 90){
-            estado = "critico"
+            estado = "Critico"
             diskBanner.classList.add("banner-critico")
         }else if(linha.Disco >= 70){
-            estado = estado != "critico" ? "alerta" : estado
+            estado = estado != "Critico" ? "Alerta" : estado
             diskBanner.classList.add('banner-alerta')
         }else{
             diskBanner.classList.remove("banner-critico")
@@ -606,10 +606,10 @@ function atualizarEstadoDoServidor(){
 
             
         if (linha.Upload >= 100){
-            estado = "critico" 
+            estado = "Critico" 
             uploadBanner.classList.add("banner-critico")
         }else if(linha.Upload >= 80){
-            estado = estado != "critico" ? "alerta" : estado
+            estado = estado != "Critico" ? "Alerta" : estado
             uploadBanner.classList.add("banner-alerta")
         }else{
             uploadBanner.classList.remove("banner-critico")
@@ -618,10 +618,10 @@ function atualizarEstadoDoServidor(){
 
             
         if (linha.Download >= 400){
-            estado = "critico"
+            estado = "Critico"
             downloadBanner.classList.add("banner-critico")
         }else if(linha.Download >= 350){
-            estado = estado != "critico" ? "alerta" : estado
+            estado = estado != "Critico" ? "Alerta" : estado
             downloadBanner.classList.add("banner-alerta")
         }else{
             downloadBanner.classList.remove("banner-critico")
@@ -693,7 +693,7 @@ function listarServidores() {
                                 <th scope="row">${i + 1}</th>
                                 <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
                                 <td>${listaIdServidores[i].localidade}</td>
-                                <td id="estadoServidor-${idServidor}" class="normal">Normal</td>
+                                <td id="estadoServidor-${idServidor}" class="Normal">Normal</td>
                             </tr>`
                     }
                 });

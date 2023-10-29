@@ -9,4 +9,8 @@ router.get("/listarServidores", function (req, res) {
     servidorController.listarServidores(req, res);
 });
 
+router.get("/status", function (req, res) {
+    servidorController.status(req, res);
+});
+
 module.exports = router;
