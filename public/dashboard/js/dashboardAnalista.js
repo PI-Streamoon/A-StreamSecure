@@ -714,8 +714,8 @@ async function listarFalhasServidores(dataInic, dataFinal) {
                                 <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
                                     <th scope="row">${i + 1}</th>
                                     <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
-                                    <td class="alerta">${totalFalhas}</td>
-                                    <td class="critico">${totalFalhasCriticos}</td>
+                                    <td class="Alerta">${totalFalhas}</td>
+                                    <td class="Critico">${totalFalhasCriticos}</td>
                                 </tr>`
 
                             resolve(true)
