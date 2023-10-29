@@ -706,17 +706,19 @@ function listarFalhasServidores(dataInic, dataFinal) {
                         let totalFalhasCriticos = 0;
                         
 
-                        totalFalhas +=  parseInt(linha.QuantFalhasCPU);
-                        totalFalhas += parseInt(linha.QuantFalhasMemoria);
-                        totalFalhas += parseInt(linha.QuantFalhasDisco);
-                        totalFalhas += parseInt(linha.QuantFalhasUpload);
-                        totalFalhas += parseInt(linha.QuantFalhasDownload);
+                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCPU);
+                        totalFalhasCriticos += parseInt(linha.QuantFalhasMemoria);
+                        totalFalhasCriticos += parseInt(linha.QuantFalhasDisco);
+                        totalFalhasCriticos += parseInt(linha.QuantFalhasUpload);
+                        totalFalhasCriticos += parseInt(linha.QuantFalhasDownload);
+                        totalFalhasCriticos += parseInt(linha.QuantFalhasFreqCpu);
 
-                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoCPU);
-                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoMemoria);
-                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDisco);
-                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoUpload);
-                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDownload);
+                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoCPU);
+                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoMemoria);
+                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoDisco);
+                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoUpload);
+                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoDownload);
+                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoFreqCpu);
                         
                         listagemDosServidores.innerHTML += `
                             <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
@@ -725,6 +727,13 @@ function listarFalhasServidores(dataInic, dataFinal) {
                                 <td class="alerta">${totalFalhas}</td>
                                 <td class="critico">${totalFalhasCriticos}</td>
                             </tr>`
+
+                        infoCPU.innerHTML = parseInt(linha.QuantFalhasCriticoCPU)
+                        infoRAM.innerHTML = parseInt(linha.QuantFalhasCriticoMemoria)
+                        infoDisco.innerHTML = parseInt(linha.QuantFalhasCriticoDisco)
+                        infoUpload.innerHTML = parseInt(linha.QuantFalhasCriticoUpload)
+                        infoDownload.innerHTML = parseInt(linha.QuantFalhasCriticoDownload)
+                        infoFrequencia.innerHTML = parseInt(linha.QuantFalhasCriticoFreqCpu)
                     }
                 });
             } else {

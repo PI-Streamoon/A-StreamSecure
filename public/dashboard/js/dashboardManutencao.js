@@ -564,6 +564,7 @@ function atualizarEstadoDoServidor(){
         diskBanner.classList.remove("banner-critico", "banner-alerta")
         uploadBanner.classList.remove("banner-critico", "banner-alerta")
         downloadBanner.classList.remove("banner-critico", "banner-alerta")
+        freqBanner.classList.remove("banner-critico", "banner-alerta")
     }
 
     const setBannerStatus = (linha)=>{
@@ -626,6 +627,17 @@ function atualizarEstadoDoServidor(){
         }else{
             downloadBanner.classList.remove("banner-critico")
             downloadBanner.classList.remove("banner-alerta")
+        }
+
+        if (linha.FrequenciaCPU > 2100){
+            estado = "Critico"
+            freqBanner.classList.add("banner-critico")
+        }else if(linha.FrequenciaCPU > 1400){
+            estado = estado != "Critico" ? "Alerta" : estado
+            freqBanner.classList.add("banner-alerta")
+        }else{
+            freqBanner.classList.remove("banner-critico")
+            freqBanner.classList.remove("banner-alerta")
         }
 
         return estado;
@@ -707,4 +719,33 @@ function listarServidores() {
             );
         });
         
-}  
+}
+
+function carregarPagina() {
+    const formatarData = (dataAtual)=>{
+        const dia = String(dataAtual.getDate()).padStart(2, '0');
+        const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+        const ano = dataAtual.getFullYear();
+        
+        const dataFormatada = `${ano}-${mes}-${dia}`;
+
+        return dataFormatada;
+    }
+
+
+    var dataAtual = new Date();
+    var dataMenosUmaSemana = new Date();
+    var dataMenosUmAno = new Date();
+    dataMenosUmMes.setTime(dataAtual.getTime() - (604800000*3))
+    dataMenosUmAno.setTime(dataAtual.getTime() - (604800000*52))
+
+    dataMenosUmAno  = formatarData(dataMenosUmAno)
+    dataMenosUmaSemana = formatarData(dataMenosUmaSemana)
+    dataAtual = formatarData(dataAtual);
+
+    filtroDataInic.value = humanVisible(dataMenosUmaSemana);
+    filtroDataFinal.value = humanVisible(dataAtual);
+    
+    listarFalhasServidores(dataMenosUmaSemana, dataAtual);
+}
+

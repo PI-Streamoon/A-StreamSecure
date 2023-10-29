@@ -30,11 +30,13 @@ function total(dataInic, dataFinal){
     SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
     SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
     SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload,
+    SUM(nivelFalhaFreqCpu = 1) AS QuantFalhasFreqCpu,
     SUM(nivelFalhaCPU = 2) AS QuantFalhasCriticoCPU,
     SUM(nivelFalhaMemoria = 2) AS QuantFalhasCriticoMemoria,
     SUM(nivelFalhaDisco = 2) AS QuantFalhasCriticoDisco,
     SUM(nivelFalhaUpload = 2) AS QuantFalhasCriticoUpload,
-    SUM(nivelFalhaDownload = 2) AS QuantFalhasCriticoDownload
+    SUM(nivelFalhaDownload = 2) AS QuantFalhasCriticoDownload,
+    SUM(nivelFalhaFreqCpu = 2) AS QuantFalhasCriticoFreqCpu
     FROM falhascolunas
     WHERE MomentoRegistro >= '${dataInic} 23:59:59' AND MomentoRegistro <= '${dataFinal} 23:59:59'
     GROUP BY idServidor, DATE(MomentoRegistro);
