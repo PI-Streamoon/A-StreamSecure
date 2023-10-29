@@ -1,9 +1,11 @@
 var falhasModel = require("../models/alertasModel");
 
-function seteDias(req, res, nivelFalhas){
-    let idServidor = req.query.idServidor;
+function geralPDia(req, res){
+    var dataInic = req.query.dataInic;
+    var dataFinal = req.query.dataFinal;
+    var idServidor = req.query.idServidor;
 
-    falhasModel.seteDias(nivelFalhas, idServidor).then(function (resultado) {
+    falhasModel.geralPDia(dataInic, dataFinal, idServidor).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -34,6 +36,6 @@ function total(req, res){
 }
 
 module.exports = {
-    seteDias,
+    geralPDia,
     total
 }

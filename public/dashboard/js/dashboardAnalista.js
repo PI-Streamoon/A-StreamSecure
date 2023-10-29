@@ -45,415 +45,399 @@ var dadosFrequenciaMegahertz = []
 var dashboardFrequenciaMegahertz;
 
 
-(function ($) {
-    "use strict";
 
-    Chart.defaults.color = "#ffffff";
+Chart.defaults.color = "#ffffff";
 
-    // setInterval(atualizarGraficoGeral, 6000)
-    // setInterval(atualizarGraficoCpuPorcentagem, 3000)
-    // setInterval(atualizarGraficoRamPorcentagem, 3000)
-    // setInterval(atualizarGraficoDiscoPorcentagem, 3000)
-    // setInterval(atualizarGraficoUpload, 3000)
-    // setInterval(atualizarGraficoDownload, 3000)
-    // setInterval(atualizarGraficoFrequencia, 3000)
+// setInterval(atualizarGraficoCpuPorcentagem, 3000)
+// setInterval(atualizarGraficoRamPorcentagem, 3000)
+// setInterval(atualizarGraficoDiscoPorcentagem, 3000)
+// setInterval(atualizarGraficoUpload, 3000)
+// setInterval(atualizarGraficoDownload, 3000)
+// setInterval(atualizarGraficoFrequencia, 3000)
 
-    function atualizarGraficoGeral() {
-        fetch(`/medidas/geral?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
-                        labelsGeral.push(registro.dtHora);
-                        dadosGeral.datasets[0].data.push(registro.CPU);
-                        dadosGeral.datasets[1].data.push(registro.Memoria);
-                        dadosGeral.datasets[2].data.push(registro.Disco);
-                    }
+function atualizarGraficoGeral() {
+    const {dataInic, dataFinal} = dataMachineVisible();
 
-                    if (labelsGeral.length > 5) {
-                        labelsGeral.shift()
-                        dadosGeral.datasets[0].data.shift()
-                        dadosGeral.datasets[1].data.shift()
-                        dadosGeral.datasets[2].data.shift()
-                    }
+    console.warn(`/alertas/geralPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`)
 
-                    dashboardGeral.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    fetch(`/alertas/geralPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsGeral.push(registro.Dia);
+                    dadosGeral.datasets[0].data.push(registro.TotalFalhas);
+                    dadosGeral.datasets[1].data.push(registro.TotalFalhasCriticas);
+                }
+
+                dashboardGeral.update()
             });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function atualizarGraficoCpuPorcentagem() {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                
+                    var registro = resposta[0];
+                    labelsCpuPorcentagem.push(registro.dtHora);
+                    dadosCpuPorcentagem.datasets[0].data.push(registro.CPU);
+                    infoCPU.innerHTML = registro.CPU+"%";
+                    infoRAM.innerHTML = registro.Memoria+"%";
+                    infoDisco.innerHTML = registro.Disco+"%";
+                    infoUpload.innerHTML = registro.Upload+" Kb/s";
+                    infoDownload.innerHTML = registro.Download+" Kb/s";
+                    infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
+                
+                    gerarRelatorio()
+
+                if (labelsCpuPorcentagem.length > 10) {
+                    labelsCpuPorcentagem.shift()
+                    dadosCpuPorcentagem.datasets[0].data.shift()
+                } 
+
+                dashboardCpuPorcentagem.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function atualizarGraficoRamPorcentagem() {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                console.log(resposta)
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsRamPorcentagem.push(registro.dtHora);
+                    dadosRamPorcentagem.datasets[0].data.push(registro.Memoria);
+                }
+
+                if (labelsRamPorcentagem.length > 10) {
+                    labelsRamPorcentagem.shift()
+                    dadosRamPorcentagem.datasets[0].data.shift()
+                } 
+
+                dashboardRamPorcentagem.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function atualizarGraficoDiscoPorcentagem() {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                console.log(resposta)
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsDiscoPorcentagem.push(registro.dtHora);
+                    dadosDiscoPorcentagem.datasets[0].data.push(registro.Disco);
+                }
+
+                if (labelsDiscoPorcentagem.length > 10) {
+                    labelsDiscoPorcentagem.shift()
+                    dadosDiscoPorcentagem.datasets[0].data.shift()
+                } 
+
+                dashboardDiscoPorcentagem.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function atualizarGraficoUpload() {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                console.log(resposta)
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsUploadKilobytes.push(registro.dtHora);
+                    dadosUploadKilobytes.datasets[0].data.push(registro.Upload);
+                }
+
+                if (labelsUploadKilobytes.length > 10) {
+                    labelsUploadKilobytes.shift()
+                    dadosUploadKilobytes.datasets[0].data.shift()
+                } 
+
+                dashboardUploadKilobytes.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+} 
+
+function atualizarGraficoDownload() {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                console.log(resposta)
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsDownloadKilobytes.push(registro.dtHora);
+                    dadosDownloadKilobytes.datasets[0].data.push(registro.Download);
+                }
+
+                if (labelsDownloadKilobytes.length > 10) {
+                    labelsDownloadKilobytes.shift()
+                    dadosDownloadKilobytes.datasets[0].data.shift()
+                } 
+
+                dashboardDownloadKilobytes.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function atualizarGraficoFrequencia() {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                console.log(resposta)
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsFrequenciaMegahertz.push(registro.dtHora);
+                    dadosFrequenciaMegahertz.datasets[0].data.push(registro.FrequenciaCPU);
+                }
+
+                if (labelsFrequenciaMegahertz.length > 10) {
+                    labelsFrequenciaMegahertz.shift()
+                    dadosFrequenciaMegahertz.datasets[0].data.shift()
+                } 
+
+                dashboardFrequenciaMegahertz.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+// Dashboard Geral
+
+labelsGeral = []
+dadosGeral = {
+labels: labelsGeral,
+datasets: [{
+    label: "Falhas",
+    data: [],
+    backgroundColor: "rgba(255, 255, 0, 0.7)"
+},
+{
+    label: "Falhas Críticas",
+    data: [],
+    backgroundColor: "rgba(255, 0, 0, 0.7)"
+}]
+}
+
+dashboardGeral = new Chart(document.getElementById(`dashboardGeral`), {
+    type: "bar",
+    data: dadosGeral,
+    options: {
+        scales: {
+            y: {
+                min: 0,
+                max: 100,
+            }
+        },
+        responsive: true
     }
+});
 
-    function atualizarGraficoCpuPorcentagem() {
-        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    
-                        var registro = resposta[0];
-                        labelsCpuPorcentagem.push(registro.dtHora);
-                        dadosCpuPorcentagem.datasets[0].data.push(registro.CPU);
-                        infoCPU.innerHTML = registro.CPU+"%";
-                        infoRAM.innerHTML = registro.Memoria+"%";
-                        infoDisco.innerHTML = registro.Disco+"%";
-                        infoUpload.innerHTML = registro.Upload+" Kb/s";
-                        infoDownload.innerHTML = registro.Download+" Kb/s";
-                        infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
-                    
-                        gerarRelatorio()
+// Dashboard CPU
 
-                    if (labelsCpuPorcentagem.length > 10) {
-                        labelsCpuPorcentagem.shift()
-                        dadosCpuPorcentagem.datasets[0].data.shift()
-                    } 
-
-                    dashboardCpuPorcentagem.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
-
-    function atualizarGraficoRamPorcentagem() {
-        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    console.log(resposta)
-
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
-                        labelsRamPorcentagem.push(registro.dtHora);
-                        dadosRamPorcentagem.datasets[0].data.push(registro.Memoria);
-                    }
-
-                    if (labelsRamPorcentagem.length > 10) {
-                        labelsRamPorcentagem.shift()
-                        dadosRamPorcentagem.datasets[0].data.shift()
-                    } 
-
-                    dashboardRamPorcentagem.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
-
-    function atualizarGraficoDiscoPorcentagem() {
-        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    console.log(resposta)
-
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
-                        labelsDiscoPorcentagem.push(registro.dtHora);
-                        dadosDiscoPorcentagem.datasets[0].data.push(registro.Disco);
-                    }
-
-                    if (labelsDiscoPorcentagem.length > 10) {
-                        labelsDiscoPorcentagem.shift()
-                        dadosDiscoPorcentagem.datasets[0].data.shift()
-                    } 
-
-                    dashboardDiscoPorcentagem.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
-
-    function atualizarGraficoUpload() {
-        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    console.log(resposta)
-
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
-                        labelsUploadKilobytes.push(registro.dtHora);
-                        dadosUploadKilobytes.datasets[0].data.push(registro.Upload);
-                    }
-
-                    if (labelsUploadKilobytes.length > 10) {
-                        labelsUploadKilobytes.shift()
-                        dadosUploadKilobytes.datasets[0].data.shift()
-                    } 
-
-                    dashboardUploadKilobytes.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    } 
-
-    function atualizarGraficoDownload() {
-        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    console.log(resposta)
-
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
-                        labelsDownloadKilobytes.push(registro.dtHora);
-                        dadosDownloadKilobytes.datasets[0].data.push(registro.Download);
-                    }
-
-                    if (labelsDownloadKilobytes.length > 10) {
-                        labelsDownloadKilobytes.shift()
-                        dadosDownloadKilobytes.datasets[0].data.shift()
-                    } 
-
-                    dashboardDownloadKilobytes.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
-
-    function atualizarGraficoFrequencia() {
-        fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-    
-                    console.log(resposta)
-
-                    for (var i = 0; i < resposta.length; i++) {
-                        var registro = resposta[i];
-                        labelsFrequenciaMegahertz.push(registro.dtHora);
-                        dadosFrequenciaMegahertz.datasets[0].data.push(registro.FrequenciaCPU);
-                    }
-
-                    if (labelsFrequenciaMegahertz.length > 10) {
-                        labelsFrequenciaMegahertz.shift()
-                        dadosFrequenciaMegahertz.datasets[0].data.shift()
-                    } 
-
-                    dashboardFrequenciaMegahertz.update()
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
-    // Dashboard Geral
-
-    labelsGeral = []
-    dadosGeral = {
-    labels: labelsGeral,
+labelsCpuPorcentagem = []
+dadosCpuPorcentagem = {
+    labels: labelsCpuPorcentagem,
     datasets: [{
-        label: "Uso da CPU",
+        label: "CPU Porcentagem",
         data: [],
-        backgroundColor: "#6248AE"
-    },
-    {
-        label: "Uso da Memória",
+        backgroundColor: "#000000",
+        borderColor: "#6248AE"
+    }]
+}
+
+dashboardCpuPorcentagem = new Chart(dashboardCpu, {
+    type: "line",
+    data: dadosCpuPorcentagem,
+    options: {
+        scales: {
+            y: {
+                min: 0,
+                max: 100
+            }
+        },
+        responsive: true
+    }
+});
+
+// Dashboard Memoria
+
+labelsRamPorcentagem = []
+dadosRamPorcentagem = {
+    labels: labelsRamPorcentagem,
+    datasets: [{
+        label: "RAM Porcentagem",
         data: [],
-        backgroundColor: "#0d6efd"
-    },
-    {
-        label: "Uso do Disco",
+        backgroundColor: "#000000",
+        borderColor: "#6248AE"
+    }]
+}
+
+dashboardRamPorcentagem = new Chart(dashboardMemory, {
+    type: "line",
+    data: dadosRamPorcentagem,
+    options: {
+        scales: {
+            y: {
+                min: 0,
+                max: 100
+            }
+        },
+        responsive: true
+    }
+});
+
+// Dashboard Disco
+labelsDiscoPorcentagem = []
+dadosDiscoPorcentagem = {
+    labels: labelsDiscoPorcentagem,
+    datasets: [{
+        label: "Disco Porcentagem",
         data: [],
-        backgroundColor: "#d63384"
-    }],
-    }
+        backgroundColor: "#000000",
+        borderColor: "#6248AE"
+    }]
+}
 
-    dashboardGeral = new Chart(document.getElementById(`dashboardGeral`), {
-        type: "bar",
-        data: dadosGeral,
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 100,
-                }
-            },
-            responsive: true
-        }
-    });
+dashboardDiscoPorcentagem = new Chart(dashboardDisk, {
+    type: "line",
+    data: dadosDiscoPorcentagem,
+    options: {
+        responsive: true
+    }
+});
+
+// Dashboard Upload
+labelsUploadKilobytes = []
+dadosUploadKilobytes = {
+    labels: labelsUploadKilobytes,
+    datasets: [{
+        label: "Upload KiloBytes",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "#6248AE"
+    }]
+}
+
+dashboardUploadKilobytes = new Chart(dashboardUpload, {
+    type: "line",
+    data: dadosUploadKilobytes,
+    options: {
+        responsive: true
+    }
+});
+
+// Dashboard Download
+labelsDownloadKilobytes = []
+dadosDownloadKilobytes = {
+    labels: labelsDownloadKilobytes,
+    datasets: [{
+        label: "Download KiloBytes",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "#6248AE"
+    }]
+}
+
+dashboardDownloadKilobytes = new Chart(dashboardDownload, {
+    type: "line",
+    data: dadosDownloadKilobytes,
+    options: {
+        responsive: true
+    }
+});
+
+// Dashboard Frequência
+labelsFrequenciaMegahertz = []
+dadosFrequenciaMegahertz = {
+    labels: labelsFrequenciaMegahertz,
+    datasets: [{
+        label: "Frequência Megahertz",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "#6248AE"
+    }]
+}
+
+dashboardFrequenciaMegahertz = new Chart(dashboardFreq, {
+    type: "line",
+    data: dadosFrequenciaMegahertz,
+    options: {
+        responsive: true
+    }
+});
     
-    // Dashboard CPU
-
-    labelsCpuPorcentagem = []
-    dadosCpuPorcentagem = {
-        labels: labelsCpuPorcentagem,
-        datasets: [{
-            label: "CPU Porcentagem",
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
-    }
-
-    dashboardCpuPorcentagem = new Chart(dashboardCpu, {
-        type: "line",
-        data: dadosCpuPorcentagem,
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 100
-                }
-            },
-            responsive: true
-        }
-    });
-
-    // Dashboard Memoria
-
-    labelsRamPorcentagem = []
-    dadosRamPorcentagem = {
-        labels: labelsRamPorcentagem,
-        datasets: [{
-            label: "RAM Porcentagem",
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
-    }
-
-    dashboardRamPorcentagem = new Chart(dashboardMemory, {
-        type: "line",
-        data: dadosRamPorcentagem,
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 100
-                }
-            },
-            responsive: true
-        }
-    });
-
-    // Dashboard Disco
-    labelsDiscoPorcentagem = []
-    dadosDiscoPorcentagem = {
-        labels: labelsDiscoPorcentagem,
-        datasets: [{
-            label: "Disco Porcentagem",
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
-    }
-
-    dashboardDiscoPorcentagem = new Chart(dashboardDisk, {
-        type: "line",
-        data: dadosDiscoPorcentagem,
-        options: {
-            responsive: true
-        }
-    });
-
-    // Dashboard Upload
-    labelsUploadKilobytes = []
-    dadosUploadKilobytes = {
-        labels: labelsUploadKilobytes,
-        datasets: [{
-            label: "Upload KiloBytes",
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
-    }
-
-    dashboardUploadKilobytes = new Chart(dashboardUpload, {
-        type: "line",
-        data: dadosUploadKilobytes,
-        options: {
-            responsive: true
-        }
-    });
-
-    // Dashboard Download
-    labelsDownloadKilobytes = []
-    dadosDownloadKilobytes = {
-        labels: labelsDownloadKilobytes,
-        datasets: [{
-            label: "Download KiloBytes",
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
-    }
-
-    dashboardDownloadKilobytes = new Chart(dashboardDownload, {
-        type: "line",
-        data: dadosDownloadKilobytes,
-        options: {
-            responsive: true
-        }
-    });
-
-    // Dashboard Frequência
-    labelsFrequenciaMegahertz = []
-    dadosFrequenciaMegahertz = {
-        labels: labelsFrequenciaMegahertz,
-        datasets: [{
-            label: "Frequência Megahertz",
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
-    }
-
-    dashboardFrequenciaMegahertz = new Chart(dashboardFreq, {
-        type: "line",
-        data: dadosFrequenciaMegahertz,
-        options: {
-            responsive: true
-        }
-    });
-    
-
-    
-})(jQuery);
 
 function change() {
     dashboardCpu.classList.add(`invisivel`)
@@ -551,14 +535,21 @@ function carregarPagina() {
     dataMenosUmaSemana = formatarData(dataMenosUmaSemana)
     dataAtual = formatarData(dataAtual);
 
-    filtroDataInic.value = humanVisible(dataMenosUmaSemana);
-    filtroDataFinal.value = humanVisible(dataAtual);
+    filtroDataInic.value = dataHumanVisible(dataMenosUmaSemana);
+    filtroDataFinal.value = dataHumanVisible(dataAtual);
     
-    listarFalhasServidores(dataMenosUmaSemana, dataAtual);
+    atualizarPagina(dataMenosUmaSemana, dataAtual);
 }
 
-function humanVisible(data){
+function dataHumanVisible(data){
     return data.split('-').reverse().join('-');
+}
+
+function dataMachineVisible(){
+    let dataInic = filtroDataInic.value.split('-').reverse().join('-');
+    let dataFinal = filtroDataFinal.value.split('-').reverse().join('-');
+
+    return {dataInic: dataInic, dataFinal: dataFinal};
 }
 
 function atualizarEstadoDoServidor(){
@@ -679,33 +670,35 @@ function trocarServidor(idServidor){
 }
 
 
-function listarFalhasServidores(dataInic, dataFinal) {
-    dashTitle.innerText = `Lista de Servidores e Falhas Entre ${humanVisible(dataInic)} - ${humanVisible(dataFinal)}`;
+async function listarFalhasServidores(dataInic, dataFinal) {
+    dashTitle.innerText = `Lista de Servidores e Falhas Entre ${dataHumanVisible(dataInic)} - ${dataHumanVisible(dataFinal)}`;
     trocarNomesServidor(`Servidor ${idServidorSelecionado}`);
 
     listagemDosServidores.innerHTML = "";
-    fetch(`/alertas/total?dataInic=${dataInic}&dataFinal=${dataFinal}`)
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    return new Promise((resolve, reject)=>{
+        fetch(`/alertas/total?dataInic=${dataInic}&dataFinal=${dataFinal}`)
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-                    var listaIdServidores = resposta
+                        var listaIdServidores = resposta
 
-                    if(idServidorSelecionado == 1){
-                        trocarServidor(listaIdServidores[0].idServidor);
-                    }
+                        if(idServidorSelecionado == 1){
+                            trocarServidor(listaIdServidores[0].idServidor);
+                        }
 
 
-                    for (let i = 0; i < resposta.length; i++) {
-                        let linha = resposta[i];
+                        for (let i = 0; i < resposta.length; i++) {
+                            let linha = resposta[i];
 
-                        let idServidor = linha.idServidor
+                            let idServidor = linha.idServidor
 
-                        let totalFalhas = 0;
-                        let totalFalhasCriticos = 0;
-                        
+                            let totalFalhas = 0;
+                            let totalFalhasCriticos = 0;
+                            
 
+<<<<<<< HEAD
                         totalFalhasCriticos +=  parseInt(linha.QuantFalhasCPU);
                         totalFalhasCriticos += parseInt(linha.QuantFalhasMemoria);
                         totalFalhasCriticos += parseInt(linha.QuantFalhasDisco);
@@ -745,20 +738,61 @@ function listarFalhasServidores(dataInic, dataFinal) {
                 `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
             );
         });
+=======
+                            totalFalhas +=  parseInt(linha.QuantFalhasCPU);
+                            totalFalhas += parseInt(linha.QuantFalhasMemoria);
+                            totalFalhas += parseInt(linha.QuantFalhasDisco);
+                            totalFalhas += parseInt(linha.QuantFalhasUpload);
+                            totalFalhas += parseInt(linha.QuantFalhasDownload);
+
+                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoCPU);
+                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoMemoria);
+                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDisco);
+                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoUpload);
+                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDownload);
+                            
+                            listagemDosServidores.innerHTML += `
+                                <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
+                                    <th scope="row">${i + 1}</th>
+                                    <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
+                                    <td class="alerta">${totalFalhas}</td>
+                                    <td class="critico">${totalFalhasCriticos}</td>
+                                </tr>`
+
+                            resolve(true)
+                        }
+                    });
+                } else {
+                    console.error("Nenhum dado encontrado");
+                    reject(false)
+                }
+            })
+            .catch(function (error) {
+                console.error(
+                    `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+                );
+                reject(false)
+            });
+    });
+>>>>>>> 16143712dcf8a168ad1c012334413eb1ac3fd416
        
 }
 
 
 function filtroDataEvent(){
-    let dataInic = filtroDataInic.value.split('-').reverse().join('-');
-    let dataFinal = filtroDataFinal.value.split('-').reverse().join('-');
+    const {dataInic, dataFinal} = dataMachineVisible();
 
     timeInic = Date.parse(dataInic);
     timeFinal = Date.parse(dataFinal);
 
     if(!isNaN(timeInic) && !isNaN(timeFinal) && timeInic < timeFinal){
-        listarFalhasServidores(dataInic, dataFinal);
-        //Carregar Gráficos
+        atualizarPagina(dataInic, dataFinal);
+    }
+}
 
+async function atualizarPagina(dataInic, dataFinal){
+    let onSucess = await listarFalhasServidores(dataInic, dataFinal);
+    if(onSucess){
+        atualizarGraficoGeral();
     }
 }
