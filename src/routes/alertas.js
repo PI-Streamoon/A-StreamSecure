@@ -7,6 +7,10 @@ router.get("/geralPDia", function (req, res) {
     falhasController.geralPDia(req, res);
 })
 
+router.get("/totalPDia", function (req, res) {
+    falhasController.totalPDia(req, res);
+})
+
 router.get("/total", function (req, res) {
     falhasController.total(req, res);
 })
