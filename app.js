@@ -17,6 +17,7 @@ var medidasRouter = require("./src/routes/medidas");
 var empresasRouter = require("./src/routes/empresas");
 var servidorRouter = require("./src/routes/servidor");
 var alertasRouter = require("./src/routes/alertas");
+var chamadosRouter = require("./src/routes/chamados");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
