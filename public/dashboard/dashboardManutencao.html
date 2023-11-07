@@ -162,6 +162,7 @@
             <!-- Lista dos Servidores Começo -->
             <div class="col-12 bordaBaixo">
                 <div class="bg-secondary rounded h-100 p-4">
+                    <div class="col-sm-7"><h2 id="time"></h2></div>
                     <h6 class="mb-4">Lista de Servidores</h6>
                     <div class="table-responsive listaServidor bordas">
                         <table class="table">
@@ -309,7 +310,7 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxFreq">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0"  data-id="nomeServidor">Servidor 1 - Frequência CPU</h6>
+                                    <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Frequência CPU</h6>
                                 </div>
                                 <canvas id="dashboardFreq"></canvas>
                             </div>
@@ -400,10 +401,22 @@
 
     </script>
 
-    <!-- Listagem dos servidores e suas devidas localidades -->
+    <!-- Data e hora -->
     <script>
+        var timeDisplay = document.getElementById("time");
 
+        function refreshTime() {
+            var data = new Date();
+            var dia = data.getDate()
+            var mes = data.getMonth() + 1
+            var ano = data.getFullYear()
+            var hora = data.getHours()
+            var min = data.getMinutes()
+            timeDisplay.innerHTML = dia + "/" + mes + "/" + ano + " - " + hora + ":" + min;
+        }
 
+        
+        setInterval(refreshTime, 1000);
     </script>
 </body>
 

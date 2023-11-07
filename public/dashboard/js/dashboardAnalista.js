@@ -624,6 +624,7 @@ async function listarFalhasServidores(dataInic, dataFinal) {
                 reject(false)
             });
     });
+>>>>>>> 16143712dcf8a168ad1c012334413eb1ac3fd416
        
 }
 

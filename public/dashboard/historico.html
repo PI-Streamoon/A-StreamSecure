@@ -163,7 +163,7 @@
             <div class="col-12 bordaBaixo">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h6 class="mb-4">Histórico Do servidor</h6>
-                        <select name="" id="" class="filtro">
+                        <select name="" id="" class="filtro" onchange="status()">
                             <option value="">Diário</option>
                             <option value="">Mensal</option>
                             <option value="">Anual</option>
@@ -234,6 +234,7 @@
 
                         if (response.ok) {
                             response.json().then(function (resposta) {
+                                listagemDosServidores.innerHTML = ""
 
                                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
