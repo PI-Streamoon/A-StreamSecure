@@ -18,7 +18,7 @@ function status() {
             DATE_FORMAT(MomentoRegistro, '%d/%m/%Y %H:%i:%s') MomentoRegistro,
             Status
         FROM situacaoServidor 
-        GROUP BY idServidor, MomentoRegistro;
+        GROUP BY idServidor, MomentoRegistro LIMIT 100;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
