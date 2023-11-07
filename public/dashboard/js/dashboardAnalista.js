@@ -48,17 +48,8 @@ var dashboardFrequenciaMegahertz;
 
 Chart.defaults.color = "#ffffff";
 
-// setInterval(atualizarGraficoCpuPorcentagem, 3000)
-// setInterval(atualizarGraficoRamPorcentagem, 3000)
-// setInterval(atualizarGraficoDiscoPorcentagem, 3000)
-// setInterval(atualizarGraficoUpload, 3000)
-// setInterval(atualizarGraficoDownload, 3000)
-// setInterval(atualizarGraficoFrequencia, 3000)
-
 function atualizarGraficoGeral() {
     const {dataInic, dataFinal} = dataMachineVisible();
-
-    console.warn(`/alertas/geralPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`)
 
     fetch(`/alertas/geralPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
@@ -83,186 +74,57 @@ function atualizarGraficoGeral() {
         });
 }
 
-function atualizarGraficoCpuPorcentagem() {
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+function atualizarGraficosFalhas() {
+    const {dataInic, dataFinal} = dataMachineVisible();
+
+    fetch(`/alertas/totalPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
+                
+                resposta.forEach((registro)=>{
+                    labelsCpuPorcentagem.push(registro.Dia);
+                    labelsRamPorcentagem.push(registro.Dia);
+                    labelsDiscoPorcentagem.push(registro.Dia);
+                    labelsUploadKilobytes.push(registro.Dia);
+                    labelsDownloadKilobytes.push(registro.Dia);
+                    labelsFrequenciaMegahertz.push(registro.Dia);
+
+                    dadosCpuPorcentagem.datasets[0].data.push(registro.QuantFalhasCPU);
+                    dadosCpuPorcentagem.datasets[1].data.push(registro.QuantFalhasCriticoCPU);
+
+                    dadosRamPorcentagem.datasets[0].data.push(registro.QuantFalhasMemoria);
+                    dadosRamPorcentagem.datasets[1].data.push(registro.QuantFalhasCriticoMemoria);
+
+                    dadosDiscoPorcentagem.datasets[0].data.push(registro.QuantFalhasDisco);
+                    dadosDiscoPorcentagem.datasets[1].data.push(registro.QuantFalhasCriticoDisco);
+
+                    dadosUploadKilobytes.datasets[0].data.push(registro.QuantFalhasUpload);
+                    dadosUploadKilobytes.datasets[1].data.push(registro.QuantFalhasCriticoUpload);
+
+                    dadosDownloadKilobytes.datasets[0].data.push(registro.QuantFalhasDownload);
+                    dadosDownloadKilobytes.datasets[1].data.push(registro.QuantFalhasCriticoDownload);
+
+                    dadosFrequenciaMegahertz.datasets[0].data.push(registro.QuantFalhasFreq);
+                    dadosFrequenciaMegahertz.datasets[1].data.push(registro.QuantFalhasCriticoFreq);
+                })
+
+                    // infoCPU.innerHTML = registro.CPU+"%";
+                    // infoRAM.innerHTML = registro.Memoria+"%";
+                    // infoDisco.innerHTML = registro.Disco+"%";
+                    // infoUpload.innerHTML = registro.Upload+" Kb/s";
+                    // infoDownload.innerHTML = registro.Download+" Kb/s";
+                    // infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
+                
+                    // gerarRelatorio()
 
                 
-                    var registro = resposta[0];
-                    labelsCpuPorcentagem.push(registro.dtHora);
-                    dadosCpuPorcentagem.datasets[0].data.push(registro.CPU);
-                    infoCPU.innerHTML = registro.CPU+"%";
-                    infoRAM.innerHTML = registro.Memoria+"%";
-                    infoDisco.innerHTML = registro.Disco+"%";
-                    infoUpload.innerHTML = registro.Upload+" Kb/s";
-                    infoDownload.innerHTML = registro.Download+" Kb/s";
-                    infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
-                
-                    gerarRelatorio()
-
-                if (labelsCpuPorcentagem.length > 10) {
-                    labelsCpuPorcentagem.shift()
-                    dadosCpuPorcentagem.datasets[0].data.shift()
-                } 
 
                 dashboardCpuPorcentagem.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function atualizarGraficoRamPorcentagem() {
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
-
-                console.log(resposta)
-
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsRamPorcentagem.push(registro.dtHora);
-                    dadosRamPorcentagem.datasets[0].data.push(registro.Memoria);
-                }
-
-                if (labelsRamPorcentagem.length > 10) {
-                    labelsRamPorcentagem.shift()
-                    dadosRamPorcentagem.datasets[0].data.shift()
-                } 
-
                 dashboardRamPorcentagem.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function atualizarGraficoDiscoPorcentagem() {
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
-
-                console.log(resposta)
-
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsDiscoPorcentagem.push(registro.dtHora);
-                    dadosDiscoPorcentagem.datasets[0].data.push(registro.Disco);
-                }
-
-                if (labelsDiscoPorcentagem.length > 10) {
-                    labelsDiscoPorcentagem.shift()
-                    dadosDiscoPorcentagem.datasets[0].data.shift()
-                } 
-
                 dashboardDiscoPorcentagem.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function atualizarGraficoUpload() {
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
-
-                console.log(resposta)
-
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsUploadKilobytes.push(registro.dtHora);
-                    dadosUploadKilobytes.datasets[0].data.push(registro.Upload);
-                }
-
-                if (labelsUploadKilobytes.length > 10) {
-                    labelsUploadKilobytes.shift()
-                    dadosUploadKilobytes.datasets[0].data.shift()
-                } 
-
                 dashboardUploadKilobytes.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-} 
-
-function atualizarGraficoDownload() {
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
-
-                console.log(resposta)
-
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsDownloadKilobytes.push(registro.dtHora);
-                    dadosDownloadKilobytes.datasets[0].data.push(registro.Download);
-                }
-
-                if (labelsDownloadKilobytes.length > 10) {
-                    labelsDownloadKilobytes.shift()
-                    dadosDownloadKilobytes.datasets[0].data.shift()
-                } 
-
                 dashboardDownloadKilobytes.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function atualizarGraficoFrequencia() {
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
-
-                console.log(resposta)
-
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsFrequenciaMegahertz.push(registro.dtHora);
-                    dadosFrequenciaMegahertz.datasets[0].data.push(registro.FrequenciaCPU);
-                }
-
-                if (labelsFrequenciaMegahertz.length > 10) {
-                    labelsFrequenciaMegahertz.shift()
-                    dadosFrequenciaMegahertz.datasets[0].data.shift()
-                } 
-
                 dashboardFrequenciaMegahertz.update()
             });
         } else {
@@ -273,6 +135,7 @@ function atualizarGraficoFrequencia() {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         });
 }
+
 // Dashboard Geral
 
 labelsGeral = []
@@ -281,12 +144,16 @@ labels: labelsGeral,
 datasets: [{
     label: "Falhas",
     data: [],
-    backgroundColor: "rgba(255, 255, 0, 0.7)"
+    borderColor: "rgb(255, 255, 0)",
+    borderWidth: 2,
+    backgroundColor: "rgba(255, 255, 0, 0.3)"
 },
 {
     label: "Falhas Críticas",
     data: [],
-    backgroundColor: "rgba(255, 0, 0, 0.7)"
+    borderColor: "rgb(255, 0, 0)",
+    borderWidth: 2,
+    backgroundColor: "rgba(255, 0, 0, 0.3)"
 }]
 }
 
@@ -296,8 +163,8 @@ dashboardGeral = new Chart(document.getElementById(`dashboardGeral`), {
     options: {
         scales: {
             y: {
-                min: 0,
-                max: 100,
+                beginAtZero: true,
+                stepSize: 1,
             }
         },
         responsive: true
@@ -310,10 +177,16 @@ labelsCpuPorcentagem = []
 dadosCpuPorcentagem = {
     labels: labelsCpuPorcentagem,
     datasets: [{
-        label: "CPU Porcentagem",
+        label: "CPU Falhas",
         data: [],
         backgroundColor: "#000000",
-        borderColor: "#6248AE"
+        borderColor: "rgb(255, 255, 0)"
+    },
+    {
+        label: "CPU Falhas Critícas",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "rgb(255, 0, 0)"
     }]
 }
 
@@ -323,8 +196,8 @@ dashboardCpuPorcentagem = new Chart(dashboardCpu, {
     options: {
         scales: {
             y: {
-                min: 0,
-                max: 100
+                beginAtZero: true,
+                stepSize: 1,
             }
         },
         responsive: true
@@ -337,10 +210,16 @@ labelsRamPorcentagem = []
 dadosRamPorcentagem = {
     labels: labelsRamPorcentagem,
     datasets: [{
-        label: "RAM Porcentagem",
+        label: "Ram Falhas",
         data: [],
         backgroundColor: "#000000",
-        borderColor: "#6248AE"
+        borderColor: "rgb(255, 255, 0)"
+    },
+    {
+        label: "Ram Falhas Critícas",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "rgb(255, 0, 0)"
     }]
 }
 
@@ -350,8 +229,8 @@ dashboardRamPorcentagem = new Chart(dashboardMemory, {
     options: {
         scales: {
             y: {
-                min: 0,
-                max: 100
+                beginAtZero: true,
+                stepSize: 1,
             }
         },
         responsive: true
@@ -363,10 +242,16 @@ labelsDiscoPorcentagem = []
 dadosDiscoPorcentagem = {
     labels: labelsDiscoPorcentagem,
     datasets: [{
-        label: "Disco Porcentagem",
+        label: "Disco Alertas",
         data: [],
         backgroundColor: "#000000",
-        borderColor: "#6248AE"
+        borderColor: "rgb(255, 255, 0)"
+    },
+    {
+        label: "Disco Alertas Críticos",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "rgb(255, 0, 0)"
     }]
 }
 
@@ -383,10 +268,16 @@ labelsUploadKilobytes = []
 dadosUploadKilobytes = {
     labels: labelsUploadKilobytes,
     datasets: [{
-        label: "Upload KiloBytes",
+        label: "Alertas de Taxa de Upload",
         data: [],
         backgroundColor: "#000000",
-        borderColor: "#6248AE"
+        borderColor: "rgb(255, 255, 0)"
+    },
+    {
+        label: "Alertas Críticos de Taxa de Upload",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "rgb(255, 0, 0)"
     }]
 }
 
@@ -403,10 +294,16 @@ labelsDownloadKilobytes = []
 dadosDownloadKilobytes = {
     labels: labelsDownloadKilobytes,
     datasets: [{
-        label: "Download KiloBytes",
+        label: "Alertas de Taxa de Downloads",
         data: [],
         backgroundColor: "#000000",
-        borderColor: "#6248AE"
+        borderColor: "rgb(255, 255, 0)"
+    },
+    {
+        label: "Alertas Críticos de Taxa de Downloads",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "rgb(255, 0, 0)"
     }]
 }
 
@@ -423,10 +320,16 @@ labelsFrequenciaMegahertz = []
 dadosFrequenciaMegahertz = {
     labels: labelsFrequenciaMegahertz,
     datasets: [{
-        label: "Frequência Megahertz",
+        label: "Alertas de Frequência",
         data: [],
         backgroundColor: "#000000",
-        borderColor: "#6248AE"
+        borderColor: "rgb(255, 255, 0)"
+    },
+    {
+        label: "Alertas Críticos de Frequência",
+        data: [],
+        backgroundColor: "#000000",
+        borderColor: "rgb(255, 0, 0)"
     }]
 }
 
@@ -688,75 +591,22 @@ async function listarFalhasServidores(dataInic, dataFinal) {
                             trocarServidor(listaIdServidores[0].idServidor);
                         }
 
-
-                        for (let i = 0; i < resposta.length; i++) {
-                            let linha = resposta[i];
-
-                            let idServidor = linha.idServidor
-
-                            let totalFalhas = 0;
-                            let totalFalhasCriticos = 0;
-                            
-
-<<<<<<< HEAD
-                        totalFalhasCriticos +=  parseInt(linha.QuantFalhasCPU);
-                        totalFalhasCriticos += parseInt(linha.QuantFalhasMemoria);
-                        totalFalhasCriticos += parseInt(linha.QuantFalhasDisco);
-                        totalFalhasCriticos += parseInt(linha.QuantFalhasUpload);
-                        totalFalhasCriticos += parseInt(linha.QuantFalhasDownload);
-                        totalFalhasCriticos += parseInt(linha.QuantFalhasFreqCpu);
-
-                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoCPU);
-                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoMemoria);
-                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoDisco);
-                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoUpload);
-                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoDownload);
-                        totalFalhas +=  parseInt(linha.QuantFalhasCriticoFreqCpu);
                         
-                        listagemDosServidores.innerHTML += `
-                            <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
-                                <th scope="row">${i + 1}</th>
-                                <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
-                                <td class="alerta">${totalFalhas}</td>
-                                <td class="critico">${totalFalhasCriticos}</td>
-                            </tr>`
+                        for (let i = 0; i < resposta.length; i++) {
+                            let linha = resposta[0];
+                            
+                            let idServidor = linha.idServidor
+                            
+                            let totalFalhas = linha.TotalFalhas;
+                            let totalFalhasCriticos = linha.TotalFalhasCriticas;
 
-                        infoCPU.innerHTML = parseInt(linha.QuantFalhasCriticoCPU)
-                        infoRAM.innerHTML = parseInt(linha.QuantFalhasCriticoMemoria)
-                        infoDisco.innerHTML = parseInt(linha.QuantFalhasCriticoDisco)
-                        infoUpload.innerHTML = parseInt(linha.QuantFalhasCriticoUpload)
-                        infoDownload.innerHTML = parseInt(linha.QuantFalhasCriticoDownload)
-                        infoFrequencia.innerHTML = parseInt(linha.QuantFalhasCriticoFreqCpu)
-                    }
-                });
-            } else {
-                console.error("Nenhum dado encontrado");
-            }
-        })
-        .catch(function (error) {
-            console.error(
-                `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
-            );
-        });
-=======
-                            totalFalhas +=  parseInt(linha.QuantFalhasCPU);
-                            totalFalhas += parseInt(linha.QuantFalhasMemoria);
-                            totalFalhas += parseInt(linha.QuantFalhasDisco);
-                            totalFalhas += parseInt(linha.QuantFalhasUpload);
-                            totalFalhas += parseInt(linha.QuantFalhasDownload);
-
-                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoCPU);
-                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoMemoria);
-                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDisco);
-                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoUpload);
-                            totalFalhasCriticos +=  parseInt(linha.QuantFalhasCriticoDownload);
                             
                             listagemDosServidores.innerHTML += `
                                 <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
                                     <th scope="row">${i + 1}</th>
                                     <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
-                                    <td class="alerta">${totalFalhas}</td>
-                                    <td class="critico">${totalFalhasCriticos}</td>
+                                    <td class="Alerta">${totalFalhas}</td>
+                                    <td class="Critico">${totalFalhasCriticos}</td>
                                 </tr>`
 
                             resolve(true)
@@ -774,7 +624,6 @@ async function listarFalhasServidores(dataInic, dataFinal) {
                 reject(false)
             });
     });
->>>>>>> 16143712dcf8a168ad1c012334413eb1ac3fd416
        
 }
 
@@ -794,5 +643,6 @@ async function atualizarPagina(dataInic, dataFinal){
     let onSucess = await listarFalhasServidores(dataInic, dataFinal);
     if(onSucess){
         atualizarGraficoGeral();
+        atualizarGraficosFalhas();
     }
 }
