@@ -40,9 +40,3 @@ const linkServer = `http://${ipAddress}:${PORTA}`;
 app.listen(PORTA, function () {
     console.log(`Servidor Rodando Em:  ${linkServer}`);
 });
-
-const curl = spawn("curl", [`qrenco.de/${linkServer}`]);
-
-curl.stdout.on("data", data => {
-    console.log(`qrcode:\n${data}`);
-});
