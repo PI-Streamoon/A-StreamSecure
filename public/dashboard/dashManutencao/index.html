@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CelestialUI Admin</title>
+    <title>Dashboard Manutencao</title>
     <!-- base:css -->
     <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
@@ -14,24 +14,15 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="shortcut icon" href="../../img/logo.ico" />
   </head>
   <body>
-    <div class="row" id="proBanner">
-      <div class="col-12">
-        <span class="d-flex align-items-center purchase-popup">
-          <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
-          <a href="https://www.bootstrapdash.com/product/celestial-admin-template/?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class="btn download-button purchase-button ml-auto">Upgrade To Pro</a>
-          <i class="typcn typcn-delete-outline" id="bannerClose"></i>
-        </span>
-      </div>
-    </div>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="../../img/logo/nome-e-logo 1.png" alt="logo"/></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../img/logo.png" alt="logo"/></a>
           <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
             <span class="typcn typcn-th-menu"></span>
           </button>
@@ -39,27 +30,17 @@
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Calendar
-              </a>
-            </li>
-            <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link active" href="#">
-                Statistic
+                Real Time
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link" href="#">
-                Employee
+                Selecionar Servidor
               </a>
             </li>
           </ul>
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item d-none d-lg-flex  mr-2">
-              <a class="nav-link" href="#">
-                Help
-              </a>
-            </li>
             <li class="nav-item dropdown d-flex">
               <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
                 <i class="typcn typcn-message-typing"></i>
@@ -156,14 +137,10 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
-                <span class="nav-profile-name">Evan Morales</span>
+                <span class="nav-profile-name"></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-                </a>
-                <a class="dropdown-item">
+                <a href="logout.html" class="dropdown-item">
                 <i class="typcn typcn-power text-primary"></i>
                 Logout
                 </a>
@@ -178,47 +155,17 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
-        <div class="theme-setting-wrapper">
-          <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
-          <div id="theme-settings" class="settings-panel">
-            <i class="settings-close typcn typcn-delete-outline"></i>
-            <p class="settings-heading">SIDEBAR SKINS</p>
-            <div class="sidebar-bg-options" id="sidebar-light-theme">
-              <div class="img-ss rounded-circle bg-light border mr-3"></div>
-              Light
-            </div>
-            <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
-              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
-              Dark
-            </div>
-            <p class="settings-heading mt-2">HEADER SKINS</p>
-            <div class="color-tiles mx-0 px-4">
-              <div class="tiles success"></div>
-              <div class="tiles warning"></div>
-              <div class="tiles danger"></div>
-              <div class="tiles primary"></div>
-              <div class="tiles info"></div>
-              <div class="tiles dark"></div>
-              <div class="tiles default border"></div>
-            </div>
-          </div>
-        </div>
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
             <div class="d-flex sidebar-profile">
-              <div class="sidebar-profile-image">
-                <img src="images/faces/face29.png" alt="image">
-                <span class="sidebar-status-indicator"></span>
-              </div>
               <div class="sidebar-profile-name">
                 <p class="sidebar-name">
-                  Kenneth Osborne
                 </p>
                 <p class="sidebar-designation">
-                  Welcome
+                  Bem Vindo (a)
                 </p>
               </div>
             </div>
@@ -346,23 +293,45 @@
       </nav>
         <!-- partial -->
         <div class="main-panel">
+          
           <div class="content-wrapper">
             <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Kenneth Osborne</h3>
-                <p>Your last login: 21h ago from newzealand.</p>
+              <div class="col-xl-12 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Lista de Servidores</h4>
+                    </div>
+                    <div class="row">
+                      <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID Servidor</th>
+                                <th scope="col">Local</th>
+                                <th scope="col">Estado do Servidor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listagemServidores">
+
+                        </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-6" id="infosServidor">
+                <h3 class="mb-0 font-weight-bold" id="nomeServidor"></h3>
+                <p>Atualizado em: <span id="tempoUltimoMonitoramento">0s atrás</span> de <span id="localidadeServidor"></span></p>
               </div>
               <div class="col-sm-6">
                 <div class="d-flex align-items-center justify-content-md-end">
                   <div class="mb-3 mb-xl-0 pr-1">
                       <div class="dropdown">
-                        <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                          <h6 class="dropdown-header">Last 14 days</h6>
-                          <a class="dropdown-item" href="#">Last 21 days</a>
-                          <a class="dropdown-item" href="#">Last 28 days</a>
+                        <div class="btn bg-white btn-sm btn-icon-text border mr-2">
+                            <i class="typcn typcn-time mr-2"></i>Tempo Real
                         </div>
                       </div>
                   </div>
@@ -370,7 +339,7 @@
                     <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
                   </div>
                   <div class="pr-1 mb-3 mb-xl-0">
-                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>info</button>
+                    <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i class="typcn typcn-info-large-outline mr-2"></i>Ajuda</button>
                   </div>
                 </div>
               </div>
@@ -896,5 +865,12 @@
     <!-- Custom js for this page-->
     <script src="../js/dashboard.js"></script>
     <!-- End custom js for this page-->
+
+    <!--Global Vars-->
+    <script>
+      var idServidorSelecionado;
+    </script>
+
+    <script src="js/load.js"></script>
   </body>
 </html>
