@@ -25,7 +25,9 @@ const carregarServidoresTable = (listarServidores)=>{
                 <th scope="row">${i + 1}</th>
                 <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
                 <td>${listarServidores[i].localidade}</td>
-                <td id="estadoServidor-${idServidor}" class="Normal">Normal</td>
+                <td id="estadoServidor-${idServidor}">
+                    <span class="badge badge-success">Normal</span>
+                </td>
             </tr>`
     }
 }
