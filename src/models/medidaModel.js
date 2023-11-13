@@ -11,7 +11,9 @@ function plotarGrafico(idServidor = "0 OR TRUE") {
         MemoriaTotal,
         Disco,
         Upload,
-        Download
+        Download,
+        DiscoEntrada,
+        DiscoSaida
         FROM streamoon.registrocolunar
         WHERE idServidor = ${idServidor}
         ORDER BY dtHora DESC LIMIT 1;

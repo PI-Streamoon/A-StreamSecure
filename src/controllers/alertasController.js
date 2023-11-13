@@ -19,6 +19,21 @@ function geralPDia(req, res){
 }
 
 
+function realTime(req, res){
+    falhasModel.realTime().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
 function totalPDia(req, res){
     var dataInic = req.query.dataInic;
     var dataFinal = req.query.dataFinal;
@@ -55,6 +70,7 @@ function total(req, res){
 }
 
 module.exports = {
+    realTime,
     geralPDia,
     totalPDia,
     total

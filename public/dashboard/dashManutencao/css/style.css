@@ -1,3 +1,11 @@
 #listagemServidores tr{
     cursor: pointer;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+.pointer:hover{
+    opacity: 0.7;
+}

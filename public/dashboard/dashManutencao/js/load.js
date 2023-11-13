@@ -54,7 +54,6 @@ const carregarServidorInic = ()=>{
         });
 }
 
-
 window.onload = ()=>{
     carregarNome();
     carregarServidorInic();

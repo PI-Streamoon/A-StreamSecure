@@ -48,6 +48,23 @@ function totalPDia(dataInic, dataFinal, idServidor){
     
 }
 
+function realTime(){
+    const instrucao = `
+        SELECT idServidor,
+        MAX(MomentoRegistro) AS MomentoRegistro,
+        nivelFalhaCPU AS CPU,
+        nivelFalhaMemoria AS Memoria,
+        nivelFalhaDisco AS Disco,
+        nivelFalhaUpload AS Upload,
+        nivelFalhaDownload AS Download
+        FROM falhascolunas
+        GROUP BY idServidor
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+
+    return database.executar(instrucao);
+}
 
 
 function geralPDia(dataInic, dataFinal, idServidor){
@@ -71,6 +88,7 @@ function geralPDia(dataInic, dataFinal, idServidor){
 
 
 module.exports = {
+    realTime,
     geralPDia,
     totalPDia,
     total
