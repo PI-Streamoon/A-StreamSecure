@@ -14,7 +14,7 @@ function plotarGrafico(idServidor = "0 OR TRUE", limit) {
         Download,
         DiscoEntrada,
         DiscoSaida
-        FROM streamoon.registrocolunar
+        FROM streamoon.registroColunar
         WHERE idServidor = ${idServidor}
         ORDER BY dtHora DESC LIMIT ${limit};
     `
@@ -39,7 +39,7 @@ function geral(idServidor) {
            CPU,
            Memoria,
            Disco
-            FROM streamoon.registrocolunar
+            FROM streamoon.registroColunar
             WHERE idServidor = ${idServidor}
             ORDER BY dtHora DESC LIMIT 1;
         `

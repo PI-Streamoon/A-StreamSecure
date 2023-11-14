@@ -6,7 +6,7 @@ function total(dataInic, dataFinal){
     SELECT idServidor,
     SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
     SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
-    FROM falhascolunas
+    FROM falhasColunas
     WHERE MomentoRegistro >= '${dataInic} 23:59:59' AND MomentoRegistro <= '${dataFinal} 23:59:59'
     GROUP BY idServidor;
 
@@ -37,7 +37,7 @@ function totalPDia(dataInic, dataFinal, idServidor){
     SUM(nivelFalhaFreqCpu = 2) AS QuantFalhasCriticoFreq
     SUM(nivelFalhaDownload = 2) AS QuantFalhasCriticoDownload,
     SUM(nivelFalhaFreqCpu = 2) AS QuantFalhasCriticoFreqCpu
-    FROM falhascolunas
+    FROM falhasColunas
     WHERE MomentoRegistro >= '${dataInic} 23:59:59' AND MomentoRegistro <= '${dataFinal} 23:59:59' AND idServidor = ${idServidor}
     GROUP BY idServidor, Dia;
     `;
@@ -57,8 +57,8 @@ function realTime(){
         nivelFalhaDisco AS Disco,
         nivelFalhaUpload AS Upload,
         nivelFalhaDownload AS Download
-        FROM falhascolunas
-        GROUP BY idServidor
+        FROM falhasColunas
+        GROUP BY idServidor, MomentoRegistro, CPU, Memoria, Disco, Upload, Download
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
@@ -74,7 +74,7 @@ function geralPDia(dataInic, dataFinal, idServidor){
     DATE_FORMAT(DATE(MomentoRegistro), "%d/%m/%Y") AS Dia,
     SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
     SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
-    FROM falhascolunas
+    FROM falhasColunas
     WHERE MomentoRegistro >= '${dataInic} 23:59:59' AND MomentoRegistro <= '${dataFinal} 23:59:59' AND idServidor = ${idServidor}
     GROUP BY idServidor, Dia;
     `;
