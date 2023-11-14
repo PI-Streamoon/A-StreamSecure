@@ -1,6 +1,6 @@
 (function($) {
   'use strict';
-  $(function() {   
+  $(function() {
     if ($('#circleProgress6').length) {
       var bar = new ProgressBar.Circle(circleProgress6, {
         color: '#001737',

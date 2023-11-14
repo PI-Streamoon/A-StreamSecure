@@ -41,6 +41,21 @@ const mudarBackgroundBanners = (values)=>{
     return nivelAlerta;
 }
 
+const atualizarChart = (chart, chartDataset, time, value) => {
+    chartDataset.labels.push(time);
+    chartDataset.datasets[0].data.push(value);
+    chartDataset.datasets[1].data.push(100);
+
+    if (chartDataset.datasets[0].data.length >= 10) {
+        chartDataset.labels.shift()
+        chartDataset.datasets[0].data.shift()
+        chartDataset.datasets[1].data.shift();
+
+    } 
+
+    chart.update();
+}
+
 const atualizarTempo = (momentoRegistro)=>{
     var dataAtual = new Date();
     var dataEspecifica = new Date(momentoRegistro);
@@ -74,13 +89,23 @@ const atualizarStatusServidor = (idServidor, nivelAlerta)=>{
     if (nivelAlerta == 'danger') estadoServidor.innerText = 'Critico';
 }
 
+const atualizarScoreServidorChart = ()=>{
+
+    let countSucess = document.querySelectorAll('#rowBanner .bg-success').length;
+
+    scoreServidorChart.animate(countSucess/6); // Number from 0.0 to 1.0
+}
+
 const ultimasMedidas = ()=>{
-    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}&limit=${10-cpuChartDataset.labels.length}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
-
+                resposta.reverse()
+                
                 resposta.forEach((linha)=>{
                     mudarValoresBanners(linha)
+
+                    atualizarChart(cpuChart, cpuChartDataset, linha.dtHora, linha.CPU);
                 })
     
             });
@@ -97,12 +122,14 @@ const checarFalhas = ()=>{
     fetch(`/alertas/realTime`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
-    
+
                 resposta.forEach((linha)=>{
                     atualizarTempo(linha.MomentoRegistro)
                     let nivelAlerta = mudarBackgroundBanners(linha);
                     atualizarStatusServidor(linha.idServidor, nivelAlerta);
                 })
+
+                atualizarScoreServidorChart();
     
             });
         } else {

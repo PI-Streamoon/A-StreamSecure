@@ -371,18 +371,18 @@
                     <h4 class="card-title mb-3">Status Componentes</h4>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-12">
                       <div class="row align-items-center">
-                        <div class="col-lg-3">
-                          <div id="circleProgress6" class="progressbar-js-circle rounded p-3"></div>
+                        <div class="col-6 col-lg-3">
+                          <div id="scoreServidor" class="progressbar-js-circle rounded p-3"></div>
                         </div>
-                        <div class="col-lg-9">
-                          <div class="row">
-                            <div class="col-lg-4">
+                        <div class="col-xl-9 col-lg-12">
+                          <div class="row" id="rowBanner">
+                            <div class="col-12 col-lg-4">
 
                               <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                  onclick="changeComponente(100)" id="Banner-CPU">
-                                  <i class="fa fa-server fa-3x"></i>
+                                  onclick="changeComponente('cpuChart', 'CPU %')" id="Banner-CPU">
+                                  <i class="fa fa-server fa-3x mr-2"></i>
                                   <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
                                       <h3 class="mb-2">Uso da CPU</h3>
                                       <h4 class="mb-0"><span id="info-CPU"></span> %</h4>
@@ -390,20 +390,20 @@
                               </div>
 
                               <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                  onclick="changeComponente(108)" id="Banner-Upload">
-                                  <i class="fa fa-upload fa-3x"></i>
+                                  onclick="changeComponente('taxaUploadChart', 'Taxa Upload MB/s')" id="Banner-Upload">
+                                  <i class="fa fa-upload fa-3x mr-2"></i>
                                   <div class="ms-3 d-flex flex-column align-items-center justify-content-center"> 
                                       <h3 class="mb-2">Taxa de Upload</h3>
-                                      <h4 class="mb-0"><span id="info-Upload"></span> mb/s</h4>
+                                      <h4 class="mb-0"><span id="info-Upload"></span> MB/s</h4>
                                   </div>
                               </div>
 
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-12 col-lg-4">
 
                               <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                  onclick="changeComponente(102)" id="Banner-Memoria">
-                                  <i class="fa fa-memory fa-3x"></i>
+                                  onclick="changeComponente('memoriaChart', 'Memoria %')" id="Banner-Memoria">
+                                  <i class="fa fa-memory fa-3x mr-2"></i>
                                   <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
                                       <h3 class="mb-2">Uso da Memória</h3>
                                       <h4 class="mb-0"><span id="info-Memoria"></span> %</h4>
@@ -411,20 +411,20 @@
                               </div>
 
                               <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                  onclick="changeComponente(109)" id="Banner-Download">
-                                  <i class="fa fa-download fa-3x"></i>
+                                  onclick="changeComponente('taxaDownloadChart', 'Taxa Download MB/s')" id="Banner-Download">
+                                  <i class="fa fa-download fa-3x mr-2"></i>
                                   <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
                                       <h3 class="mb-2">Taxa de Download</h3>
-                                      <h4 class="mb-0"><span id="info-Download"></span> mb/s</h4>
+                                      <h4 class="mb-0"><span id="info-Download"></span> MB/s</h4>
                                   </div>
                               </div>
 
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-12 col-lg-4">
                               
                               <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                  onclick="changeComponente(105)" id="Banner-Disco">
-                                  <i class="fa fa-database fa-3x"></i>
+                                  onclick="changeComponente('discoChart', 'Uso Disco %')" id="Banner-Disco">
+                                  <i class="fa fa-database fa-3x mr-2"></i>
                                   <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
                                       <h3 class="mb-2">Uso do Disco</h3>
                                       <h4 class="mb-0"><span id="info-Disco"></span> %</h4>
@@ -432,8 +432,8 @@
                               </div>
 
                               <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                  onclick="changeComponente(109)" id="Banner-DiscoEntrada">
-                                  <i class="fa fa-database fa-3x"></i>
+                                  onclick="changeComponente('ioDiscoChart', 'IO Disco MB/s')" id="Banner-DiscoEntrada">
+                                  <i class="fa fa-database fa-3x mr-2"></i>
                                   <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
                                       <h3 class="mb-3">IO Disco</h3>
                                       <h4 class="mb-0" >Entrada: <span id="info-DiscoEntrada"></span> mb/s</h4>
@@ -456,47 +456,21 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Sessions by Channel</h4>
+                    <h4 class="card-title mb-3">10 Últimas Leituras <span data-id="labelComponente">CPU</span></h4>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="d-flex justify-content-between mb-4">
-                            <div class="font-weight-medium">Empolyee Name</div>
-                            <div class="font-weight-medium">This Month</div>
+                            <div class="font-weight-medium">Data</div>
+                            <div class="font-weight-medium">Medida</div>
                           </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Connor Chandler</div>
-                            <div class="small">$ 4909</div>
-                          </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Russell Floyd</div>
-                            <div class="small">$857</div>
-                          </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Douglas White</div>
-                            <div class="small">$612 </div>
-                          </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Alta Fletcher </div>
-                            <div class="small">$233</div>
-                          </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Marguerite Pearson</div>
-                            <div class="small">$233</div>
-                          </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Leonard Gutierrez</div>
-                            <div class="small">$35</div>
-                          </div>
-                          <div class="d-flex justify-content-between mb-4">
-                            <div class="text-secondary font-weight-medium">Helen Benson</div>
-                            <div class="small">$43</div>
-                          </div>
-                          <div class="d-flex justify-content-between">
-                            <div class="text-secondary font-weight-medium">Helen Benson</div>
-                            <div class="small">$43</div>
+                          <div id="ultimas10Leituras">
+                            <div class="d-flex justify-content-between mb-4">
+                              <div class="text-secondary font-weight-medium">Connor Chandler</div>
+                              <div class="font-weight-medium">$ 4909</div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -505,12 +479,12 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-6 d-flex grid-margin stretch-card">
+            <div class="col-xl-9 d-flex grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Sales Analytics</h4>
-                    <button type="button" class="btn btn-sm btn-light">Month</button>
+                    <h4 class="card-title mb-3">Monitoramento <span data-id="labelComponente">CPU %</span></h4>
+                    <button type="button" class="btn btn-sm btn-light">Real Time</button>
                   </div>
                   <div class="row">
                     <div class="col-12">
@@ -528,42 +502,12 @@
                           <h2 class="text-warning mb-1 font-weight-bold">1,542</h2>
                         </div>
                       </div>
-                      <canvas id="salesanalyticChart"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 d-flex grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Card Title</h4>
-                  </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="mb-5">
-                        <div class="mr-1">
-                          <div class="text-info mb-1">
-                            Total Earning
-                          </div>
-                          <h2 class="mb-2 mt-2 font-weight-bold">287,493$</h2>
-                          <div class="font-weight-bold">
-                            1.4% Since Last Month
-                          </div>
-                        </div>
-                        <hr>
-                        <div class="mr-1">
-                          <div class="text-info mb-1">
-                            Total Earning
-                          </div>
-                          <h2 class="mb-2 mt-2  font-weight-bold">87,493</h2>
-                          <div class="font-weight-bold">
-                            5.43% Since Last Month
-                          </div>
-                        </div>
-                      </div>
-                      <canvas id="barChartStacked"></canvas>
+                      <canvas id="cpuChart" class="d-block"></canvas>
+                      <canvas id="memoriaChart" class="d-none"></canvas>
+                      <canvas id="discoChart" class="d-none"></canvas>
+                      <canvas id="taxaUploadChart" class="d-none"></canvas>
+                      <canvas id="taxaDownloadChart" class="d-none"></canvas>
+                      <canvas id="ioDiscoChart" class="d-none"></canvas>
                     </div>
                   </div>
                 </div>
@@ -887,6 +831,19 @@
   <!--Global Vars-->
   <script>
     var idServidorSelecionado;
+    var scoreServidorChart;
+    var cpuChart;
+    var cpuChartDataset;
+    var memoriaChart;
+    var memoriaChartDataset;
+    var discoChart;
+    var discoChartDataset;
+    var taxaUploadChart;
+    var taxaUploadChartDataset;
+    var taxaDownloadChart;
+    var taxaDownloadChartDataset;
+    var ioDiscoChart;
+    var ioDiscoChartDataset;
   </script>
 
   <script src="js/load.js"></script>

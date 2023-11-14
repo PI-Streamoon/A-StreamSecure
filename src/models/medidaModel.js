@@ -1,9 +1,9 @@
 var database = require("../database/config");
 
-function plotarGrafico(idServidor = "0 OR TRUE") {
+function plotarGrafico(idServidor = "0 OR TRUE", limit) {
     const instrucao = `
     SELECT idServidor,
-        DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
+        DATE_FORMAT(MomentoRegistro, '%H:%i:%s') AS dtHora,
         CPU,
         FrequenciaCPU,
         Memoria,
@@ -16,7 +16,7 @@ function plotarGrafico(idServidor = "0 OR TRUE") {
         DiscoSaida
         FROM streamoon.registrocolunar
         WHERE idServidor = ${idServidor}
-        ORDER BY dtHora DESC LIMIT 1;
+        ORDER BY dtHora DESC LIMIT ${limit};
     `
 
     console.log("Executando a instrução SQL: \n" + instrucao);
