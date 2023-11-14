@@ -262,7 +262,7 @@ const loadScoreServidor = () => {
             width: 10
         },
         to: {
-            color: '#2617c9',
+            color: '#00de6b',
             width: 10
         },
         // Set default step function for all animate calls

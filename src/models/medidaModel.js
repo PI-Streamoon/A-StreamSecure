@@ -16,7 +16,7 @@ function plotarGrafico(idServidor = "0 OR TRUE", limit) {
         DiscoSaida
         FROM streamoon.registroColunar
         WHERE idServidor = ${idServidor}
-        ORDER BY dtHora DESC LIMIT ${limit};
+        ORDER BY MomentoRegistro DESC LIMIT ${limit};
     `
 
     console.log("Executando a instrução SQL: \n" + instrucao);

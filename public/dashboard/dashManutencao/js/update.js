@@ -41,15 +41,27 @@ const mudarBackgroundBanners = (values)=>{
     return nivelAlerta;
 }
 
-const atualizarChart = (chart, chartDataset, time, value) => {
+const atualizarChart = (chart, chartDataset, time, datasets) => {
     chartDataset.labels.push(time);
-    chartDataset.datasets[0].data.push(value);
-    chartDataset.datasets[1].data.push(100);
+    
+    datasets.forEach((dataset, index)=>{
+        chartDataset.datasets[index].data.push(dataset);
+    })
+    
+    new_dataSet = {
+        label: 'CPU',
+        data: [100],
+        borderColor: [
+            '#6248AE',
+        ],borderWidth: 3,
+        fill: true,
+    }
+    chartDataset.datasets.push()
+    chartDataset.datasets[datasets.length+1].data.push(100);
 
-    if (chartDataset.datasets[0].data.length >= 10) {
+    if (chartDataset.labels.length >= 10) {
         chartDataset.labels.shift()
-        chartDataset.datasets[0].data.shift()
-        chartDataset.datasets[1].data.shift();
+        chartDataset.datasets[datasets.length+1].data.shift();
 
     } 
 
@@ -85,6 +97,7 @@ const atualizarStatusServidor = (idServidor, nivelAlerta)=>{
     let estadoServidor = document.querySelector(`#estadoServidor-${idServidor} span`)
 
     estadoServidor.className = `badge badge-${nivelAlerta}`;
+    if (nivelAlerta == 'success') estadoServidor.innerText = 'Normal';
     if (nivelAlerta == 'warning') estadoServidor.innerText = 'Alerta';
     if (nivelAlerta == 'danger') estadoServidor.innerText = 'Critico';
 }
@@ -100,12 +113,18 @@ const ultimasMedidas = ()=>{
     fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}&limit=${10-cpuChartDataset.labels.length}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
+                console.log(resposta)
                 resposta.reverse()
                 
                 resposta.forEach((linha)=>{
                     mudarValoresBanners(linha)
 
-                    atualizarChart(cpuChart, cpuChartDataset, linha.dtHora, linha.CPU);
+                    atualizarChart(cpuChart, cpuChartDataset, linha.dtHora, [linha.CPU]);
+                    atualizarChart(memoriaChart, memoriaChartDataset, linha.dtHora, [linha.Memoria]);
+                    atualizarChart(discoChart, discoChartDataset, linha.dtHora, [linha.Disco]);
+                    atualizarChart(taxaUploadChart, taxaUploadChartDataset, linha.dtHora, [linha.Upload]);
+                    atualizarChart(taxaDownloadChart, taxaDownloadChartDataset, linha.dtHora, [linha.Download]);
+                    atualizarChart(ioDiscoChart, ioDiscoChartDataset, linha.dtHora, [linha.DiscoEntrada, linha.DiscoSaida]);
                 })
     
             });
