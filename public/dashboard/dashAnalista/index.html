@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CelestialUI Admin</title>
+    <title>Dashboard Analista</title>
     <!-- base:css -->
     <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
@@ -14,24 +14,15 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="shortcut icon" href="../../img/logo.ico" />
   </head>
   <body>
-    <div class="row" id="proBanner">
-      <div class="col-12">
-        <span class="d-flex align-items-center purchase-popup">
-          <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
-          <a href="https://www.bootstrapdash.com/product/celestial-admin-template/?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class="btn download-button purchase-button ml-auto">Upgrade To Pro</a>
-          <i class="typcn typcn-delete-outline" id="bannerClose"></i>
-        </span>
-      </div>
-    </div>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="../../img/logo/nome-e-logo 1.png" alt="logo" /></a>
+          <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../img/logo.png" alt="logo"/></a> -->
           <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
             <span class="typcn typcn-th-menu"></span>
           </button>
@@ -39,13 +30,13 @@
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Calendar
+              <a class="nav-link active" href="#">
+                Geral
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link active" href="#">
-                Statistic
+              <a class="nav-link" href="#">
+                Métricas
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
@@ -55,11 +46,6 @@
             </li>
           </ul>
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item d-none d-lg-flex  mr-2">
-              <a class="nav-link" href="#">
-                Help
-              </a>
-            </li>
             <li class="nav-item dropdown d-flex">
               <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
                 <i class="typcn typcn-message-typing"></i>
@@ -156,17 +142,13 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
                 <i class="typcn typcn-user-outline mr-0"></i>
-                <span class="nav-profile-name">Evan Morales</span>
+                <span class="nav-profile-name">Suzy</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-                </a>
-                <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-                </a>
+                <a onclick="logout()" class="dropdown-item">
+                  <i class="typcn typcn-power text-primary"></i>
+                    Sair
+                  </a>
               </div>
             </li>
           </ul>
@@ -178,31 +160,6 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
-        <div class="theme-setting-wrapper">
-          <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
-          <div id="theme-settings" class="settings-panel">
-            <i class="settings-close typcn typcn-delete-outline"></i>
-            <p class="settings-heading">SIDEBAR SKINS</p>
-            <div class="sidebar-bg-options" id="sidebar-light-theme">
-              <div class="img-ss rounded-circle bg-light border mr-3"></div>
-              Light
-            </div>
-            <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
-              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
-              Dark
-            </div>
-            <p class="settings-heading mt-2">HEADER SKINS</p>
-            <div class="color-tiles mx-0 px-4">
-              <div class="tiles success"></div>
-              <div class="tiles warning"></div>
-              <div class="tiles danger"></div>
-              <div class="tiles primary"></div>
-              <div class="tiles info"></div>
-              <div class="tiles dark"></div>
-              <div class="tiles default border"></div>
-            </div>
-          </div>
-        </div>
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -210,34 +167,32 @@
           <li class="nav-item">
             <div class="d-flex sidebar-profile">
               <div class="sidebar-profile-image">
-                <img src="images/faces/face29.png" alt="image">
-                <span class="sidebar-status-indicator"></span>
+                <img src="../images/faces/face10.jpg" alt="image">
               </div>
               <div class="sidebar-profile-name">
-                <p class="sidebar-name">
-                  Kenneth Osborne
+                <p class="sidebar-name">Suzy
                 </p>
                 <p class="sidebar-designation">
-                  Welcome
+                  Analista de dados
                 </p>
               </div>
             </div>
             <div class="nav-search">
-              <div class="input-group">
+              <!-- <div class="input-group">
                 <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
                 <div class="input-group-append">
                   <span class="input-group-text" id="search">
                     <i class="typcn typcn-zoom"></i>
                   </span>
                 </div>
-              </div>
+              </div> -->
             </div>
-            <p class="sidebar-menu-title">Dash menu</p>
+            <p class="sidebar-menu-title">Menu</p>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.html">
               <i class="typcn typcn-device-desktop menu-icon"></i>
-              <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
+              <span class="menu-title">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
@@ -248,9 +203,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/buttons.html">Buttons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/typography.html">Typography</a></li>
               </ul>
             </div>
           </li>
@@ -262,7 +217,7 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Basic Elements</a></li>
               </ul>
             </div>
           </li>
@@ -274,7 +229,7 @@
             </a>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/charts/chartjs.html">ChartJs</a></li>
               </ul>
             </div>
           </li>
@@ -286,7 +241,7 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/tables/basic-table.html">Basic table</a></li>
               </ul>
             </div>
           </li>
@@ -298,50 +253,25 @@
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/icons/mdi.html">Mdi icons</a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="typcn typcn-user-add-outline menu-icon"></i>
-              <span class="menu-title">User Pages</span>
+              <span class="menu-title">Equipe</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                <!-- <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/samples/register.html"> Register </a></li> -->
+                <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/samples/register.html"> Adicionar funcionário </a></li>
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-              <i class="typcn typcn-globe-outline menu-icon"></i>
-              <span class="menu-title">Error pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/documentation/documentation.html">
-              <i class="typcn typcn-document-text menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="sidebar-legend">
-          <li>
-            <p class="sidebar-menu-title">Category</p>
-          </li>
-          <li class="nav-item"><a href="#" class="nav-link">#Sales</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">#Marketing</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">#Growth</a></li>
         </ul>
       </nav>
         <!-- partial -->
@@ -896,5 +826,17 @@
     <!-- Custom js for this page-->
     <script src="../js/dashboard.js"></script>
     <!-- End custom js for this page-->
+    <script>
+      function logout() {
+        delete localStorage.CPF_USUARIO;
+        delete localStorage.EMAIL_USUARIO;
+        delete localStorage.NOME_USUARIO;
+        delete localStorage.ID_USUARIO;
+        delete localStorage.FK_ADMIN;
+        delete localStorage.FK_EMPRESA;
+
+        window.location = "../../index.html";
+      }
+    </script>
   </body>
 </html>
