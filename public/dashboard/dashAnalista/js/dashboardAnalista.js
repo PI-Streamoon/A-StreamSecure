@@ -44,8 +44,6 @@ var labelsFrequenciaMegahertz = []
 var dadosFrequenciaMegahertz = []
 var dashboardFrequenciaMegahertz;
 
-
-
 Chart.defaults.color = "#ffffff";
 
 function atualizarGraficoGeral() {
