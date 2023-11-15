@@ -23090,6 +23090,7 @@ body.avgrund-active {
   transition: width 0.25s ease, margin 0.25s ease;
   width: calc(100% - 255px);
   min-height: calc(100vh - 64px);
+  margin-left: 255px;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: column;
@@ -23126,6 +23127,7 @@ body.avgrund-active {
   padding: 0;
   width: 255px;
   z-index: 11;
+  position: fixed;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
@@ -24441,6 +24443,7 @@ body.avgrund-active {
   }
   .sidebar-icon-only .main-panel {
     width: calc(100% - 70px);
+    margin-left: 70px;
   }
 }
 
