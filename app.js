@@ -18,6 +18,7 @@ var empresasRouter = require("./src/routes/empresas");
 var servidorRouter = require("./src/routes/servidor");
 var alertasRouter = require("./src/routes/alertas");
 var chamadosRouter = require("./src/routes/chamados");
+var exportRouter = require('./src/routes/exports');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +33,7 @@ app.use("/medidas", medidasRouter);
 app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
+app.use("/exports", exportRouter);
 
 const ipAddress = IP.address();
 

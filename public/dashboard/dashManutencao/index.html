@@ -245,8 +245,16 @@
                   </div>
                 </div>
                 <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                  <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i
-                      class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
+                  <div class="dropdown">
+                    <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="typcn typcn-export mr-2"></i>Export
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
+                      <h6 class="dropdown-header">Export</h6>
+                      <a class="dropdown-item" href="#" onclick="exportPDF()">Relatório de Falhas (PDF)</a>
+                      <a class="dropdown-item" href="#" onclick="exportCSV()">Relatório de Dados (CSV)</a>
+                    </div>
+                  </div>
                 </div>
                 <div class="pr-1 mb-3 mb-xl-0">
                   <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i

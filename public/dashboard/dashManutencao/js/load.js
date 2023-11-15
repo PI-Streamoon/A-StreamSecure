@@ -60,6 +60,65 @@ const configLineCharts = {
     },
 };
 
+const exportCSV = ()=>{
+    fetch(`/exports/csv?idServidor=${idServidorSelecionado}`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (csvContent) {
+                    console.log(csvContent)
+
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    // Create a link element
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+
+                    // Set the filename for the download
+                    link.download = 'output.csv';
+
+                    // Append the link to the document
+                    document.body.appendChild(link);
+
+                    // Trigger the download
+                    link.click();
+
+                    // Remove the link from the document
+                    document.body.removeChild(link);
+                })
+            } else {
+                console.error("Nenhum dado encontrado");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+            );
+        });
+}
+
+const exportPDF = ()=>{
+    fetch(`/exports/pdf?idServidor=${idServidorSelecionado}`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then((resposta) => {
+                    var pdf = resposta.pdf;
+                    var blobPDF =  new Blob([ pdf ], { type : 'application/pdf'});
+                    var blobUrl = URL.createObjectURL(blobPDF); 
+
+                    window.open(blobUrl, '_blank');
+
+                    URL.revokeObjectURL(blobUrl);
+                })
+            } else {
+                console.error("Nenhum dado encontrado");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+            );
+        });
+}
+
 const changeComponente = (idElementChart, title, chartDataset)=>{
     // Display none para todos os charts de monitoramento
     let chartsMonitoramento = document.querySelectorAll('[data-id="chartMonitoramento"]');
