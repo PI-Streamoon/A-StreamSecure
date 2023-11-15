@@ -1,5 +1,6 @@
 const tempoUltimoMonitoramento = document.querySelector('#infosServidor #tempoUltimoMonitoramento');
-
+const legendaChartMonitoramento = document.getElementById('legendaChartMonitoramento');
+const ultimas10Leituras = document.getElementById('ultimas10Leituras');
 const interval = 2000;
 
 // Update Ultimas Medidas
@@ -41,27 +42,63 @@ const mudarBackgroundBanners = (values)=>{
     return nivelAlerta;
 }
 
+const atualizar10UltimasLeituras = ()=>{
+    let idChart = Object.keys(datasetsSelecionado[0]._meta)[0];
+    let labels = datasetsSelecionado[0]._meta[idChart].controller.chart.data.labels
+
+    let html = '';
+
+    for (let index = labels.length - 1; index >= 0; index--) {
+        const label = labels[index];
+        
+        html += `
+        <div class="d-flex justify-content-between mb-4">
+            <div class="text-secondary font-weight-medium">${label}</div>
+            <div class="font-weight-medium">
+        `;
+
+        for (let i = 0; i < datasetsSelecionado.length - 1; i++) {
+            const dataset = datasetsSelecionado[i];
+            html += `${dataset.data[index]} ${dataset.unMedida}<br>`;
+        }
+        
+        html += `</div>
+        </div>
+        `
+    }
+
+    ultimas10Leituras.innerHTML = html;
+}
+
+const atualizarLegendasChart = (value, index, label)=>{
+    let labelDataset = document.querySelector(`[data-id="legenda-dataset-${index}-${label}"]`);
+
+    if(labelDataset != undefined){
+        labelDataset.innerText = value;
+    }
+}
+
 const atualizarChart = (chart, chartDataset, time, datasets) => {
     chartDataset.labels.push(time);
     
-    datasets.forEach((dataset, index)=>{
-        chartDataset.datasets[index].data.push(dataset);
+    datasets.forEach((value, index)=>{
+        chartDataset.datasets[index].data.push(value);
+
+        atualizarLegendasChart(value, index, chartDataset.datasets[index].label);
+
+        atualizar10UltimasLeituras();
+
+        if (chartDataset.labels.length >= 10) {
+            chartDataset.datasets[index].data.shift();    
+        } 
+
     })
-    
-    new_dataSet = {
-        label: 'CPU',
-        data: [100],
-        borderColor: [
-            '#6248AE',
-        ],borderWidth: 3,
-        fill: true,
-    }
-    chartDataset.datasets.push()
-    chartDataset.datasets[datasets.length+1].data.push(100);
+
+    chartDataset.datasets[chartDataset.datasets.length-1].data.push(100);
 
     if (chartDataset.labels.length >= 10) {
         chartDataset.labels.shift()
-        chartDataset.datasets[datasets.length+1].data.shift();
+        chartDataset.datasets[chartDataset.datasets.length-1].data.shift();
 
     } 
 
@@ -105,15 +142,17 @@ const atualizarStatusServidor = (idServidor, nivelAlerta)=>{
 const atualizarScoreServidorChart = ()=>{
 
     let countSucess = document.querySelectorAll('#rowBanner .bg-success').length;
+    let countDanger = document.querySelectorAll('#rowBanner .bg-danger').length * 1.25;
 
-    scoreServidorChart.animate(countSucess/6); // Number from 0.0 to 1.0
+
+    scoreServidorChart.animate((countSucess-countDanger)/6); // Number from 0.0 to 1.0
 }
 
 const ultimasMedidas = ()=>{
     fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}&limit=${10-cpuChartDataset.labels.length}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
-                console.log(resposta)
+
                 resposta.reverse()
                 
                 resposta.forEach((linha)=>{

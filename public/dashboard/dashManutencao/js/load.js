@@ -60,12 +60,54 @@ const configLineCharts = {
     },
 };
 
+const changeComponente = (idElementChart, title, chartDataset)=>{
+    // Display none para todos os charts de monitoramento
+    let chartsMonitoramento = document.querySelectorAll('[data-id="chartMonitoramento"]');
+
+    chartsMonitoramento.forEach((chart) => {
+        chart.className = 'd-none';
+    });
+
+    // Alterar o titulo de todos os lugares para o componente desejado
+    let titlesCharts = document.querySelectorAll('[data-id="titleComponente"]');
+
+    titlesCharts.forEach((titleChart) => {
+        titleChart.innerText = title;
+    });
+
+    // Mostra o chart selecionado
+    let elementChart = document.getElementById(idElementChart);
+    elementChart.className = 'd-block';
+
+    // Altera a legenda do gráfico
+    legendaChartMonitoramento.innerHTML = '';
+
+    chartDataset = chartDataset.datasets
+
+    chartDataset.forEach((dataset, index) => {
+        let label = dataset.label;
+        
+        if (label != ''){
+            
+            legendaChartMonitoramento.innerHTML += `
+            <div class="mr-md-5 mb-4">
+                <h4 class="mb-1"><i class="typcn typcn-chart-line mr-1"></i>${dataset.label} ${dataset.unMedida}</h4>
+                <h2 class="mb-1 font-weight-bold" data-id='legenda-dataset-${index}-${label}' style="color:${dataset.borderColor[0]}"></h2>
+            </div>
+            `;
+        }
+    });
+
+
+    datasetsSelecionado = chartDataset;
+}
 
 const loadCpuChart = () => {
     cpuChartDataset = {
         labels: [],
         datasets: [{
             label: 'CPU',
+            unMedida: '%',
             data: [],
             borderColor: [
                 '#6248AE',
@@ -96,7 +138,8 @@ const loadMemoriaChart = () => {
     memoriaChartDataset = {
         labels: [],
         datasets: [{
-            label: 'CPU',
+            label: 'Memória',
+            unMedida: '%',
             data: [],
             borderColor: [
                 '#6248AE',
@@ -127,7 +170,8 @@ const loadDiscoChart = () => {
     discoChartDataset = {
         labels: [],
         datasets: [{
-            label: 'CPU',
+            label: 'Uso do Disco',
+            unMedida: '%',
             data: [],
             borderColor: [
                 '#6248AE',
@@ -158,7 +202,8 @@ const loadTaxaUploadChart = () => {
     taxaUploadChartDataset = {
         labels: [],
         datasets: [{
-            label: 'CPU',
+            label: 'Taxa Upload',
+            unMedida: 'MB/s',
             data: [],
             borderColor: [
                 '#6248AE',
@@ -189,7 +234,8 @@ const loadTaxaDownloadChart = () => {
     taxaDownloadChartDataset = {
         labels: [],
         datasets: [{
-            label: 'CPU',
+            label: 'Taxa Downloads',
+            unMedida: 'MB/s',
             data: [],
             borderColor: [
                 '#6248AE',
@@ -220,12 +266,23 @@ const loadIODiscoChart = () => {
     ioDiscoChartDataset = {
         labels: [],
         datasets: [{
-            label: 'CPU',
+            label: 'Entrada Disco',
+            unMedida: 'MB/s',
             data: [],
             borderColor: [
                 '#6248AE',
             ],borderWidth: 3,
             fill: true,
+        },
+        {
+            label: 'Saida Disco',
+            unMedida: 'MB/s',
+            data: [],
+            borderColor: [
+                '#3498db',
+            ],borderWidth: 3,
+            fill: true,
+            pointBorderColor: '#3498db'
         },
         {
             label: '',
@@ -274,12 +331,13 @@ const loadScoreServidor = () => {
             var percentage = Math.round(circle.value() * 100);
             var value = '<p class="text-center mb-0">Score</p>' + percentage + "%";
 
-            if (percentage < 60) {
-                // If less than 50%, set color to red
+            if (percentage >= 0 && percentage < 60) {
                 circle.path.setAttribute('stroke', 'red');
             } else if (percentage >= 60 && percentage < 99) {
                 // If between 50% (inclusive) and 99%, set color to yellow
                 circle.path.setAttribute('stroke', 'orange');
+            } else {
+                circle.path.setAttribute('stroke', 'black');
             }
 
             if (value === 0) {
@@ -300,9 +358,14 @@ const carregarNome = () => {
     navNomeUser.innerText = localStorage.NOME_USUARIO;
 }
 
-const carregarInfosServidorSelecionado = (idServidor, localidade) => {
-    nomeServidor.innerText = "Servidor: " + idServidor;
+const carregarInfosServidorSelecionado = (localidade) => {
+    nomeServidor.innerText = "Servidor: " + idServidorSelecionado;
     localidadeServidor.innerText = localidade;
+}
+
+const trocarServidor = (idServidor, localidade)=>{
+    idServidorSelecionado = idServidor;
+    carregarInfosServidorSelecionado(localidade);
 }
 
 const carregarServidoresTable = (listarServidores) => {
@@ -310,7 +373,7 @@ const carregarServidoresTable = (listarServidores) => {
         let idServidor = listarServidores[i].idServidor;
 
         listagemServidores.innerHTML += `
-            <tr onclick="trocarServidor(${idServidor})">
+            <tr onclick="trocarServidor(${idServidor}, '${listarServidores[i].localidade}')">
                 <th scope="row">${i + 1}</th>
                 <td id="nomeServidor-${idServidor}"> Servidor ${idServidor}</td>
                 <td>${listarServidores[i].localidade}</td>
@@ -328,7 +391,9 @@ const carregarServidorInic = () => {
                 response.json().then(function (resposta) {
                     idServidorSelecionado = resposta[0].idServidor;
 
-                    carregarInfosServidorSelecionado(idServidorSelecionado, resposta[0].localidade);
+                    console.log(resposta[0].localidade)
+
+                    carregarInfosServidorSelecionado(resposta[0].localidade);
                     carregarServidoresTable(resposta);
                 })
             } else {
@@ -352,4 +417,5 @@ window.onload = () => {
     loadIODiscoChart();
     loadTaxaUploadChart();
     loadTaxaDownloadChart();
+    changeComponente('cpuChart', 'CPU %', cpuChartDataset);
 }
