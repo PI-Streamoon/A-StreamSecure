@@ -21,9 +21,13 @@
 </head>
 
 <body>
-  <button class="moonAssistant-Button">
-    <img width="40" height="40" src="https://img.icons8.com/ios/50/ffffff/astronaut.png" alt="MoonAssistant Button"/>
+  <button class="moonAssistant-button pulse-anim" onclick="turnModalMoonAssistant(this)">
+    <img width="40" height="40" src="https://img.icons8.com/ios/50/ffffff/astronaut.png" class="icon" alt="MoonAssistant Button"/>
   </button>
+
+  <div class="moonAssistant-modal-container" id="moonAssistant-Modal">
+    
+  </div>
 
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
@@ -465,6 +469,7 @@
 
   <script src="js/load.js"></script>
   <script src="js/update.js"></script>
+  <script src="js/modal.js"></script>
 </body>
 
 </html>
