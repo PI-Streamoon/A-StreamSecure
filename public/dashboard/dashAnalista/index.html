@@ -190,22 +190,18 @@
                 </p>
               </div>
             </div>
-            <div class="nav-search">
-              <!-- <div class="input-group">
-                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="search">
-                    <i class="typcn typcn-zoom"></i>
-                  </span>
-                </div>
-              </div> -->
-            </div>
             <p class="sidebar-menu-title">Menu</p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="typcn typcn-compass menu-icon"></i>
+              <span class="menu-title">Geral</span>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.html">
               <i class="typcn typcn-device-desktop menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+              <span class="menu-title">Falhas</span>
             </a>
           </li>
           <li class="nav-item">
@@ -295,7 +291,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="cadastroManutencao.html">
-              <i class="typcn typcn-compass menu-icon"></i>
+              <i class="typcn typcn-user-add-outline menu-icon"></i>
               <span class="menu-title">Equipe</span>
             </a>
           </li>
@@ -573,7 +569,7 @@
             </div>
           </div> -->
         </div>
-       
+
 
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
@@ -593,44 +589,40 @@
     <!-- page-body-wrapper ends -->
   </div>
 
-  <div id="metrics_adjustment" class="metrics" style="display: none;">
-    <div class="row">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-lg-5">
-            <h1>Ajuste de métricas</h1>
-            <h4>Otimize o desempenho dos seus componentes ajustando as métricas conforme suas necessidades.</h4>
-            <div class="row">
-              <ul>
-                <li id="cpu">CPU</li>
-                <li id="ram">Memória RAM</li>
-                <li id="disk">Disco</li>
-                <li id="upload">Upload</li>
-                <li id="download">Download</li>
-                <li id="freqCPU">Frequência da CPU</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-7">
-            <div id="inputs" class="hidden" style="display: none;">
-              <h4>Ajuste dos Limites de Alerta e Crítico <br>
-                <span id="nomeComponente" style="font-size: 16px;"></span>
-              </h4>
-              <label for="alerta">Mínimo valor que indicará estado de <span class="spanAlerta">alerta</span> do
-                servidor:</label>
-              <br>
-              <input type="number" id="ipt_alerta"><br><br>
-              <label for="critico">Mínimo valor que indicará estado <span class="spanCritico">crítico</span> do
-                servidor:</label>
-              <br>
-              <input type="number" id="ipt_critico">
-              <br>
-              <button id="aplicarMetricas" onclick="verifyMetrics()">Aplicar</button>
-            </div>
-          </div>
+  <div id="metrics_adjustment" class="metrics">
+    <div id="container">
+      <div id="imagemLogo">
+        <a href="index.html"><img id="logo" src="../../img/logo.png" alt="" /></a>
+      </div>
+      <div class="row">
+        <h1>Ajuste de métricas</h1>
+        <h4>Otimize o desempenho dos seus componentes ajustando as métricas conforme suas necessidades.</h4>
+        <ul>
+          <li id="cpu">CPU</li>
+          <li id="ram">Memória RAM</li>
+          <li id="disk">Disco</li>
+          <li id="upload">Upload</li>
+          <li id="download">Download</li>
+          <li id="freqCPU">Frequência da CPU</li>
+        </ul>
+        <div id="inputs" class="hidden" style="display: none;">
+          <h4>Ajuste dos Limites de Alerta e Crítico <br>
+            <span id="nomeComponente" style="font-size: 16px;"></span>
+          </h4>
+          <label for="alerta">Mínimo valor que indicará estado de <span class="spanAlerta">alerta</span> do
+            servidor:</label>
+          <br>
+          <input type="number" id="ipt_alerta"><br><br>
+          <label for="critico">Mínimo valor que indicará estado <span class="spanCritico">crítico</span> do
+            servidor:</label>
+          <br>
+          <input type="number" id="ipt_critico">
+          <br>
+          <button id="aplicarMetricas" onclick="verifyMetrics()">Aplicar</button>
         </div>
       </div>
     </div>
+
   </div>
   <!-- container-scroller -->
   <!-- base:js -->
@@ -730,7 +722,7 @@
       "hideMethod": "fadeOut"
     }
 
-    
+
     function verifyMetrics() {
       var alerta = ipt_alerta.value;
       var critico = ipt_critico.value;
@@ -747,7 +739,7 @@
       else if (!erro) {
         metricsUpdate();
       }
-      
+
       function metricsUpdate() {
 
         fetch("/metricas/atualizarMetricas", {
@@ -769,15 +761,15 @@
             });
 
           } else {
-            
+
             console.log("Houve um erro ao tentar atualizar as métricas!");
-            
+
             resposta.text().then(texto => {
               console.error(texto);
               alert(texto);
             });
           }
-          
+
         }).catch(function (erro) {
           console.log(erro);
         })

@@ -128,16 +128,56 @@ footer
   transform: rotate(180deg);
 }
 
-#metrics_adjustment.metrics {
+.metrics {
+  display: none;
+  justify-content: center;
+  align-items: center;
   padding: 5vh;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0px;
+}
+
+.metrics #container {
+  background-color: #fff;
+  height: 55vh;
+  width: 45vw;
+  border-bottom-left-radius: 2vh;
+  border-top-left-radius: 2vh;
+  border-top-right-radius: 2vh;
+  border-bottom-right-radius: 2vh;
+  border-top: #5042e7 solid 3px;
+  border-bottom: #5042e7 solid 3px;
+  border-left: #5042e7 solid 3px;
+  border-right: #5042e7 solid 3px;
+}
+
+#metrics_adjustment .row {
+  padding: 3vh;
+}
+
+.metrics #imagemLogo {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 3vh;
+}
+
+.metrics #logo {
+  margin-left: 1.5vw;
+  background-size: cover;
+  height: 6vh;
 }
 
 #metrics_adjustment h1 {
   margin-bottom: 10px;
+  padding-left: 1.5vh;
 }
 
 #metrics_adjustment h4 {
   margin-bottom: 10px;
+  padding-left: 1.5vh;
 }
 
 #metrics_adjustment ul {
@@ -157,14 +197,14 @@ footer
 }
 
 #inputs {
-  padding: 5vh;
+  padding-left: 3.5vh;
+  margin-top: 0;
   font-size: 16px;
   text-align: center;
 }
 
 #inputs h4 {
   font-size: 1.5rem;
-
 }
 
 #inputs label {
