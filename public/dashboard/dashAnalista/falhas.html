@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard Analista</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../img/logo.ico" />
+
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="css/styleAnalytic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body onload="carregarPagina()">
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="../../img/logo/nome-e-logo 1.png"
+                        alt="logo" /></a>
+                <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../img/logo.png" alt="logo"/></a> -->
+                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+                    data-toggle="minimize">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link active" href="falhas.html">
+                            Falhas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown d-flex">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
+                            id="messageDropdown" href="#" data-toggle="dropdown">
+                            <i class="typcn typcn-message-typing"></i>
+                            <span class="count bg-success">2</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="messageDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-normal">David Grey
+                                    </h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        The meeting is cancelled
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
+                                    </h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        New product launch
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
+                                    </h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Upcoming board meeting
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown  d-flex">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+                            id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="typcn typcn-bell mr-0"></i>
+                            <span class="count bg-danger">2</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="typcn typcn-info-large mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="typcn typcn-cog mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="typcn typcn-user-outline mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown"
+                            id="profileDropdown">
+                            <i class="typcn typcn-user-outline mr-0"></i>
+                            <span class="nav-profile-name" id="nomeUsuario"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a onclick="log_out()" class="dropdown-item">
+                                <i class="typcn typcn-power text-primary"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <div class="d-flex sidebar-profile">
+                            <div class="sidebar-profile-image">
+                                <img src="../images/faces/face10.jpg" alt="image">
+                            </div>
+                            <div class="sidebar-profile-name">
+                                <p class="sidebar-name">Suzy
+                                </p>
+                                <p class="sidebar-designation">
+                                    Analista de dados
+                                </p>
+                            </div>
+                        </div>
+                        <p class="sidebar-menu-title">Menu</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Geral</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="falhas.html">
+                            <i class="typcn typcn-compass menu-icon"></i>
+                            <span class="menu-title">Falhas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                            aria-controls="ui-basic">
+                            <i class="typcn typcn-briefcase menu-icon"></i>
+                            <span class="menu-title">UI Elements</span>
+                            <i class="typcn typcn-chevron-right menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link"
+                                        href="../pages/ui-features/buttons.html">Buttons</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                        href="../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                        href="../pages/ui-features/typography.html">Typography</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                            aria-controls="form-elements">
+                            <i class="typcn typcn-film menu-icon"></i>
+                            <span class="menu-title">Form elements</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="form-elements">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Basic
+                                        Elements</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                            aria-controls="charts">
+                            <i class="typcn typcn-chart-pie-outline menu-icon"></i>
+                            <span class="menu-title">Charts</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="charts">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link"
+                                        href="../pages/charts/chartjs.html">ChartJs</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                            aria-controls="tables">
+                            <i class="typcn typcn-th-small-outline menu-icon"></i>
+                            <span class="menu-title">Tables</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="tables">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="../pages/tables/basic-table.html">Basic
+                                        table</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false"
+                            aria-controls="icons">
+                            <i class="typcn typcn-compass menu-icon"></i>
+                            <span class="menu-title">Icons</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="icons">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="../pages/icons/mdi.html">Mdi icons</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                            aria-controls="auth">
+                            <i class="typcn typcn-user-add-outline menu-icon"></i>
+                            <span class="menu-title">Equipe</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="auth">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="cadastrarManutencao.html"> Adicionar
+                                        funcionário
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="historicoAnalista.html">
+                            <i class="typcn typcn-compass menu-icon"></i>
+                            <span class="menu-title">Histórico</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastroManutencao.html">
+                            <i class="typcn typcn-user-add-outline menu-icon"></i>
+                            <span class="menu-title">Equipe</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row  mt-3">
+                        <div class="col-xl-12 d-flex grid-margin stretch-card">
+                            <div class="card">
+                                <!-- Lista dos Servidores Começo -->
+                                <div class="col-12 bordaBaixo">
+                                    <div class="bg-secondary rounded h-100 p-4">
+                                        <div class="d-flex align-items-center justify-content-between mb-2">
+                                            <h2 class="mb-4" id="dashTitle">Lista de Servidores e Falhas</h2>
+
+                                            <div class="d-flex">
+                                                <div class="consultaDia">
+                                                    <input id="filtroDataInic" placeholder="dd-MM-AAAA">
+                                                    <span>-</span>
+                                                    <input id="filtroDataFinal" placeholder="dd-MM-AAAA">
+                                                </div>
+                                                <button class="search-button mx-3" onclick="filtroDataEvent()"><span
+                                                        class="fa fa-search"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive listaServidor bordas">
+                                            <table class="table">
+                                                <thead class="bg-meu tituloServidor">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">ID Servidor</th>
+                                                        <th scope="col">Número de Alertas</th>
+                                                        <th scope="col">Número de Alertas Críticos</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="listagemDosServidores">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Lista dos Servidores Final -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  mt-3">
+                        <div class="col-xl-12 d-flex grid-margin stretch-card">
+                            <div class="card">
+                                <!-- Título -->
+                                <h6 class="text-center tituloServidor" data-id="nomeServidor">Servidor 1</h1>
+
+                                    <!-- KPI's componentes Começo -->
+                                    <div class="container-fluid pt- px-4">
+                                        <div class="row g-4 marginTop">
+                                            <div class="col-sm-6 col-xl-3">
+                                                <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
+                                                    onclick="change(), showCpu()" id="cpuBanner">
+                                                    <i class="fa fa-server fa-3x cpu"></i>
+                                                    <div class="ms-3">
+                                                        <p class="mb-2">Falhas de CPU's</p>
+                                                        <h6 class="mb-0" id="infoCPU"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xl-3">
+                                                <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
+                                                    onclick="change(), showMemory()" id="memoryBanner">
+                                                    <i class="fa fa-memory fa-3x memoria"></i>
+                                                    <div class="ms-3">
+                                                        <p class="mb-2">Falhas de Memórias</p>
+                                                        <h6 class="mb-0" id="infoRAM"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xl-3">
+                                                <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
+                                                    onclick="change(), showDisk()" id="diskBanner">
+                                                    <i class="fa fa-database fa-3x disco"></i>
+                                                    <div class="ms-3">
+                                                        <p class="mb-2">Falhas de Discos</p>
+                                                        <h6 class="mb-0" id="infoDisco"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xl-3">
+                                                <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
+                                                    onclick="change(), showUpload()" id="uploadBanner">
+                                                    <i class="fa fa-upload fa-3x upload"></i>
+                                                    <div class="ms-3">
+                                                        <p class="mb-2">Falhas de Uploads</p>
+                                                        <h6 class="mb-0" id="infoUpload"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xl-3">
+                                                <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
+                                                    onclick="change(), showDownload()" id="downloadBanner">
+                                                    <i class="fa fa-download fa-3x download"></i>
+                                                    <div class="ms-3">
+                                                        <p class="mb-2">Falhas de Downloads</p>
+                                                        <h6 class="mb-0" id="infoDownload"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xl-3">
+                                                <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
+                                                    onclick="change(), showFreq()" id="freqBanner">
+                                                    <i class="fa fa-wave-square fa-3x frequenciaGpu"></i>
+                                                    <div class="ms-3">
+                                                        <p class="mb-2">Falhas de Freq. CPU</p>
+                                                        <h6 class="mb-0" id="infoFrequencia"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- KPI's componentes Fim -->
+
+                                    <div class="container-fluid pt-4 px-4">
+                                        <div class="row g-4">
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Visão Geral
+                                                            (%)</h6>
+                                                    </div>
+                                                    <canvas id="dashboardGeral"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo" id="boxCpu">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" id="dashboardTitle" data-id="nomeServidor">
+                                                            Servidor 1 - CPU</h6>
+                                                    </div>
+                                                    <canvas id="dashboardCpu" class=""></canvas>
+                                                    <canvas id="dashboardMemory" class="invisivel"></canvas>
+                                                    <canvas id="dashboardDisk" class="invisivel"></canvas>
+                                                    <canvas id="dashboardUpload" class="invisivel"></canvas>
+                                                    <canvas id="dashboardDownload" class="invisivel"></canvas>
+                                                    <canvas id="dashboardFreq" class="invisivel"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel"
+                                                    id="boxMemory">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Memória
+                                                        </h6>
+                                                    </div>
+                                                    <canvas id="dashboardMemory"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel"
+                                                    id="boxDisk">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Disco</h6>
+                                                    </div>
+                                                    <canvas id="dashboardDisk"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel"
+                                                    id="boxUpload">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Upload</h6>
+                                                    </div>
+                                                    <canvas id="dashboardUpload"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel"
+                                                    id="boxDownload">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Download
+                                                        </h6>
+                                                    </div>
+                                                    <canvas id="dashboardDownload"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xl-6">
+                                                <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel"
+                                                    id="boxFreq">
+                                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                                        <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Frequência
+                                                            CPU</h6>
+                                                    </div>
+                                                    <canvas id="dashboardFreq"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a
+                                href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a
+                                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates
+                            from
+                            Bootstrapdash.com</span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../js/off-canvas.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
+    <script src="../js/template.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="../vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="../vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="../js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+
+    <!-- Template Javascript -->
+    <script src="js/dashboardAnalista.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="js/jquery.mask.min.js"></script>
+    <script>
+        $('#filtroDataInic').mask('00-00-0000');
+        $('#filtroDataFinal').mask('00-00-0000');
+    </script>
+
+    <script>
+        // Função logout
+        function log_out() {
+
+            delete localStorage.CPF_USUARIO;
+            delete localStorage.EMAIL_USUARIO;
+            delete localStorage.NOME_USUARIO;
+            delete localStorage.ID_USUARIO;
+            delete localStorage.FK_ADMIN;
+            delete localStorage.FK_EMPRESA;
+
+            window.location = "../../login.html";
+        }
+    </script>
+</body>
+
+</html>

@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
-<body onload="carregarNome(), carregarPagina()">
+<body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -193,14 +193,14 @@
             <p class="sidebar-menu-title">Menu</p>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="typcn typcn-compass menu-icon"></i>
+            <a class="nav-link" href="index.html">
+              <i class="typcn typcn-device-desktop menu-icon"></i>
               <span class="menu-title">Geral</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="typcn typcn-device-desktop menu-icon"></i>
+            <a class="nav-link" href="falhas.html">
+              <i class="typcn typcn-compass menu-icon"></i>
               <span class="menu-title">Falhas</span>
             </a>
           </li>
@@ -300,193 +300,7 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row  mt-3">
-            <div class="col-xl-12 d-flex grid-margin stretch-card">
-              <div class="card">
-                <!-- Lista dos Servidores Começo -->
-                <div class="col-12 bordaBaixo">
-                  <div class="bg-secondary rounded h-100 p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                      <h2 class="mb-4" id="dashTitle">Lista de Servidores e Falhas</h2>
-
-                      <div class="d-flex">
-                        <div class="consultaDia">
-                          <input id="filtroDataInic" placeholder="dd-MM-AAAA">
-                          <span>-</span>
-                          <input id="filtroDataFinal" placeholder="dd-MM-AAAA">
-                        </div>
-                        <button class="search-button mx-3" onclick="filtroDataEvent()"><span
-                            class="fa fa-search"></span></button>
-                      </div>
-                    </div>
-                    <div class="table-responsive listaServidor bordas">
-                      <table class="table">
-                        <thead class="bg-meu tituloServidor">
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">ID Servidor</th>
-                            <th scope="col">Número de Alertas</th>
-                            <th scope="col">Número de Alertas Críticos</th>
-                          </tr>
-                        </thead>
-                        <tbody id="listagemDosServidores">
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <!-- Lista dos Servidores Final -->
-              </div>
-            </div>
-          </div>
-          <div class="row  mt-3">
-            <div class="col-xl-12 d-flex grid-margin stretch-card">
-              <div class="card">
-                <!-- Título -->
-                <h6 class="text-center tituloServidor" data-id="nomeServidor">Servidor 1</h1>
-
-                  <!-- KPI's componentes Começo -->
-                  <div class="container-fluid pt- px-4">
-                    <div class="row g-4 marginTop">
-                      <div class="col-sm-6 col-xl-3">
-                        <div
-                          class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
-                          onclick="change(), showCpu()" id="cpuBanner">
-                          <i class="fa fa-server fa-3x cpu"></i>
-                          <div class="ms-3">
-                            <p class="mb-2">Falhas de CPU's</p>
-                            <h6 class="mb-0" id="infoCPU"></h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-xl-3">
-                        <div
-                          class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
-                          onclick="change(), showMemory()" id="memoryBanner">
-                          <i class="fa fa-memory fa-3x memoria"></i>
-                          <div class="ms-3">
-                            <p class="mb-2">Falhas de Memórias</p>
-                            <h6 class="mb-0" id="infoRAM"></h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-xl-3">
-                        <div
-                          class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
-                          onclick="change(), showDisk()" id="diskBanner">
-                          <i class="fa fa-database fa-3x disco"></i>
-                          <div class="ms-3">
-                            <p class="mb-2">Falhas de Discos</p>
-                            <h6 class="mb-0" id="infoDisco"></h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-xl-3">
-                        <div
-                          class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
-                          onclick="change(), showUpload()" id="uploadBanner">
-                          <i class="fa fa-upload fa-3x upload"></i>
-                          <div class="ms-3">
-                            <p class="mb-2">Falhas de Uploads</p>
-                            <h6 class="mb-0" id="infoUpload"></h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-xl-3">
-                        <div
-                          class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
-                          onclick="change(), showDownload()" id="downloadBanner">
-                          <i class="fa fa-download fa-3x download"></i>
-                          <div class="ms-3">
-                            <p class="mb-2">Falhas de Downloads</p>
-                            <h6 class="mb-0" id="infoDownload"></h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-xl-3">
-                        <div
-                          class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 bordasQuadradinhos"
-                          onclick="change(), showFreq()" id="freqBanner">
-                          <i class="fa fa-wave-square fa-3x frequenciaGpu"></i>
-                          <div class="ms-3">
-                            <p class="mb-2">Falhas de Freq. CPU</p>
-                            <h6 class="mb-0" id="infoFrequencia"></h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- KPI's componentes Fim -->
-
-                  <div class="container-fluid pt-4 px-4">
-                    <div class="row g-4">
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Visão Geral (%)</h6>
-                          </div>
-                          <canvas id="dashboardGeral"></canvas>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo" id="boxCpu">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" id="dashboardTitle" data-id="nomeServidor">Servidor 1 - CPU</h6>
-                          </div>
-                          <canvas id="dashboardCpu" class=""></canvas>
-                          <canvas id="dashboardMemory" class="invisivel"></canvas>
-                          <canvas id="dashboardDisk" class="invisivel"></canvas>
-                          <canvas id="dashboardUpload" class="invisivel"></canvas>
-                          <canvas id="dashboardDownload" class="invisivel"></canvas>
-                          <canvas id="dashboardFreq" class="invisivel"></canvas>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxMemory">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Memória</h6>
-                          </div>
-                          <canvas id="dashboardMemory"></canvas>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDisk">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Disco</h6>
-                          </div>
-                          <canvas id="dashboardDisk"></canvas>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxUpload">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Upload</h6>
-                          </div>
-                          <canvas id="dashboardUpload"></canvas>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxDownload">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Download</h6>
-                          </div>
-                          <canvas id="dashboardDownload"></canvas>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4 bordaTudo invisivel" id="boxFreq">
-                          <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0" data-id="nomeServidor">Servidor 1 - Frequência CPU</h6>
-                          </div>
-                          <canvas id="dashboardFreq"></canvas>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="row">
+          <div class="row">
             <div class="col-lg-12 d-flex grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -498,24 +312,24 @@
                       <div class="d-sm-flex justify-content-between">
                         <div class="dropdown">
                           <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text pl-0" type="button"
-                            id="dropdownMenuSizeButton4" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            Mon,1 Oct 2019 - Tue,2 Oct 2019
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4"
-                            data-x-placement="top-start">
-                            <h6 class="dropdown-header">Mon,17 Oct 2019 - Tue,25 Oct 2019</h6>
-                            <a class="dropdown-item" href="#">Tue,18 Oct 2019 - Wed,26 Oct 2019</a>
-                            <a class="dropdown-item" href="#">Wed,19 Oct 2019 - Thu,26 Oct 2019</a>
-                          </div>
-                        </div>
-                        <div>
-                          <button type="button" class="btn btn-sm btn-light mr-2">Day</button>
-                          <button type="button" class="btn btn-sm btn-light mr-2">Week</button>
-                        </div>
+                          id="dropdownMenuSizeButton4" data-toggle="dropdown" aria-haspopup="true"
+                          aria-expanded="false">
+                          Mon,1 Oct 2019 - Tue,2 Oct 2019
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4"
+                        data-x-placement="top-start">
+                        <h6 class="dropdown-header">Mon,17 Oct 2019 - Tue,25 Oct 2019</h6>
+                        <a class="dropdown-item" href="#">Tue,18 Oct 2019 - Wed,26 Oct 2019</a>
+                        <a class="dropdown-item" href="#">Wed,19 Oct 2019 - Thu,26 Oct 2019</a>
                       </div>
-                      <div class="chart-container mt-4">
-                        <canvas id="ecommerceAnalytic"></canvas>
+                    </div>
+                    <div>
+                      <button type="button" class="btn btn-sm btn-light mr-2">Day</button>
+                      <button type="button" class="btn btn-sm btn-light mr-2">Week</button>
+                    </div>
+                  </div>
+                  <div class="chart-container mt-4">
+                        <canvas id=""></canvas>
                       </div>
                     </div>
                     <div class="col-lg-3">
@@ -567,7 +381,7 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
 
 
@@ -622,8 +436,8 @@
         </div>
       </div>
     </div>
-
   </div>
+
   <!-- container-scroller -->
   <!-- base:js -->
   <script src="../vendors/js/vendor.bundle.base.js"></script>
@@ -671,28 +485,16 @@
       window.location = "../../login.html";
     }
 
-    function carregarNome() {
-      if (localStorage.ID_USUARIO == undefined) {
-        window.location = "../../login.html"
-      }
-      var nome = nomeUsuario;
-      nome.innerHTML = localStorage.NOME_USUARIO;
-    }
-
     const metricas = document.getElementById('metrics_adjustment');
 
     function metricsAdjustment() {
       metricas.style.display = 'flex';
     }
 
-    // Seleciona todos os elementos <li> da lista
     const listaItems = document.querySelectorAll('#metrics_adjustment ul li');
-
-    // Seleciona os inputs
     const inputsDiv = document.getElementById('inputs');
     const nomeComponenteSpan = document.getElementById('nomeComponente');
 
-    // Adiciona evento de clique a cada elemento da lista
     listaItems.forEach(item => {
       item.addEventListener('click', () => {
         listaItems.forEach(li => {
