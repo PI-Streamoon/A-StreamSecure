@@ -738,6 +738,9 @@
       }
       else if (!erro) {
         metricsUpdate();
+        toastr.success("<b style='font-family: arial;'>Métricas atualizadas!</b>")
+        ipt_alerta.value = '';
+        ipt_critico.value = '';
       }
 
       function metricsUpdate() {
