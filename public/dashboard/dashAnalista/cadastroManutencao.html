@@ -150,7 +150,7 @@
               <span class="nav-profile-name" id="nomeUsuario"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a onclick="logout()" class="dropdown-item">
+              <a onclick="log_out()" class="dropdown-item">
                 <i class="typcn typcn-power text-primary"></i>
                 Sair
               </a>
@@ -434,12 +434,12 @@
       delete localStorage.FK_ADMIN;
       delete localStorage.FK_EMPRESA;
 
-      window.location = "../login.html";
+      window.location = "../../login.html";
     }
 
     function carregarNome() {
       if (localStorage.ID_USUARIO == undefined) {
-        window.location = "../login.html"
+        window.location = "../../login.html"
       }
       var nome = nomeUsuario;
       nome.innerHTML = localStorage.NOME_USUARIO;
