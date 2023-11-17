@@ -118,16 +118,12 @@ select.filtro {
 .button-dash {
   width: 50px;
   height: 50px;
-
   background-color: #6248AE;
-
   border-radius: 50%;
   border: solid 1px #fff;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: relative;
 }
 
@@ -273,4 +269,138 @@ input[type="number"] {
 canvas {
   width: 100%;
   height: 100%;
+}
+
+.bordas {
+  border: 1px solid #6248AE;
+}
+
+.banner-critico {
+  background-color: rgb(49, 0, 0) !important;
+  border: 1px solid #fc6363 !important;
+  box-shadow: 0 0 0 0 rgb(255, 0, 0);
+  transform: scale(1);
+  animation: pulse 2s infinite;
+}
+
+.banner-alerta {
+  background-color: rgb(145, 145, 0) !important;
+  border: 1px solid #dbfc63 !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+  }
+}
+
+.bordasQuadradinhos:hover {
+  background-color: #dadada;
+  cursor: pointer;
+  border: 1px solid #6248AE;
+}
+
+.bordasQuadradinhos {
+  border: 1px solid #6248AE;
+}
+
+.bordaBranca {
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.bordaDireita {
+  border-right: 1px solid #6248AE;
+}
+
+.bordaTudo {
+  border: 1px solid #6248AE;
+}
+
+.marginTop {
+  margin-top: 0.1% !important;
+}
+
+.marginLeft {
+  margin-left: 0.1% !important;
+}
+
+.colunaQuadrados {
+  display: flex;
+  flex-direction: row;
+}
+
+.conteudoTexto h3 {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
+.conteudoTexto p {
+  margin-left: 5%;
+}
+
+.invisivel {
+  display: none !important;
+}
+
+.table-responsive tbody tr:hover {
+  background-color: #dde0e3;
+  color: #fff;
+  cursor: pointer;
+  border: 1.5px solid #6248AE;
+}
+
+.detalhesServidor {
+  max-height: 40rem;
+}
+
+.tituloServidor {
+  margin-top: 2%;
+}
+
+.listaServidor {
+  text-transform: capitalize;
+  max-height: 30rem;
+  color: #FFFFFF;
+}
+
+.bg-meu {
+  background-color: #fff;
+}
+
+.Normal {
+  color: #00FF01 !important;
+  font-weight: bolder !important;
+}
+
+.Alerta {
+  color: #FDDD02;
+  font-weight: bolder;
+}
+
+.Critico {
+  color: #FC151F !important;
+  font-weight: bolder !important;
+}
+
+.tituloServidor {
+  position: sticky;
+  top: 0;
+  z-index: 0
+}
+
+.footerDiferente {
+  margin-top: 5%;
 }
