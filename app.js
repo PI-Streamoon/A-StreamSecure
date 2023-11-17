@@ -19,6 +19,7 @@ var servidorRouter = require("./src/routes/servidor");
 var alertasRouter = require("./src/routes/alertas");
 var chamadosRouter = require("./src/routes/chamados");
 var exportRouter = require('./src/routes/exports');
+var moonAssistantRouter = require('./src/routes/MoonAssistant');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
 app.use("/exports", exportRouter);
+app.use("/MoonAssistant", moonAssistantRouter);
 
 const ipAddress = IP.address();
 

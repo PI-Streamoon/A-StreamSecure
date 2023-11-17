@@ -49,7 +49,7 @@
 .moonAssistant-modal-container .container{
     border: 3px solid rgb(71, 71, 71);
 
-    background-color: #1c1c1c81;
+    background-color: #1c1c1cb4;
     backdrop-filter: blur(3);
     border-radius: 33px;
 }
@@ -60,12 +60,92 @@
 
     border-radius: 33px;
 
+    box-shadow: 8px 9px 8px 0px #00000070;
     
 }
 
 .chat-input-text-container .text-input {
+    height: 30px;
+
+    border: none;
+
+    border-bottom: 2px solid rgb(92, 92, 92);
+
+
+}
+
+.chat-input-text-container .badge{
+    border-radius: 33px !important;
+}
+
+.chat-input-text-container button{
+    background-color: rgb(92, 92, 92);
+
+    border-radius: 50%;
+
+    width: 35px;
+    height: 35px;
+
+    padding: 0px;
+
+    border: none;
+}
+
+.chat-input-text-container button span.fa-spinner{
+    animation: spinner 1s infinite normal;
+}
+
+@keyframes spinner {
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(360deg);
+
+    }
+}
+
+#messages{
+    border-radius: 33px 33px 0px 0px;
+}
+
+#messages::-webkit-scrollbar {
+    width: 1em;
+}
+
+#messages::-webkit-scrollbar-thumb {
+    background-color: white;
+
     border-radius: 33px;
 }
+
+#messages div{
+    border-radius: 33px;
+
+    width: 70%;
+
+    box-shadow: 8px 9px 8px 0px #00000070;
+
+}
+
+#messages div span{
+    text-wrap: wrap;
+    word-break: keep-all;
+    
+}
+
+#messages div img{
+    border-radius: 50% 0px;
+
+    background-color: rgb(97, 72, 173);
+
+    padding: 5px;
+
+    width: 40px;
+    height: 40px;
+}
+
 
 @keyframes float-anim {
 0% {
