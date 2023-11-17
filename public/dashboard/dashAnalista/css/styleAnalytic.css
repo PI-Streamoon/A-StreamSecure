@@ -156,8 +156,7 @@ select.filtro {
 
 .metrics #container {
   background-color: #fff;
-  height: 55vh;
-  width: 45vw;
+  width: 50vw;
   border-bottom-left-radius: 2vh;
   border-top-left-radius: 2vh;
   border-top-right-radius: 2vh;
@@ -186,12 +185,12 @@ select.filtro {
 
 #metrics_adjustment h1 {
   margin-bottom: 10px;
-  padding-left: 1.5vh;
+  padding-left: 2vh;
 }
 
 #metrics_adjustment h4 {
   margin-bottom: 10px;
-  padding-left: 1.5vh;
+  padding-left: 2vh;
 }
 
 #metrics_adjustment ul {
@@ -218,7 +217,7 @@ select.filtro {
 }
 
 #inputs h4 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 #inputs label {
