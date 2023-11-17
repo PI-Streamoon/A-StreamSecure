@@ -30,7 +30,7 @@ var dashboardRamPorcentagem;
 
 var labelsDiscoPorcentagem = []
 var dadosDiscoPorcentagem = []
-var dashboardDiscoPorcentagem; 
+var dashboardDiscoPorcentagem;
 
 var labelsUploadKilobytes = []
 var dadosUploadKilobytes = []
@@ -47,7 +47,7 @@ var dashboardFrequenciaMegahertz;
 Chart.defaults.color = "#ffffff";
 
 function atualizarGraficoGeral() {
-    const {dataInic, dataFinal} = dataMachineVisible();
+    const { dataInic, dataFinal } = dataMachineVisible();
 
     fetch(`/alertas/geralPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
@@ -73,14 +73,14 @@ function atualizarGraficoGeral() {
 }
 
 function atualizarGraficosFalhas() {
-    const {dataInic, dataFinal} = dataMachineVisible();
+    const { dataInic, dataFinal } = dataMachineVisible();
 
     fetch(`/alertas/totalPDia?dataInic=${dataInic}&dataFinal=${dataFinal}&idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                
-                resposta.forEach((registro)=>{
+
+                resposta.forEach((registro) => {
                     labelsCpuPorcentagem.push(registro.Dia);
                     labelsRamPorcentagem.push(registro.Dia);
                     labelsDiscoPorcentagem.push(registro.Dia);
@@ -107,16 +107,16 @@ function atualizarGraficosFalhas() {
                     dadosFrequenciaMegahertz.datasets[1].data.push(registro.QuantFalhasCriticoFreq);
                 })
 
-                    // infoCPU.innerHTML = registro.CPU+"%";
-                    // infoRAM.innerHTML = registro.Memoria+"%";
-                    // infoDisco.innerHTML = registro.Disco+"%";
-                    // infoUpload.innerHTML = registro.Upload+" Kb/s";
-                    // infoDownload.innerHTML = registro.Download+" Kb/s";
-                    // infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
-                
-                    // gerarRelatorio()
+                // infoCPU.innerHTML = registro.CPU+"%";
+                // infoRAM.innerHTML = registro.Memoria+"%";
+                // infoDisco.innerHTML = registro.Disco+"%";
+                // infoUpload.innerHTML = registro.Upload+" Kb/s";
+                // infoDownload.innerHTML = registro.Download+" Kb/s";
+                // infoFrequencia.innerHTML = registro.FrequenciaCPU+" MHz"
 
-                
+                // gerarRelatorio()
+
+
 
                 dashboardCpuPorcentagem.update()
                 dashboardRamPorcentagem.update()
@@ -138,21 +138,21 @@ function atualizarGraficosFalhas() {
 
 labelsGeral = []
 dadosGeral = {
-labels: labelsGeral,
-datasets: [{
-    label: "Falhas",
-    data: [],
-    borderColor: "rgb(255, 255, 0)",
-    borderWidth: 2,
-    backgroundColor: "rgba(255, 255, 0, 0.3)"
-},
-{
-    label: "Falhas Críticas",
-    data: [],
-    borderColor: "rgb(255, 0, 0)",
-    borderWidth: 2,
-    backgroundColor: "rgba(255, 0, 0, 0.3)"
-}]
+    labels: labelsGeral,
+    datasets: [{
+        label: "Falhas",
+        data: [],
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
+    },
+    {
+        label: "Falhas Críticas",
+        data: [],
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
+    }]
 }
 
 dashboardGeral = new Chart(document.getElementById(`dashboardGeral`), {
@@ -338,7 +338,7 @@ dashboardFrequenciaMegahertz = new Chart(dashboardFreq, {
         responsive: true
     }
 });
-    
+
 
 function change() {
     dashboardCpu.classList.add(`invisivel`)
@@ -385,10 +385,10 @@ function gerarRelatorio() {
         if (response.ok) {
             response.json().then(function (resposta) {
                 // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();    
-                        
+                resposta.reverse();
+
                 var registro = resposta[0];
-                
+
                 CpuTotal.innerHTML = `${registro.CPU} %`;
                 Freq.innerHTML = `${registro.FrequenciaCPU} MHz`;
                 Disco.innerHTML = `${registro.Disco} %`;
@@ -406,7 +406,7 @@ function gerarRelatorio() {
                 registroUpload = registro.Upload
 
                 atualizarEstadoDoServidor(registroCPU, registroDisco, registroMemoria)
-               
+
             });
         } else {
             console.error('Nenhum dado encontrado ou erro na API');
@@ -418,11 +418,11 @@ function gerarRelatorio() {
 }
 
 function carregarPagina() {
-    const formatarData = (dataAtual)=>{
+    const formatarData = (dataAtual) => {
         const dia = String(dataAtual.getDate()).padStart(2, '0');
         const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
         const ano = dataAtual.getFullYear();
-        
+
         const dataFormatada = `${ano}-${mes}-${dia}`;
 
         return dataFormatada;
@@ -432,34 +432,34 @@ function carregarPagina() {
     var dataAtual = new Date();
     var dataMenosUmaSemana = new Date()
     dataMenosUmaSemana.setTime(dataAtual.getTime() - 604800000)
-    
+
     dataMenosUmaSemana = formatarData(dataMenosUmaSemana)
     dataAtual = formatarData(dataAtual);
 
     filtroDataInic.value = dataHumanVisible(dataMenosUmaSemana);
     filtroDataFinal.value = dataHumanVisible(dataAtual);
-    
+
     atualizarPagina(dataMenosUmaSemana, dataAtual);
 }
 
-function dataHumanVisible(data){
+function dataHumanVisible(data) {
     return data.split('-').reverse().join('-');
 }
 
-function dataMachineVisible(){
+function dataMachineVisible() {
     let dataInic = filtroDataInic.value.split('-').reverse().join('-');
     let dataFinal = filtroDataFinal.value.split('-').reverse().join('-');
 
-    return {dataInic: dataInic, dataFinal: dataFinal};
+    return { dataInic: dataInic, dataFinal: dataFinal };
 }
 
-function atualizarEstadoDoServidor(){
-    const setServerStatus = (element, estado)=>{
+function atualizarEstadoDoServidor() {
+    const setServerStatus = (element, estado) => {
         element.innerHTML = estado
         element.classList.add(estado)
     }
-    
-    const delAllStatus = ()=>{
+
+    const delAllStatus = () => {
         cpuBanner.classList.remove("banner-critico", "banner-alerta")
         memoryBanner.classList.remove("banner-critico", "banner-alerta")
         diskBanner.classList.remove("banner-critico", "banner-alerta")
@@ -467,64 +467,64 @@ function atualizarEstadoDoServidor(){
         downloadBanner.classList.remove("banner-critico", "banner-alerta")
     }
 
-    const setBannerStatus = (linha)=>{
+    const setBannerStatus = (linha) => {
         let estado = 'normal';
 
         delAllStatus();
 
-        if (linha.CPU >= 90){
+        if (linha.CPU >= 90) {
             estado = "critico"
             cpuBanner.classList.add("banner-critico")
-        }else if(linha.CPU >= 70){
+        } else if (linha.CPU >= 70) {
             estado = estado != "critico" ? "alerta" : estado
             cpuBanner.classList.add("banner-alerta")
-        }else{
+        } else {
             cpuBanner.classList.remove("banner-critico")
             cpuBanner.classList.remove("banner-alerta")
         }
 
-        if (linha.Memoria >= 90){
+        if (linha.Memoria >= 90) {
             estado = "critico"
             memoryBanner.classList.add("banner-critico")
-        }else if(linha.Memoria >= 70){
+        } else if (linha.Memoria >= 70) {
             estado = estado != "critico" ? "alerta" : estado
             memoryBanner.classList.add("banner-alerta")
-        }else{
+        } else {
             memoryBanner.classList.remove("banner-critico")
             memoryBanner.classList.remove("banner-alerta")
         }
 
-        if (linha.Disco >= 90){
+        if (linha.Disco >= 90) {
             estado = "critico"
             diskBanner.classList.add("banner-critico")
-        }else if(linha.Disco >= 70){
+        } else if (linha.Disco >= 70) {
             estado = estado != "critico" ? "alerta" : estado
             diskBanner.classList.add('banner-alerta')
-        }else{
+        } else {
             diskBanner.classList.remove("banner-critico")
             diskBanner.classList.remove("banner-alerta")
         }
 
-            
-        if (linha.Upload >= 100){
-            estado = "critico" 
+
+        if (linha.Upload >= 100) {
+            estado = "critico"
             uploadBanner.classList.add("banner-critico")
-        }else if(linha.Upload >= 80){
+        } else if (linha.Upload >= 80) {
             estado = estado != "critico" ? "alerta" : estado
             uploadBanner.classList.add("banner-alerta")
-        }else{
+        } else {
             uploadBanner.classList.remove("banner-critico")
             uploadBanner.classList.remove("banner-alerta")
         }
 
-            
-        if (linha.Download >= 400){
+
+        if (linha.Download >= 400) {
             estado = "critico"
             downloadBanner.classList.add("banner-critico")
-        }else if(linha.Download >= 350){
+        } else if (linha.Download >= 350) {
             estado = estado != "critico" ? "alerta" : estado
             downloadBanner.classList.add("banner-alerta")
-        }else{
+        } else {
             downloadBanner.classList.remove("banner-critico")
             downloadBanner.classList.remove("banner-alerta")
         }
@@ -537,12 +537,12 @@ function atualizarEstadoDoServidor(){
             response.json().then(function (resposta) {
                 resposta.reverse();
 
-                resposta.forEach((linha)=>{
+                resposta.forEach((linha) => {
                     // Crítico
                     let estadoServidor = document.getElementById(`estadoServidor-${linha.idServidor}`);
 
                     console.warn(linha)
-                    
+
                     let estado = setBannerStatus(linha);
                     setServerStatus(estadoServidor, estado);
                 })
@@ -551,12 +551,12 @@ function atualizarEstadoDoServidor(){
             console.error('Nenhum dado encontrado ou erro na API');
         }
     })
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
 }
 
-function trocarNomesServidor(nomeFuturo){
+function trocarNomesServidor(nomeFuturo) {
     var nomesServidor = document.querySelectorAll('[data-id="nomeServidor"]')
 
     nomesServidor.forEach((textosTag) => {
@@ -564,7 +564,7 @@ function trocarNomesServidor(nomeFuturo){
     })
 }
 
-function trocarServidor(idServidor){
+function trocarServidor(idServidor) {
     trocarNomesServidor(`Servidor ${idServidor}`);
 
     idServidorSelecionado = idServidor;
@@ -576,7 +576,7 @@ async function listarFalhasServidores(dataInic, dataFinal) {
     trocarNomesServidor(`Servidor ${idServidorSelecionado}`);
 
     listagemDosServidores.innerHTML = "";
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         fetch(`/alertas/total?dataInic=${dataInic}&dataFinal=${dataFinal}`)
             .then(function (response) {
                 if (response.ok) {
@@ -585,20 +585,20 @@ async function listarFalhasServidores(dataInic, dataFinal) {
 
                         var listaIdServidores = resposta
 
-                        if(idServidorSelecionado == 1){
+                        if (idServidorSelecionado == 1) {
                             trocarServidor(listaIdServidores[0].idServidor);
                         }
 
-                        
+
                         for (let i = 0; i < resposta.length; i++) {
                             let linha = resposta[0];
-                            
+
                             let idServidor = linha.idServidor
-                            
+
                             let totalFalhas = linha.TotalFalhas;
                             let totalFalhasCriticos = linha.TotalFalhasCriticas;
 
-                            
+
                             listagemDosServidores.innerHTML += `
                                 <tr class="bordaBaixo" onclick="trocarServidor(${idServidor})">
                                     <th scope="row">${i + 1}</th>
@@ -622,25 +622,100 @@ async function listarFalhasServidores(dataInic, dataFinal) {
                 reject(false)
             });
     });
-       
+
 }
 
 
-function filtroDataEvent(){
-    const {dataInic, dataFinal} = dataMachineVisible();
+function filtroDataEvent() {
+    const { dataInic, dataFinal } = dataMachineVisible();
 
     timeInic = Date.parse(dataInic);
     timeFinal = Date.parse(dataFinal);
 
-    if(!isNaN(timeInic) && !isNaN(timeFinal) && timeInic < timeFinal){
+    if (!isNaN(timeInic) && !isNaN(timeFinal) && timeInic < timeFinal) {
         atualizarPagina(dataInic, dataFinal);
     }
 }
 
-async function atualizarPagina(dataInic, dataFinal){
+async function atualizarPagina(dataInic, dataFinal) {
     let onSucess = await listarFalhasServidores(dataInic, dataFinal);
-    if(onSucess){
+    if (onSucess) {
         atualizarGraficoGeral();
         atualizarGraficosFalhas();
     }
+}
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3500",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
+function verifyMetrics() {
+    var alerta = ipt_alerta.value;
+    var critico = ipt_critico.value;
+    var erro = false;
+
+    if (alerta == '' && critico == '') {
+        toastr.error("<b style='font-family: arial;'>Preencha os campos</b>");
+        erro = true;
+    }
+    else if (alerta == '' || critico == '') {
+        toastr.error("<b style='font-family: arial;'>Preencha todos os campos</b>");
+        erro = true;
+    }
+    else if (!erro) {
+        metricsUpdate();
+        toastr.success("<b style='font-family: arial;'>Métricas atualizadas!</b>")
+        ipt_alerta.value = '';
+        ipt_critico.value = '';
+    }
+    
+    function metricsUpdate() {
+
+        fetch(`/metricas/atualizarMetricas?fkComponenteServidor=${fkComponenteServidor}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                alertaServer: alerta,
+                criticoServer: critico
+            })
+        }).then(function (resposta) {
+            console.log("Resposta: " + resposta)
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar atualizar as métricas!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    alert(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+    }
+
 }
