@@ -5305,11 +5305,11 @@
       term.write('\r\n' + shellprompt);
     };
   
-    term.writeln('Bem vindo ao terminal Streamoon!');
+    term.writeln('Bem vindo ao terminal Web da Streamoon!');
     term.writeln('');
     term.writeln('Aqui você pode digitar comandos e se comunicar com seu servidor AWS.');
     term.writeln('');
-    term.writeln('XPTO');
+    term.writeln('Configure o seu servidor de uma forma mais simples e prática.');
     term.prompt();
   
     term.on('key', function (key, ev) {
