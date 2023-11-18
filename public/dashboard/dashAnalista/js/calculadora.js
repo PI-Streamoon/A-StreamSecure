@@ -167,3 +167,10 @@ function pesquisar() {
         }
     }
 }
+
+function simular() {
+    
+    var mostrarRelatorio = document.getElementById('relatorio')
+
+    mostrarRelatorio.classList.remove('invisible')
+}
