@@ -44,7 +44,7 @@
                             <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                                    <img src="../images/faces/face4.jpg" alt="image" class="profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow">
                                     <h6 class="preview-subject ellipsis font-weight-normal">David Grey
@@ -56,7 +56,7 @@
                             </a>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                                    <img src="../images/faces/face2.jpg" alt="image" class="profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow">
                                     <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
@@ -68,7 +68,7 @@
                             </a>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                                    <img src="../images/faces/face3.jpg" alt="image" class="profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow">
                                     <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
@@ -280,35 +280,49 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <h3 class="mb-0 font-weight-bold">Calculadora</h3>
+                            <br>
                             <p>Realize uma simulação de custo mensal para sua empresa
                                 refente a ospedagem da sua aplicação nos serviços da AWS,
                                 filtrando por regição, sistema operacional e por tipo de instância na EC2</p>
                         </div>
                     </div>
-                    <!-- <div class="row"> -->
-                    <div class="form-group">
-                        <label for="exampleSelectGender">Região</label>
-                        <select class="form-control" id="regiao">
 
-                        </select>
-                    </div>
                     <div class="form-group">
+                        <br>
+                        <label for="exampleFormControlSelect1">Região</label>
+                        <select class="form-control form-control-lg" id="regiao">
+                            <option value="default" disabled selected>Selecione uma região</option>
+                        </select>
+
+                        <br>
+
                         <label for="exampleSelectGender">Sistema Operacional</label>
                         <select class="form-control" id="so">
-
+                            
                         </select>
+                    
                     </div>
+                    <button type="submit" class="btn btn-primary mb-2" id="comparar" onclick="mostrarTabela()">Comparar</button>
+                    
 
-                    <!-- </div> -->
-                    <div class="row">
+                    <div class="row invisible" id="tabelaInstancias">
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">instâncias</h4>
+                                    <h4 class="card-title" id="textoTabela"></h4>
+
+                                            <div id="the-basics">
+                                              <input class="typeahead" type="text" id="iptBusca" placeholder="t2 medium">
+                                              <button type="submit" class="btn btn-primary mb-2" onclick="pesquisar()">Buscar</button>
+                                            </div>
+
                                     <div class="table-responsive">
                                         <table class="table table-striped">
-                                            <thead>
+                                            <thead id="tabelaFixa">
                                                 <tr>
+                                                    <th>
+                                                        selecione
+                                                    </th>
                                                     <th>
                                                         tipo
                                                     </th>
@@ -323,138 +337,17 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        t2 micro
-                                                    </td>
-                                                    <td>
-                                                        2
-                                                    </td>
-                                                    <td>
-                                                        0.5
-                                                    </td>
-                                                    <td>
-                                                        $ 0.77
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="../../images/faces/face2.jpg" alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        Messsy Adam
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-danger" role="progressbar"
-                                                                style="width: 75%" aria-valuenow="75" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $245.30
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="../../images/faces/face3.jpg" alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        John Richards
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                                style="width: 90%" aria-valuenow="90" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $138.00
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="../../images/faces/face4.jpg" alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        Peter Meggik
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-primary" role="progressbar"
-                                                                style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $ 77.99
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="../../images/faces/face5.jpg" alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        Edward
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-danger" role="progressbar"
-                                                                style="width: 35%" aria-valuenow="35" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $ 160.25
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="../../images/faces/face6.jpg" alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        John Doe
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-info" role="progressbar"
-                                                                style="width: 65%" aria-valuenow="65" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $ 123.21
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img src="../../images/faces/face7.jpg" alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        Henry Tom
-                                                    </td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                                style="width: 20%" aria-valuenow="20" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $ 150.00
-                                                    </td>
-                                                </tr>
+                                            <tbody id="dadosEC2">
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-primary mb-2" id="simular" onclick="">Simular</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row  invisible">
                         <div class="col-xl-3 d-flex grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">

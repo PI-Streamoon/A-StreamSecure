@@ -3,7 +3,7 @@ var router = express.Router();
 
 var calculadoraController = require("../controllers/calculadoraController");
 
-router.get("/mostrarInstancias", function (req, res) {
+router.get("/mostrarInstancias/:so/:fkLocal", function (req, res) {
     calculadoraController.mostrarInstancias(req, res);
 });
 

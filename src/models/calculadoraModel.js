@@ -3,7 +3,7 @@ var database = require("../database/config")
 function mostrarInstancias(so, fkLocal) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirPerfil()");
     var instrucao = `
-    SELECT * FROM dadosec2 WHERE so = '${so}' AND WHERE fkLocal = ${fkLocal};
+    SELECT * FROM dadosec2 WHERE so = '${so}' AND fkLocal = ${fkLocal} ORDER BY tipo;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
