@@ -40,16 +40,21 @@
     right: -100vw;
     z-index: 9998;
 
-    width: 20vw;
+    width: 100vw;
     height: 100vh;
 
     transition: 500ms;
+
+    border: 3px solid rgb(71, 71, 71);
+
+    
+    background-color: #1c1c1cb4;
 }
 
 .moonAssistant-modal-container .container{
-    border: 3px solid rgb(71, 71, 71);
+    border: 3px solid #e7eaed;
 
-    background-color: #1c1c1cb4;
+    background-color: #e7eaed;
     backdrop-filter: blur(3);
     border-radius: 33px;
 }
@@ -60,7 +65,7 @@
 
     border-radius: 33px;
 
-    box-shadow: 8px 9px 8px 0px #00000070;
+    box-shadow: 4px 4px 5px 0px #00000070;
     
 }
 
@@ -120,22 +125,22 @@
     border-radius: 33px;
 }
 
-#messages div{
+.box-message{
     border-radius: 33px;
 
-    width: 70%;
+    width: 90%;
 
-    box-shadow: 8px 9px 8px 0px #00000070;
+    box-shadow: 4px 4px 5px 0px #00000070;
 
 }
 
-#messages div span{
+.box-message span{
     text-wrap: wrap;
     word-break: keep-all;
     
 }
 
-#messages div img{
+#messages .moonAssistant-icon{
     border-radius: 50% 0px;
 
     background-color: rgb(97, 72, 173);
@@ -144,6 +149,11 @@
 
     width: 40px;
     height: 40px;
+}
+
+#messages .message_text img{
+    width: 50%;
+    margin: 5px;
 }
 
 

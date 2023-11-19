@@ -9,6 +9,12 @@ var hasDadosFalhas = false;
 var hasDadosMonitoramento = false;
 var hasError = false;
 
+iptMessage.onkeyup = (e)=>{
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+}
+
 const turnModalMoonAssistant = (elementOrigin)=>{
     let img = elementOrigin.getElementsByTagName('img')[0];
 
@@ -17,7 +23,7 @@ const turnModalMoonAssistant = (elementOrigin)=>{
     img.src = isClosed ? "https://img.icons8.com/ios/50/ffffff/delete-sign.png" : "https://img.icons8.com/ios/50/ffffff/astronaut.png";
     img.className = isClosed ? "" : "icon";
 
-    moonAssistantModal.style.right = isClosed ? '100px' : '-100vw';
+    moonAssistantModal.style.right = isClosed ? '0px' : '-100vw';
 
     document.body.style.overflowY = isClosed ? 'hidden' : 'auto';
 
@@ -38,7 +44,6 @@ const turnDadosFalhas = (elementOrigin)=>{
     }
 }
 
-
 const turnDadosMonitoramento = (elementOrigin)=>{
     if(hasDadosMonitoramento){
         hasDadosMonitoramento = false;
@@ -53,17 +58,55 @@ const turnDadosMonitoramento = (elementOrigin)=>{
     }
 }
 
+const turnSpinner = (spinner)=>{
+    if(spinner){
+        buttonSendMessage.onclick = '';
+        spanButtonSendMessage.classList.remove('fa-arrow-right');
+        spanButtonSendMessage.classList.add('fa-spinner');
+    }else{
+        spanButtonSendMessage.classList.remove('fa-spinner');
+        spanButtonSendMessage.classList.add('fa-arrow-right');
+        buttonSendMessage.onclick = ()=>{sendMessage()};
+    }
+}
+
 const addMsgFront = (bot, message)=>{
+    let markedReplace = marked.parse(message)
+        .replaceAll("<table>", "<div class='overflow-auto'><table class='table'>")
+        .replaceAll('</table>', '</table></div>')
+
     containerMessages.innerHTML += `
-    <div class="d-flex flex-column overflow-hidden text-black font-weight-bold ${bot ? 'float-left' : 'float-right'} bg-white mt-3">
-        ${bot ? '<img src="https://img.icons8.com/ios/50/ffffff/astronaut.png">' : ''}
-        <span class="m-3">${message}</span>
-    </div>
+        <div class="d-flex flex-column overflow-hidden text-black font-weight-bold ${bot ? 'float-left' : 'float-right'} bg-white mt-3 box-message">
+            ${bot ? '<img class="moonAssistant-icon" src="https://img.icons8.com/ios/50/ffffff/astronaut.png">' : ''}
+            <span class="m-3 message_text">${markedReplace}</span>
+        </div>
     `;
 
     containerMessages.scrollTop = containerMessages.scrollHeight;
 }
 
+const inserirTextoPosicao = (original, texto, posicao) => {
+    return original.slice(0, posicao) + texto + original.slice(posicao);
+}
+
+const tratarResposta = (resposta) =>{
+    var content = resposta['content'];
+    var images = resposta['images'];
+    var lastSimbolMarkdownImage = 0;
+
+    images.forEach((link)=>{
+        let firstSimbolMarkdownImage = content.indexOf('[Image of', lastSimbolMarkdownImage);
+        lastSimbolMarkdownImage = content.indexOf(']', firstSimbolMarkdownImage)+2;
+        content = inserirTextoPosicao(content, '!', firstSimbolMarkdownImage);
+        content = inserirTextoPosicao(content, `(${link})`, lastSimbolMarkdownImage);
+    })
+
+    return content;
+}
+
+const showInfo = ()=>{
+    addMsgFront(true, "Para enviar uma mensagem, por favor, redija-a no campo abaixo.\nCaso deseje adicionar um conjunto de dados à sua mensagem, utilize os botões localizados acima do campo de escrita (conforme indicado na imagem abaixo).\n![Botões Dataset](./img/btDataset.png)");
+}
 
 const sendMessage = ()=>{
     let message = iptMessage.value;
@@ -71,9 +114,7 @@ const sendMessage = ()=>{
     if(message.trim().length > 0){
         iptMessage.value = '';
 
-        buttonSendMessage.onclick = '';
-        spanButtonSendMessage.classList.remove('fa-arrow-right');
-        spanButtonSendMessage.classList.add('fa-spinner');
+        turnSpinner(true);
 
         hasError = false;
         addMsgFront(false, message);
@@ -95,19 +136,22 @@ const sendMessage = ()=>{
             console.log(response)
             if (response.ok) {
                 response.json().then(function (resposta) {
-                    addMsgFront(true, resposta['message']);
+                    message = tratarResposta(resposta);
 
-                    spanButtonSendMessage.classList.remove('fa-spinner');
-                    spanButtonSendMessage.classList.add('fa-arrow-right');
-                    buttonSendMessage.onclick = ()=>{sendMessage()};
+                    addMsgFront(true, message);
+
+                    turnSpinner(false);
                 });
             } else {
-                response.then(function (respostaError) {
+                response.json().then(function (respostaError) {
                     if(respostaError == "Texto Muito Longo"){
                         addMsgFront(true, "Minha aplicação está nos estágios iniciais, limitada a 5000 caracteres; por favor, desconsidere conjuntos de dados ou reduza a mensagem.");
+                    
+                        turnSpinner(false);
                     }else{
                         addMsgFront(true, "Houve Um Erro. Por Favor tente mais tarde");
-                        console.error(`Erro na obtenção dos dados`);
+
+                        turnSpinner(false);
                     }
                 });
             }

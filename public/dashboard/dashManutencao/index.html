@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -26,12 +27,12 @@
   </button>
 
   <div class="moonAssistant-modal-container d-flex align-items-center justify-content-center" id="moonAssistant-Modal">
-    <div class="container w-100 h-75 d-flex flex-column justify-content-end pb-2">
-      <div class="chat w-100 h-100 mt-4 overflow-auto" id="messages">
-        <div class="d-flex flex-column overflow-hidden text-black font-weight-bold float-left bg-white mt-3">
-          <img src="https://img.icons8.com/ios/50/ffffff/astronaut.png">
+    <div class="container w-100 h-90 d-flex flex-column justify-content-end pb-2">
+      <div class="chat w-100 h-100 p-3 overflow-auto" id="messages">
+        <div class="d-flex flex-column overflow-hidden text-black font-weight-bold float-left bg-white mt-3 box-message">
+          <img class="moonAssistant-icon" src="https://img.icons8.com/ios/50/ffffff/astronaut.png">
           <span class="m-3">Olá, eu sou o Assistente de Monitoramento e Otimização para Servidores de Streaming! Estou aqui para oferecer suporte especializado na análise contínua do hardware dos seus servidores, garantindo que tudo funcione de forma eficiente e confiável.</span>
-          <span class="fa fa-2x fa-info-circle font-weight-bolder text-center mb-3 pointer" onclick="openModalInfo()"></span>
+          <span class="fa fa-2x fa-info-circle font-weight-bolder text-center mb-3 pointer" onclick="showInfo()"></span>
         </div>
 
       </div>
@@ -40,10 +41,11 @@
           <div class="badge badge-light mr-3 pointer font-weight-bolder" onclick="turnDadosMonitoramento(this)">Dados Monitoramento</div>
           <div class="badge badge-light pointer font-weight-bolder" onclick="turnDadosFalhas(this)">Dados Falhas</div>
         </div>
-        <div class="d-flex align-items-center">
-          <input id="ipt-message" type="text" placeholder="Digite Aqui" class="text-input mt-3 mr-3"/>
+        <div class="d-flex align-items-center justify-content-center w-100">
+          <input id="ipt-message" type="text" placeholder="Digite Aqui" class="text-input mt-3 mr-3 w-75"/>
           <button class="mt-3" id="buttonSendMessage" onclick="sendMessage()"><span class="fa fa-1x fa-arrow-right text-white"></span></button>
         </div>
+        <a class="text-black-50 font-italic mt-1" target="_blank" href="https://bard.google.com/">Powered By Bard</a>
       </div>
     </div>
   </div>
