@@ -10356,6 +10356,7 @@ pre code {
 
 #tabelaFixa{
   position: sticky;
+  z-index: 9;
   top: 0;
   background-color: #f5f5f5;
 }

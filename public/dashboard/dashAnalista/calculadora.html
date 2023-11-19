@@ -281,9 +281,9 @@
                         <div class="col-sm-6">
                             <h3 class="mb-0 font-weight-bold">Calculadora</h3>
                             <br>
-                            <p>Realize uma simulação de custo mensal para sua empresa
-                                refente a hospedagem da sua aplicação nos serviços da AWS,
-                                filtrando por regição, sistema operacional e por tipo de instância na EC2</p>
+                            <p> Realize uma simulação de custo mensal para sua empresa
+                                referente a hospedagem da sua aplicação nos serviços da AWS,
+                                filtrando por região, sistema operacional e por tipo de instância na EC2 </p>
                         </div>
                     </div>
 
@@ -300,20 +300,20 @@
                         <select class="form-control" id="so">
                             
                         </select>
-                    
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2" id="comparar" onclick="mostrarTabela()">Comparar</button>
+                    <button type="submit" class="btn btn-primary mb-2" onclick="mostrarSimulacao(simples)">Simulação Simples</button>
+                    <button type="submit" class="btn btn-primary mb-2" onclick="mostrarSimulacao(comparada1)">Simulação Comparada</button>
                     
 
-                    <div class="row invisible" id="tabelaInstancias">
+                    <div class="row invisible" id="tabelaInstanciasSimples">
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title" id="textoTabela"></h4>
 
                                             <div id="the-basics">
-                                              <input class="typeahead" type="text" id="iptBusca" placeholder="t2 medium">
-                                              <button type="submit" class="btn btn-primary mb-2" onclick="pesquisar()">Buscar</button>
+                                              <input class="typeahead" type="text" id="iptBuscaSimples" placeholder="t2 medium">
+                                              <button type="submit" class="btn btn-primary mb-2" onclick="pesquisarNome(simples)">Buscar</button>
                                             </div>
 
                                     <div class="table-responsive">
@@ -337,18 +337,118 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="dadosEC2">
+                                            <tbody id="dadosEC2Simples">
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-2" onclick="simular()">Simular</button>
+                                <button type="submit" class="btn btn-primary mb-2" onclick="simular(simples)">Simular</button>
                             </div>
                         </div>
                     </div>
 
+                    <!-- <div class="row"> -->
+                        <div class="col-lg-12 grid-margin stretch-card invisible" id="tabelaInstanciasComparada1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title" id="textoTabelaComparada1"></h4>
+
+                                            <div id="the-basics">
+                                              <input class="typeahead" type="text" id="iptBuscaComparacao1" placeholder="t2 medium">
+                                              <button type="submit" class="btn btn-primary mb-2" onclick="pesquisarNome(comparada1)">Buscar</button>
+                                            </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead id="tabelaFixa">
+                                                <tr>
+                                                    <th>
+                                                        selecione
+                                                    </th>
+                                                    <th>
+                                                        tipo
+                                                    </th>
+                                                    <th>
+                                                        Núcleos
+                                                    </th>
+                                                    <th>
+                                                        Memória RAM(BG)
+                                                    </th>
+                                                    <th>
+                                                        Preço por Hora
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dadosEC2Comparada1">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group invisible" id="selectsComparacao2">
+                            <br>
+                            <label for="exampleFormControlSelect1">Região</label>
+                            <select class="form-control form-control-lg" id="regiaoComparada2">
+                                <option value="default" disabled selected>Selecione uma região</option>
+                            </select>
+    
+                            <br>
+    
+                            <label for="exampleSelectGender">Sistema Operacional</label>
+                            <select class="form-control" id="soComparada2">
+                                
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2 invisible" id="botaoCarregarC2" onclick="mostrarSimulacao(comparada2)">Carregar</button>
+
+                        <br> <br>
+
+                        <div class="col-lg-12 grid-margin stretch-card invisible" id="tabelaInstanciasComparada2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title" id="textoTabelaComparada2"></h4>
+
+                                            <div id="the-basics">
+                                              <input class="typeahead" type="text" id="iptBuscaComparacao2" placeholder="t2 medium">
+                                              <button type="submit" class="btn btn-primary mb-2" onclick="pesquisarNome(comparada2)">Buscar</button>
+                                            </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead id="tabelaFixa">
+                                                <tr>
+                                                    <th>
+                                                        selecione
+                                                    </th>
+                                                    <th>
+                                                        tipo
+                                                    </th>
+                                                    <th>
+                                                        Núcleos
+                                                    </th>
+                                                    <th>
+                                                        Memória RAM(BG)
+                                                    </th>
+                                                    <th>
+                                                        Preço por Hora
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dadosEC2Comparada2">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2" onclick="simular(comparada)">Simular</button>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+
+
                     <div class="row  invisible" id="relatorio">
-                        <div class="col-xl-3 d-flex grid-margin stretch-card">
+                        <div class="col-xl-3 d-flex grid-margin stretch-card" id="precoTempo">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-wrap justify-content-between">
@@ -363,29 +463,29 @@
                                                         <div class="font-weight-medium">Valor $</div>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4">
-                                                        <div class="text-secondary font-weight-medium">Horá
+                                                        <div class="text-secondary font-weight-medium">Hora
                                                         </div>
-                                                        <div class="small">$ 0,50</div>
+                                                        <div class="medium" id="gastoHora"></div>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <div class="text-secondary font-weight-medium">Dia
                                                         </div>
-                                                        <div class="small">$ 120,00</div>
+                                                        <div class="medium" id="gastoDia"></div>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <div class="text-secondary font-weight-medium">Semana
                                                         </div>
-                                                        <div class="small">$ 840,00</div>
+                                                        <div class="medium" id="gastoSemana"></div>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <div class="text-secondary font-weight-medium">Mês
                                                         </div>
-                                                        <div class="small">$ 25.200,00</div>
+                                                        <div class="medium" id="gastoMes"></div>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <div class="text-secondary font-weight-medium">Ano
                                                         </div>
-                                                        <div class="small">$ 302.400,00</div>
+                                                        <div class="medium" id="gastoAno"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -394,67 +494,63 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 d-flex grid-margin stretch-card">
+                        <div class="col-xl-6 d-flex grid-margin stretch-card" id="compararPreco">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="d-flex flex-wrap justify-content-between">
-                                        <h4 class="card-title mb-3">Sales Analytics</h4>
+                                    <!-- <div class="d-flex flex-wrap justify-content-between">
+                                        <h4 class="card-title mb-3">Comparação</h4>
                                         <button type="button" class="btn btn-sm btn-light">Month</button>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="d-md-flex mb-4">
                                                 <div class="mr-md-5 mb-4">
                                                     <h5 class="mb-1"><i
-                                                            class="typcn typcn-globe-outline mr-1"></i>Online</h5>
-                                                    <h2 class="text-primary mb-1 font-weight-bold">23,342</h2>
+                                                            class="typcn typcn-globe-outline mr-1"></i>Atual</h5>
+                                                    <h2 class="mb-2 mt-2 font-weight-bold" id="precoInstAtual"></h2>
                                                 </div>
                                                 <div class="mr-md-5 mb-4">
-                                                    <h5 class="mb-1"><i class="typcn typcn-archive mr-1"></i>Offline
+                                                    <h5 class="mb-1"><i class="typcn typcn-archive mr-1"></i>Previsto
                                                     </h5>
-                                                    <h2 class="text-secondary mb-1 font-weight-bold">13,221</h2>
+                                                    <h2 class="mb-2 mt-2 font-weight-bold" id="precoInstFutura"></h2>
                                                 </div>
                                                 <div class="mr-md-5 mb-4">
-                                                    <h5 class="mb-1"><i class="typcn typcn-tags mr-1"></i>Marketing</h5>
-                                                    <h2 class="text-warning mb-1 font-weight-bold">1,542</h2>
+                                                    <h5 class="mb-1" id="categorizacaoAcao"><i class="typcn typcn-tags mr-1"></i>Diferença</h5>
+                                                    <h2 class="mb-1 font-weight-bold" id="diferenca"></h2>
                                                 </div>
                                             </div>
-                                            <canvas id="salesanalyticChart"></canvas>
+                                            <canvas id="barChart"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 d-flex grid-margin stretch-card">
+                        <div class="col-xl-3 d-flex grid-margin stretch-card" id="diferencaTempo">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-wrap justify-content-between">
-                                        <h4 class="card-title mb-3">Card Title</h4>
+                                        <h4 class="card-title mb-3" id="tituloDiferencaTempo"></h4>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="mb-5">
                                                 <div class="mr-1">
                                                     <div class="text-info mb-1">
-                                                        Total Earning
+                                                        Valor ano Atual
                                                     </div>
-                                                    <h2 class="mb-2 mt-2 font-weight-bold">287,493$</h2>
-                                                    <div class="font-weight-bold">
-                                                        1.4% Since Last Month
-                                                    </div>
+                                                    <h2 class="mb-2 mt-2 font-weight-bold" id="valorAnoAtual"></h2>
                                                 </div>
                                                 <hr>
                                                 <div class="mr-1">
                                                     <div class="text-info mb-1">
-                                                        Total Earning
+                                                        Valor ano Final
                                                     </div>
-                                                    <h2 class="mb-2 mt-2  font-weight-bold">87,493</h2>
-                                                    <div class="font-weight-bold">
-                                                        5.43% Since Last Month
+                                                    <h2 class="mb-2 mt-2  font-weight-bold" id="valorAnoFinal"></h2>
+                                                    <div class="font-weight-bold" id="diferencaComp">
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
-                                            <canvas id="barChartStacked"></canvas>
                                         </div>
                                     </div>
                                 </div>
