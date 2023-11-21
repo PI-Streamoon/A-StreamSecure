@@ -44,8 +44,6 @@ var labelsFrequenciaMegahertz = []
 var dadosFrequenciaMegahertz = []
 var dashboardFrequenciaMegahertz;
 
-Chart.defaults.color = "#ffffff";
-
 function atualizarGraficoGeral() {
     const { dataInic, dataFinal } = dataMachineVisible();
 
@@ -177,14 +175,16 @@ dadosCpuPorcentagem = {
     datasets: [{
         label: "CPU Falhas",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 255, 0)"
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
     },
     {
         label: "CPU Falhas Critícas",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 0, 0)"
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
     }]
 }
 
@@ -210,14 +210,16 @@ dadosRamPorcentagem = {
     datasets: [{
         label: "Ram Falhas",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 255, 0)"
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
     },
     {
         label: "Ram Falhas Critícas",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 0, 0)"
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
     }]
 }
 
@@ -242,14 +244,16 @@ dadosDiscoPorcentagem = {
     datasets: [{
         label: "Disco Alertas",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 255, 0)"
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
     },
     {
         label: "Disco Alertas Críticos",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 0, 0)"
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
     }]
 }
 
@@ -268,14 +272,16 @@ dadosUploadKilobytes = {
     datasets: [{
         label: "Alertas de Taxa de Upload",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 255, 0)"
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
     },
     {
         label: "Alertas Críticos de Taxa de Upload",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 0, 0)"
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
     }]
 }
 
@@ -294,14 +300,16 @@ dadosDownloadKilobytes = {
     datasets: [{
         label: "Alertas de Taxa de Downloads",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 255, 0)"
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
     },
     {
         label: "Alertas Críticos de Taxa de Downloads",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 0, 0)"
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
     }]
 }
 
@@ -320,14 +328,16 @@ dadosFrequenciaMegahertz = {
     datasets: [{
         label: "Alertas de Frequência",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 255, 0)"
+        borderColor: "rgb(255, 255, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 255, 0, 0.3)"
     },
     {
         label: "Alertas Críticos de Frequência",
         data: [],
-        backgroundColor: "#000000",
-        borderColor: "rgb(255, 0, 0)"
+        borderColor: "rgb(255, 0, 0)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 0, 0, 0.3)"
     }]
 }
 
@@ -682,7 +692,7 @@ function verifyMetrics() {
         ipt_alerta.value = '';
         ipt_critico.value = '';
     }
-    
+
     function metricsUpdate() {
 
         fetch(`/metricas/atualizarMetricas?fkComponenteServidor=${fkComponenteServidor}`, {
@@ -719,3 +729,88 @@ function verifyMetrics() {
     }
 
 }
+
+var labelsPredict = [];
+var dadosPredict = [];
+var dashPredict;
+
+(function ($) {
+    "use strict";
+
+    Chart.defaults.color = "#ffffff";
+
+    setInterval(atualizarGraficoPredict, 6000)
+
+    function atualizarGraficoPredict() {
+        fetch(`/medidas/predict?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        labelsPredict.push(registro.dtHora);
+                        dadosPredict.datasets[0].data.push(registro.upload);
+                        dadosPredict.datasets[1].data.push(predict.uploadPredict);
+                    }
+
+                    if (labelsPredict.length > 5) {
+                        labelsPredict.shift()
+                        dadosPredict.datasets[0].data.shift()
+                        dadosPredict.datasets[1].data.shift()
+                    }
+
+                    dashPredict.update()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    // Dashboard Predict
+
+    labelsPredict = []
+    dadosPredict = {
+        labels: labelsPredict,
+        datasets: [{
+            label: "Dados reais",
+            data: [],
+            borderColor: dadosA.borderColor,
+            backgroundColor: dadosA.backgroundColor,
+            borderWidth: 1
+        },
+        {
+            label: "Dados previstos",
+            data: [],
+            borderColor: dadosB.borderColor,
+            backgroundColor: dadosB.backgroundColor,
+            borderWidth: 1
+        }
+        ]
+    }
+
+    dashboardGeral = new Chart(document.getElementById(`dashboardPredict`), {
+        type: "line",
+        data: dadosPredict,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Comparação entre dados reais e previstos'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+})(jQuery);

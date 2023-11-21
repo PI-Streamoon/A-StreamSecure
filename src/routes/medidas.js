@@ -11,6 +11,10 @@ router.get("/geral", function (req, res) {
     medidaController.geral(req, res);
 })
 
+router.get("/predict", function (req, res) {
+    medidaController.predict(req, res);
+})
+
 /* router.get("/tempo-real/:idAquario", function (req, res) {
     medidaController.buscarMedidasEmTempoReal(req, res);
 }) */

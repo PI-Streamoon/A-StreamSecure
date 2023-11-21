@@ -49,7 +49,28 @@ function geral(idServidor) {
     return database.executar(instrucao);
 }
 
+function predict(idServidor) {
+    var instrucao = ``
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucao = `
+        `;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+
+        instrucao = `
+       
+        `
+    } else {
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     plotarGrafico,
-    geral
+    geral,
+    predict
 }
