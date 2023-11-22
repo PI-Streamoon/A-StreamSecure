@@ -5292,7 +5292,7 @@
   //# sourceMappingURL=xterm.js.map
   
   var terminalContainer = document.getElementById('terminal-container');
-  
+  var comandoDigitado = ''; // Inicializa a VAR
   var term = new Terminal({
       cursorBlink: true
     });
@@ -5319,16 +5319,29 @@
   
       if (ev.keyCode == 13) {
         term.prompt();
+        // FAZ O FETCH COM O comandoDigitado
+
+        
+
+
+
+        comandoDigitado = ''; // REDEFINE O comandoDigitado PRA VAZIO *** DEPOIS DO FETCH ***
       } else if (ev.keyCode == 8) {
        // Do not delete the prompt
         if (term.x > 2) {
           term.write('\b \b');
         }
+
+        comandoDigitado = comandoDigitado.slice(0, -1); // REMOVE A ÚLTIMA LETRA DO COMANDO
       } else if (printable) {
         term.write(key);
+        comandoDigitado += key // CONCATENA A LETRA DIGITADA (key) COM O TEXTO NA VAR
       }
     });
   
     term.on('paste', function (data, ev) {
       term.write(data);
+
+      comandoDigitado += data // CASO A PESSOA DER CTRL+V ELE VAI PEGAR O DADO (data) DO QUE FOI
+                                // COLADO E COLOCA NO comandoDigitado
     });
