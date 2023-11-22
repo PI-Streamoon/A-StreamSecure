@@ -20,26 +20,30 @@ const mudarValoresBanners = (values)=>{
     }
 }
 
-const mudarBackgroundBanners = (values)=>{
+const getNivelAlerta = (valor)=>{
     let nivelAlerta = 'success';
 
+    if(valor == 1){
+        nivelAlerta = 'warning';
+    }else if(valor == 2){
+        nivelAlerta = 'danger';
+    }
+    
+
+    return nivelAlerta;
+}
+
+const mudarBackgroundBanners = (values)=>{
     for(let key in values){
-        let valor = values[key]
-
-        if(valor == 1){
-            nivelAlerta = 'warning';
-        }else if(valor == 2){
-            nivelAlerta = 'danger';
-        }
-
         let banner = document.getElementById(`Banner-${key}`);
+
+        let nivelAlerta = getNivelAlerta(values[key])
 
         if (banner != undefined && values.idServidor == idServidorSelecionado){
             banner.className = `bg-${nivelAlerta} rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer mt-2`;
         }
     }
 
-    return nivelAlerta;
 }
 
 const atualizar10UltimasLeituras = ()=>{
@@ -156,6 +160,8 @@ const ultimasMedidas = ()=>{
                 resposta.reverse()
                 
                 resposta.forEach((linha)=>{
+                    console.warn(linha.idServidor)
+
                     mudarValoresBanners(linha)
 
                     atualizarChart(cpuChart, cpuChartDataset, linha.dtHora, [linha.CPU]);
@@ -182,8 +188,18 @@ const checarFalhas = ()=>{
             response.json().then(function (resposta) {
 
                 resposta.forEach((linha)=>{
-                    atualizarTempo(linha.MomentoRegistro)
-                    let nivelAlerta = mudarBackgroundBanners(linha);
+                    
+                    if(linha.idServidor == idServidorSelecionado){
+                        atualizarTempo(linha.MomentoRegistro)
+                        mudarBackgroundBanners(linha);
+                    }
+                    
+                    let nivelAlerta;
+
+                    for(let key in linha){
+                        nivelAlerta = getNivelAlerta(linha[key]);
+                    }
+
                     atualizarStatusServidor(linha.idServidor, nivelAlerta);
                 })
 

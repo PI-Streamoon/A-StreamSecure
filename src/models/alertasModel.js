@@ -47,15 +47,28 @@ function totalPDia(dataInic, dataFinal, idServidor){
 
 function realTime(){
     const instrucao = `
-        SELECT idServidor,
-        MAX(MomentoRegistro) AS MomentoRegistro,
+        SELECT
+        idServidor,
+        MomentoRegistro,
         nivelFalhaCPU AS CPU,
         nivelFalhaMemoria AS Memoria,
         nivelFalhaDisco AS Disco,
         nivelFalhaUpload AS Upload,
         nivelFalhaDownload AS Download
+    FROM (
+        SELECT
+            idServidor,
+            MomentoRegistro,
+            nivelFalhaCPU,
+            nivelFalhaMemoria,
+            nivelFalhaDisco,
+            nivelFalhaUpload,
+            nivelFalhaDownload,
+            ROW_NUMBER() OVER (PARTITION BY idServidor ORDER BY MomentoRegistro DESC) AS rn
         FROM falhasColunas
-        GROUP BY idServidor, MomentoRegistro, CPU, Memoria, Disco, Upload, Download
+    ) AS ranked
+    WHERE rn = 1;
+
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
