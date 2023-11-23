@@ -162,7 +162,7 @@ function carregarEC2(so, fkLocal, situacao, vt) {
 
                         vt.push(resposta[i])
 
-                        gerarLinhasTabela(vt, i)
+                        gerarLinhasTabela(vt, dadosEC2Simples, i)
                     }
                 })
 
@@ -187,7 +187,7 @@ function carregarEC2(so, fkLocal, situacao, vt) {
 
                         vt.push(resposta[i])
 
-                        gerarLinhasTabela(vt, i)
+                        gerarLinhasTabela(vt, dadosEC2Comparada1, i)
                     }
                 })
 
@@ -211,7 +211,7 @@ function carregarEC2(so, fkLocal, situacao, vt) {
 
                         vt.push(resposta[i])
 
-                        gerarLinhasTabela(vt, i)
+                        gerarLinhasTabela(vt, dadosEC2Comparada2, i)
                     }
                 })
 
@@ -227,84 +227,49 @@ function carregarEC2(so, fkLocal, situacao, vt) {
 }
 
 
-function gerarLinhasTabela(vt, i) {
+function gerarLinhasTabela(vt, div, i) {
+
+    var name = "";
 
     if (vt == vt_ec2simples) {
-
-        dadosEC2Simples.innerHTML += `
-                    <tr>
-                            <td>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="ec2s" value="${vt_ec2simples[i].preco}"> 
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="py-1">
-                                ${vt_ec2simples[i].tipo}
-                            </td>
-                            <td>
-                                ${vt_ec2simples[i].vcpu}
-                            </td>
-                            <td>
-                                ${vt_ec2simples[i].ram}
-                            </td>
-                            <td>
-                                $ ${vt_ec2simples[i].preco.toFixed(2)}
-                            </td>
-                        </tr>`;
+ 
+        name = "ec2s";
 
     } else if (vt == vt_ec2comparada1) {
-
-        dadosEC2Comparada1.innerHTML += `
-                    <tr>
-                            <td>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="ec2c1" value="${vt_ec2comparada1[i].preco}"> 
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="py-1">
-                                ${vt_ec2comparada1[i].tipo}
-                            </td>
-                            <td>
-                                ${vt_ec2comparada1[i].vcpu}
-                            </td>
-                            <td>
-                                ${vt_ec2comparada1[i].ram}
-                            </td>
-                            <td>
-                                $ ${vt_ec2comparada1[i].preco}
-                            </td>
-                        </tr>`;
-
+        
+        name = "ec2c1";
+        
     } else if (vt == vt_ec2comparada2) {
-
-        dadosEC2Comparada2.innerHTML += `
-                    <tr>
-                            <td>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="ec2c2" value="${vt_ec2comparada2[i].preco}"> 
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="py-1">
-                                ${vt_ec2comparada2[i].tipo}
-                            </td>
-                            <td>
-                                ${vt_ec2comparada2[i].vcpu}
-                            </td>
-                            <td>
-                                ${vt_ec2comparada2[i].ram}
-                            </td>
-                            <td>
-                                $ ${vt_ec2comparada2[i].preco}
-                            </td>
-                        </tr>`;
+        
+        name = "ec2c2";
+        
     }
-}
+
+    div.innerHTML += `
+                <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="${name}" value="${vt[i].preco}"> 
+                                </label>
+                            </div>
+                        </td>
+                        <td class="py-1">
+                            ${vt[i].tipo}
+                        </td>
+                        <td>
+                            ${vt[i].vcpu}
+                        </td>
+                        <td>
+                            ${vt[i].ram}
+                        </td>
+                        <td>
+                            $ ${vt[i].preco.toFixed(2)}
+                        </td>
+                    </tr>`;
+
+
+}    
 
 
 function pesquisarNome(situacao) {
