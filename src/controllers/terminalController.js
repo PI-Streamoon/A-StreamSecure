@@ -2,15 +2,14 @@ var terminalModel = require("../models/terminalModel");
 
 function inserirComando(req, res) {
 
-    var comandoDigitado = req.body.ComandoServer;
+    var comandoDigitado = req.body.comandoServer;
+    var idServidorSelecionado = req.body.idServidorServer
+    
+    console.log(comandoDigitado)
 
-    terminalModel.inserirComando().then(function (resultado) {
-
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
+    terminalModel.inserirComando(comandoDigitado, idServidorSelecionado).then(function (resultado) {
+        console.log(resultado.insertId)
+        res.status(200).json(resultado);
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao inserir o comando: ", erro.sqlMessage);

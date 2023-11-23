@@ -10,7 +10,7 @@ router.post("/inserirComando", function (req, res) {
 });
 
 router.get("/lerComando", function (req, res) {
-    terminalController.lerComandos(req, res);
+    terminalController.lerComando(req, res);
 });
 
 module.exports = router;

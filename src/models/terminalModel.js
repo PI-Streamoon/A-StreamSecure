@@ -1,8 +1,8 @@
 var database = require("../database/config");
 
-function inserirComando(comandoDigitado) {
+function inserirComando(comandoDigitado, idServidorSelecionado) {
     var instrucao = `
-        INSERT INTO terminal (comando) VALUES ${comandoDigitado};
+        INSERT INTO terminal (comando, fkServidor) VALUES ('${comandoDigitado}', ${idServidorSelecionado} );
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

@@ -5341,6 +5341,7 @@ term.on('key', function (key, ev) {
       },
       body: JSON.stringify({
         'comandoServer': comandoDigitado,
+        'idServidorServer' : 2222
       })
     };
 
@@ -5351,7 +5352,7 @@ term.on('key', function (key, ev) {
 
 
           setInterval(() => {
-            fetch('/terminal/lerComando?idTerminal=' + resposta.lastId).then(function (reponseLerComando) {
+            fetch('/terminal/lerComando?idTerminal=' + resposta.insertId).then(function (reponseLerComando) {
 
               if (reponseLerComando.ok) {
                   reponseLerComando.json().then(function (respostaLerComando) {
