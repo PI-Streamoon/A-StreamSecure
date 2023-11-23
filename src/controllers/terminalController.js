@@ -1,7 +1,10 @@
 var terminalModel = require("../models/terminalModel");
 
 function inserirComando(req, res) {
-    terminalModel.lerComandos().then(function (resultado) {
+
+    var comandoDigitado = req.body.ComandoServer;
+
+    terminalModel.inserirComando().then(function (resultado) {
 
         if (resultado.length > 0) {
             res.status(200).json(resultado);
@@ -17,7 +20,11 @@ function inserirComando(req, res) {
 
 
 function lerComando(req, res) {
-    terminalModel.lerComando().then(function (resultado) {
+
+    var idTerminal = req.query.idTerminal;
+
+    terminalModel.lerComando(idTerminal).then(function (resultado) {
+
 
         if (resultado.length > 0) {
             res.status(200).json(resultado);

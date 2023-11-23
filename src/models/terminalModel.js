@@ -2,16 +2,16 @@ var database = require("../database/config");
 
 function inserirComando(comandoDigitado) {
     var instrucao = `
-        INSERT INTO terminal (comando) VALUES ('${comandoDigitado}');
+        INSERT INTO terminal (comando) VALUES ${comandoDigitado};
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
-function lerComando() {
+function lerComando(idTerminal) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
     var instrucao = `
-        SELECT * comando FROM terminal;
+        SELECT retorno FROM terminal WHERE idTerminal = ${idTerminal} AND retorno != null;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
