@@ -231,18 +231,16 @@ function gerarLinhasTabela(vt, div, i) {
 
     var name = "";
 
-    if (vt == vt_ec2simples) {
- 
-        name = "ec2s";
-
-    } else if (vt == vt_ec2comparada1) {
-        
-        name = "ec2c1";
-        
-    } else if (vt == vt_ec2comparada2) {
-        
-        name = "ec2c2";
-        
+    switch (vt) {
+        case vt_ec2simples:
+            name = "ec2s";
+            break;
+        case vt_ec2comparada1:
+            name = "ec2c1";
+            break;
+        case vt_ec2comparada2:
+            name = "ec2c2";
+            break;
     }
 
     div.innerHTML += `
