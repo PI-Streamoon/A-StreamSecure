@@ -245,12 +245,12 @@ function gerarLinhasTabela(vt, div, i) {
 
     div.innerHTML += `
                 <tr>
-                        <td>
-                            <div class="form-check">
+                        <td>    
+                        <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" name="${name}" value="${vt[i].preco}"> 
-                                </label>
-                            </div>
+                                <i class="input-helper"></i></label>
+                        </div>
                         </td>
                         <td class="py-1">
                             ${vt[i].tipo}
@@ -287,7 +287,7 @@ function pesquisarNome(situacao) {
 
                 if (vt_ec2simples[i].tipo.indexOf(buscaSimples.toLowerCase()) > -1) {
 
-                    gerarLinhasTabela(vt_ec2simples, i)
+                    gerarLinhasTabela(vt_ec2simples, dadosEC2Simples, i)
                 }
             }
 
@@ -297,7 +297,7 @@ function pesquisarNome(situacao) {
 
             for (let i = 0; i < vt_ec2simples.length; i++) {
 
-                gerarLinhasTabela(vt_ec2simples, i)
+                gerarLinhasTabela(vt_ec2simples, dadosEC2Simples, i)
             }
         }
 
@@ -311,7 +311,7 @@ function pesquisarNome(situacao) {
 
                 if (vt_ec2comparada1[i].tipo.indexOf(buscaComparacao1.toLowerCase()) > -1) {
 
-                    gerarLinhasTabela(vt_ec2comparada1, i)
+                    gerarLinhasTabela(vt_ec2comparada1, dadosEC2Comparada1, i)
                 }
             }
 
@@ -321,7 +321,7 @@ function pesquisarNome(situacao) {
 
             for (let i = 0; i < vt_ec2comparada1.length; i++) {
 
-                gerarLinhasTabela(vt_ec2comparada1, i)
+                gerarLinhasTabela(vt_ec2comparada1, dadosEC2Comparada1, i)
             }
         }
 
@@ -335,7 +335,7 @@ function pesquisarNome(situacao) {
 
                 if (vt_ec2comparada2[i].tipo.indexOf(buscaComparacao2.toLowerCase()) > -1) {
 
-                    gerarLinhasTabela(vt_ec2comparada2, i)
+                    gerarLinhasTabela(vt_ec2comparada2, dadosEC2Comparada2, i)
                 }
             }
 
@@ -345,7 +345,7 @@ function pesquisarNome(situacao) {
 
             for (let i = 0; i < vt_ec2comparada2.length; i++) {
 
-                gerarLinhasTabela(vt_ec2comparada2, i)
+                gerarLinhasTabela(vt_ec2comparada2, dadosEC2Comparada2, i)
             }
         }
 
@@ -416,7 +416,7 @@ function calculo(situacao) {
             precoInstAtual.innerHTML = `${Number(opcaoSelecionadac1.value).toFixed(2).replace(".", ",")}`;
             precoInstFutura.innerHTML = `${Number(opcaoSelecionadac2.value).toFixed(2).replace(".", ",")}`;
 
-            var percentDiferenca = ((opcaoSelecionadac1.value - opcaoSelecionadac2.value)*100/opcaoSelecionadac1.value)*-1;
+            var percentDiferenca = (((opcaoSelecionadac1.value - opcaoSelecionadac2.value)*100)/opcaoSelecionadac1.value)*-1;
 
             if (percentDiferenca > 0) {
 
@@ -438,7 +438,7 @@ function calculo(situacao) {
             diferenca.innerHTML = `${Number(percentDiferenca).toFixed(2).replace(".", ",")}%`;
 
 
-            tituloDiferencaTempo.innerHTML = "Diferença anuel entre instâncias"
+            tituloDiferencaTempo.innerHTML = "Diferença anual entre instâncias"
             valorAnoAtual.innerHTML = "$ "+ Number(opcaoSelecionadac1.value * 24 * 365).toFixed(2).replace(".", ",")
             valorAnoFinal.innerHTML = "$ "+ Number(opcaoSelecionadac2.value * 24 * 365).toFixed(2).replace(".", ",")
             diferencaComp.innerHTML = `${Number(percentDiferenca).toFixed(2).replace(".",",")}% em relação a Instância inicial`;
