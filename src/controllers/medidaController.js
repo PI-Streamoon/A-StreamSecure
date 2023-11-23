@@ -34,7 +34,7 @@ function geral(req, res) {
     });
 }
 
-function geral(req, res) {
+function predict(req, res) {
     var idServidor = req.query.idServidor;
 
     console.log(`Recuperando medidas em tempo real`);
@@ -74,6 +74,7 @@ function geral(req, res) {
 
 module.exports = {
     plotarGrafico,
-    geral
+    geral,
+    predict
     /* buscarMedidasEmTempoReal */
 }
