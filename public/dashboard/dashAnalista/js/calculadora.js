@@ -248,7 +248,7 @@ function gerarLinhasTabela(vt, div, i) {
                         <td>    
                         <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="${name}" value="${vt[i].preco}"> 
+                                    <input type="radio" class="form-check-input" name="${name}" id="${i}" value="${vt[i].preco}"> 
                                 <i class="input-helper"></i></label>
                         </div>
                         </td>
@@ -380,16 +380,19 @@ function calculo(situacao) {
 
         const tabela = document.getElementById('dadosEC2Simples');
         const opcaoSelecionada = tabela.querySelector('input[name="ec2s"]:checked')
+        var nomeInstancia = vt_ec2simples[opcaoSelecionada.id].tipo
 
         if (opcaoSelecionada) {
-
-            tituloDiferencaTempo.innerHTML = "Diferença pelo tempo";
+            
+            
+            tituloDiferencaTempo.innerHTML = `Diferença pelo tempo (${nomeInstancia})`;
 
             gastoHora.innerHTML = `$: ${Number(opcaoSelecionada.value).toFixed(2)}`;
             gastoDia.innerHTML = `$: ${Number(opcaoSelecionada.value * 24).toFixed(2)}`;
             gastoSemana.innerHTML = `$: ${Number(opcaoSelecionada.value * 24 * 7).toFixed(2)}`;
             gastoMes.innerHTML = `$: ${Number(opcaoSelecionada.value * 24 * 30).toFixed(2)}`;
             gastoAno.innerHTML = `$: ${Number(opcaoSelecionada.value * 24 * 365).toFixed(2)}`;
+
 
         } else {
             alert("Selecione uma instância para realizar a simulação")
@@ -401,16 +404,18 @@ function calculo(situacao) {
         const tabela2 = document.getElementById('dadosEC2Comparada2');
         const opcaoSelecionadac1 = tabela1.querySelector('input[name="ec2c1"]:checked')
         const opcaoSelecionadac2 = tabela2.querySelector('input[name="ec2c2"]:checked')
+        const nomeInstInicial = vt_ec2comparada1[opcaoSelecionadac1.id].tipo
+        const nomeInstFinal = vt_ec2comparada2[opcaoSelecionadac2.id].tipo
 
         if (opcaoSelecionadac1 && opcaoSelecionadac2) {
 
             tituloDiferencaTempo.innerHTML = "Diferença pelo tempo Prevista";
 
-            gastoHora.innerHTML = `$: ${Number(opcaoSelecionadac2.value).toFixed(2).replace(".", ",")}`;
-            gastoDia.innerHTML = `$: ${Number(opcaoSelecionadac2.value * 24).toFixed(2).replace(".", ",")}`;
-            gastoSemana.innerHTML = `$: ${Number(opcaoSelecionadac2.value * 24 * 7).toFixed(2).replace(".", ",")}`;
-            gastoMes.innerHTML = `$: ${Number(opcaoSelecionadac2.value * 24 * 30).toFixed(2).replace(".", ",")}`;
-            gastoAno.innerHTML = `$: ${Number(opcaoSelecionadac2.value * 24 * 365).toFixed(2).replace(".", ",")}`;
+            gastoHora.innerHTML = `$ ${Number(opcaoSelecionadac2.value).toFixed(2).replace(".", ",")}`;
+            gastoDia.innerHTML = `$ ${Number(opcaoSelecionadac2.value * 24).toFixed(2).replace(".", ",")}`;
+            gastoSemana.innerHTML = `$ ${Number(opcaoSelecionadac2.value * 24 * 7).toFixed(2).replace(".", ",")}`;
+            gastoMes.innerHTML = `$ ${Number(opcaoSelecionadac2.value * 24 * 30).toFixed(2).replace(".", ",")}`;
+            gastoAno.innerHTML = `$ ${Number(opcaoSelecionadac2.value * 24 * 365).toFixed(2).replace(".", ",")}`;
             
 
             precoInstAtual.innerHTML = `${Number(opcaoSelecionadac1.value).toFixed(2).replace(".", ",")}`;
@@ -435,15 +440,81 @@ function calculo(situacao) {
 
             }
 
+            instAtual.innerHTML = nomeInstInicial;
+            InstFinal.innerHTML = nomeInstFinal;
+
             diferenca.innerHTML = `${Number(percentDiferenca).toFixed(2).replace(".", ",")}%`;
 
+            var dadosPreco = [opcaoSelecionadac1.value * 24 * 365, opcaoSelecionadac2.value * 24 * 365];
 
             tituloDiferencaTempo.innerHTML = "Diferença anual entre instâncias"
-            valorAnoAtual.innerHTML = "$ "+ Number(opcaoSelecionadac1.value * 24 * 365).toFixed(2).replace(".", ",")
-            valorAnoFinal.innerHTML = "$ "+ Number(opcaoSelecionadac2.value * 24 * 365).toFixed(2).replace(".", ",")
+
+            valorInstInicial.innerHTML = nomeInstInicial;
+            valorInstFinal.innerHTML = nomeInstFinal;
+
+            valorAnoAtual.innerHTML = "$ "+ Number(opcaoSelecionadac1.value * 24 * 365).toFixed(2).replace(".", ",");
+            valorAnoFinal.innerHTML = "$ "+ Number(opcaoSelecionadac2.value * 24 * 365).toFixed(2).replace(".", ",");
             diferencaComp.innerHTML = `${Number(percentDiferenca).toFixed(2).replace(".",",")}% em relação a Instância inicial`;
+
+            var nomesInstancias = [nomeInstInicial, nomeInstFinal];
+
+            grafico(dadosPreco, nomesInstancias);
+
+        } else {
+            alert("Selecione as instâncias para realizar a simulação");
         }
 
     }
-
 }
+
+
+    var barChartCanvas = document.getElementById('barChart').getContext('2d');
+   
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: {
+          labels: [],
+          datasets: [{
+            label: [],
+            data: [],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1,
+            fill: false
+          }]
+      },
+      options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          legend: {
+            display: false
+          },
+          elements: {
+            point: {
+              radius: 0
+            }
+          }
+      
+        }
+      });
+
+
+    function grafico(dados, labels) {  
+
+        barChart.data.datasets[0].data = dados;
+        barChart.data.labels = labels;
+
+        barChart.update();
+    }
