@@ -1,13 +1,14 @@
 const dashboardPredictCpu = document.getElementById('dashboardPredictCpu');
 const dashboardPredictUpload = document.getElementById('dashboardPredictUpload');
-const graficoTotalDisco = document.getElementById('totalDisco');
+const graficoTotalMemoria = document.getElementById('totalMemoria');
 var labelsPredict = [];
+var labelsTotalMemoria = [];
 var dadosPredictCpu = [];
 var dadosPredictUpload = [];
-var dadoDiscoTotal = [];
+var dadoMemoriaTotal = [];
 var dashPredictCpu;
 var dashPredictUpload;
-var totalDisco;
+var totalMemoria;
 
 var idServidorSelecionado = 1;
 
@@ -159,16 +160,22 @@ dashPredictUpload = new Chart(dashboardPredictUpload, {
     }
 });
 
-function exibirDisco() {
-    fetch(`/predicts/buscarDisco`)
+function exibirMemoria() {
+    fetch(`/predicts/exibirMemoria`)
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    dadoDiscoTotal = resposta;
-                    total.innerHTML += `<p>${arrayEspecies[0].nomeEspecie}</p>`
+                    dadoMemoriaTotal = resposta;
 
+                    const { MemoriaTotal, MemoriaUsada } = dadoMemoriaTotal[0];
 
+                    dadoMemoriaTotal.push(`${MemoriaTotal}`)
+                    dadoMemoriaTotal.push(`${MemoriaUsada}`)
+                    
+                    console.log(`${dadoMemoriaTotal}`)
+
+                    totalMemoria.update()
                 });
             } else {
                 console.error("Nenhum dado encontrado ou erro na API");
@@ -176,19 +183,20 @@ function exibirDisco() {
         })
         .catch(function (error) {
             console.error(
-                `Erro na obtenção dos dados p / idEspecie: ${error.message}`
+                `Erro na obtenção dos dados p / memória: ${error.message}`
             );
         });
+        
 }
 
-labelsTotalDisco = []
-dadoDiscoTotal = {
+labelsTotalMemoria = []
+dadoMemoriaTotal = {
     labels: [
-        'Espaço utilizado',
+        'Espaço Utilizado',
         'Espaço Disponível'
     ],
     datasets: [{
-        label: 'My First Dataset',
+        // label: 'My First Dataset',
         data: [],
         backgroundColor: [
             'rgb(131,111,255)',
@@ -199,7 +207,7 @@ dadoDiscoTotal = {
 }
 
 
-totalDisco = new Chart(graficoTotalDisco, {
+totalMemoria = new Chart(graficoTotalMemoria, {
     type: 'pie',
-    data: dadoDiscoTotal
+    data: dadoMemoriaTotal
 });
