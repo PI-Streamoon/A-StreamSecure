@@ -55,7 +55,7 @@ function predict(idServidor) {
     if (process.env.AMBIENTE_PROCESSO == "producao") {
         instrucao = `
         SELECT DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
-           upload
+           cpu
             FROM streamoon.registroColunar
             WHERE idServidor = ${idServidor}
             ORDER BY dtHora DESC LIMIT 1;
