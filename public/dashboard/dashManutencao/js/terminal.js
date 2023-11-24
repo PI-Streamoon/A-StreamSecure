@@ -5329,8 +5329,8 @@ term.on('key', function (key, ev) {
     !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
   );
 
-  if (ev.keyCode == 13) {
-    term.prompt();
+  if (ev.keyCode == 13 && comandoDigitado.length > 0) {
+    term.write('\r\n');
 
     // FAZ O FETCH COM O comandoDigitado
 
@@ -5351,13 +5351,19 @@ term.on('key', function (key, ev) {
         response.json().then(function (resposta) {
 
 
-          setInterval(() => {
+          loopSearchCommand = setInterval(() => {
             fetch('/terminal/lerComando?idTerminal=' + resposta.insertId).then(function (reponseLerComando) {
-
+              
               if (reponseLerComando.ok) {
-                  reponseLerComando.json().then(function (respostaLerComando) {
-                    if(respostaLerComando.length > 0) {
-                      term.write(respostaLerComando.retorno)
+                reponseLerComando.json().then(function (respostaLerComando) {
+                  if(respostaLerComando.length > 0) {
+                    linhas = (respostaLerComando[0].retorno).split('\n')
+                      linhas.forEach((linha)=>{
+                        term.write(linha + '\n\r')
+                      })
+                      term.prompt();
+
+                      clearInterval(loopSearchCommand);
                     }
                 });
               }

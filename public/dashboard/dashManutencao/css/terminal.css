@@ -90,6 +90,10 @@
     white-space: nowrap;
 }
 
+.terminal .xterm-rows div span{
+    word-break: keep-all;
+}
+
 .terminal .xterm-scroll-area {
     visibility: hidden;
 }
