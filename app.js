@@ -17,6 +17,8 @@ var medidasRouter = require("./src/routes/medidas");
 var empresasRouter = require("./src/routes/empresas");
 var servidorRouter = require("./src/routes/servidor");
 var alertasRouter = require("./src/routes/alertas");
+var calculadoraRouter = require("./src/routes/calculadora");
+var chamadosRouter = require("./src/routes/chamados");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,6 +33,7 @@ app.use("/medidas", medidasRouter);
 app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
+app.use("/calculadora", calculadoraRouter);
 
 const ipAddress = IP.address();
 
@@ -38,10 +41,4 @@ const linkServer = `http://${ipAddress}:${PORTA}`;
 
 app.listen(PORTA, function () {
     console.log(`Servidor Rodando Em:  ${linkServer}`);
-});
-
-const curl = spawn("curl", [`qrenco.de/${linkServer}`]);
-
-curl.stdout.on("data", data => {
-    console.log(`qrcode:\n${data}`);
 });
