@@ -19,6 +19,7 @@ var servidorRouter = require("./src/routes/servidor");
 var alertasRouter = require("./src/routes/alertas");
 var calculadoraRouter = require("./src/routes/calculadora");
 var chamadosRouter = require("./src/routes/chamados");
+var metricasRouter = require("./src/routes/metricas");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
 app.use("/calculadora", calculadoraRouter);
+app.use("/metricas", metricasRouter);
 
 const ipAddress = IP.address();
 
