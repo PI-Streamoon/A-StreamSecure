@@ -8,21 +8,19 @@ router.get("/totalChamadosResolvidos", function (req, res) {
 })
 
 router.get("/abrirChamado", function (req, res) {
-    chamadosController.totalPDia(req, res);
+    chamadosController.abrirChamado(req, res);
 })
 
-router.get("/totalChamadosCriticos", function (req, res) {
-    chamadosController.totalChamadosCriticos(req, res);
+router.get("/totalChamadosAbertos", function (req, res) {
+    chamadosController.totalChamadosAbertos(req, res);
 })
 
-router.get("/chamadoResolvido", function (req, res) {
-    chamadosController.chamadoResolvido(req, res);
+router.get("/fecharChamado", function (req, res) {
+    chamadosController.fecharChamado(req, res);
 })
 
 router.get("/totalChamados", function (req, res) {
-    chamadosController.totalChamadosCriticos(req, res);
+    chamadosController.totalChamados(req, res);
 })
-
-
 
 module.exports = router;

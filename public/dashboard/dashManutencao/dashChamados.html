@@ -51,6 +51,9 @@
           class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
         >
           <ul class="navbar-nav navbar-nav-right">
+            <!-- <li class="nav-item d-none d-lg-flex">
+              <a class="nav-link active" href="#"> Gerenciamento de Equipe </a>
+            </li> -->
             <li class="nav-item nav-profile dropdown">
               <a
                 class="nav-link dropdown-toggle pl-0 pr-0"
@@ -123,303 +126,48 @@
         </nav>
         <!-- partial -->
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-xl-12 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">Lista de Servidores</h4>
-                    </div>
+          <div class="row">
+            <div class="col-xl-12 d-flex grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Histórico de Chamados</h4>
+                  </div>
 
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">ID Servidor</th>
-                            <th scope="col">Local</th>
-                            <th scope="col">Estado do Servidor</th>
-                          </tr>
-                        </thead>
-                        <tbody id="listagemServidores"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-sm-6" id="infosServidor">
-                <h3 class="mb-0 font-weight-bold" id="nomeServidor"></h3>
-                <p>
-                  Atualizado a:
-                  <span id="tempoUltimoMonitoramento">0s atrás</span> de
-                  <span id="localidadeServidor"></span>
-                </p>
-              </div>
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center justify-content-md-end">
-                  <div class="mb-3 mb-xl-0 pr-1">
-                    <div class="dropdown">
-                      <div
-                        class="btn bg-white btn-sm btn-icon-text border mr-2"
-                      >
-                        <i class="typcn typcn-time mr-2"></i>Tempo Real
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                    <div class="dropdown">
-                      <button
-                        class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2"
-                        type="button"
-                        id="dropdownMenu3"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="typcn typcn-export mr-2"></i>Export
-                      </button>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="dropdownMenuSizeButton3"
-                        data-x-placement="top-start"
-                      >
-                        <h6 class="dropdown-header">Export</h6>
-                        <a class="dropdown-item" href="#" onclick="exportPDF()"
-                          >Relatório de Falhas (PDF)</a
-                        >
-                        <a class="dropdown-item" href="#" onclick="exportCSV()"
-                          >Relatório de Dados (CSV)</a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pr-1 mb-3 mb-xl-0">
-                    <button
-                      type="button"
-                      class="btn btn-sm bg-white btn-icon-text border"
-                    >
-                      <i class="typcn typcn-info-large-outline mr-2"></i>Ajuda
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-xl-12 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">Status Componentes</h4>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="row align-items-center">
-                          <div class="col-6 col-lg-3">
-                            <div
-                              id="scoreServidor"
-                              class="progressbar-js-circle rounded p-3"
-                            ></div>
-                          </div>
-                          <div class="col-xl-9 col-lg-12">
-                            <div class="row" id="rowBanner">
-                              <div class="col-12 col-lg-6 col-xl-4">
-                                <div
-                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                  onclick="changeComponente('cpuChart', 'CPU %', cpuChartDataset)"
-                                  id="Banner-CPU"
-                                >
-                                  <i class="fa fa-server fa-3x mr-2"></i>
-                                  <div
-                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
-                                  >
-                                    <h3 class="mb-2">Uso da CPU</h3>
-                                    <h4 class="mb-0">
-                                      <span id="info-CPU"></span> %
-                                    </h4>
-                                  </div>
-                                </div>
-
-                                <div
-                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                  onclick="changeComponente('taxaUploadChart', 'Taxa Upload MB/s', taxaUploadChartDataset)"
-                                  id="Banner-Upload"
-                                >
-                                  <i class="fa fa-upload fa-3x mr-2"></i>
-                                  <div
-                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
-                                  >
-                                    <h3 class="mb-2">Taxa de Upload</h3>
-                                    <h4 class="mb-0">
-                                      <span id="info-Upload"></span> MB/s
-                                    </h4>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-6 col-xl-4">
-                                <div
-                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                  onclick="changeComponente('memoriaChart', 'Memoria %', memoriaChartDataset)"
-                                  id="Banner-Memoria"
-                                >
-                                  <i class="fa fa-memory fa-3x mr-2"></i>
-                                  <div
-                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
-                                  >
-                                    <h3 class="mb-2">Uso da Memória</h3>
-                                    <h4 class="mb-0">
-                                      <span id="info-Memoria"></span> %
-                                    </h4>
-                                  </div>
-                                </div>
-
-                                <div
-                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                  onclick="changeComponente('taxaDownloadChart', 'Taxa Download MB/s', taxaDownloadChartDataset)"
-                                  id="Banner-Download"
-                                >
-                                  <i class="fa fa-download fa-3x mr-2"></i>
-                                  <div
-                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
-                                  >
-                                    <h3 class="mb-2">Taxa de Download</h3>
-                                    <h4 class="mb-0">
-                                      <span id="info-Download"></span> MB/s
-                                    </h4>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-12 col-xl-4">
-                                <div
-                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                  onclick="changeComponente('discoChart', 'Uso Disco %', discoChartDataset)"
-                                  id="Banner-Disco"
-                                >
-                                  <i class="fa fa-database fa-3x mr-2"></i>
-                                  <div
-                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
-                                  >
-                                    <h3 class="mb-2">Uso do Disco</h3>
-                                    <h4 class="mb-0">
-                                      <span id="info-Disco"></span> %
-                                    </h4>
-                                  </div>
-                                </div>
-
-                                <div
-                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                  onclick="changeComponente('ioDiscoChart', 'IO Disco MB/s', ioDiscoChartDataset)"
-                                  id="Banner-DiscoEntrada"
-                                >
-                                  <i class="fa fa-database fa-3x mr-2"></i>
-                                  <div
-                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
-                                  >
-                                    <h3 class="mb-3">IO Disco</h3>
-                                    <h4 class="mb-0">
-                                      Entrada:
-                                      <span id="info-DiscoEntrada"></span> MB/s
-                                    </h4>
-                                    <h4 class="mt-2">
-                                      Saida:
-                                      <span id="info-DiscoSaida"></span> MB/s
-                                    </h4>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-3 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">
-                        10 Últimas Leituras
-                        <span data-id="titleComponente">CPU</span>
-                      </h4>
-                    </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="row">
-                          <div class="col-sm-12">
-                            <div class="d-flex justify-content-between mb-4">
-                              <div class="font-weight-medium">Data</div>
-                              <div class="font-weight-medium">Medida</div>
-                            </div>
-                            <div id="ultimas10Leituras"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-9 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">
-                        Monitoramento
-                        <span data-id="titleComponente">CPU %</span>
-                      </h4>
-                      <button type="button" class="btn btn-sm btn-light">
-                        Real Time
-                      </button>
-                    </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <div
-                          class="d-md-flex mb-4"
-                          id="legendaChartMonitoramento"
-                        ></div>
-                        <canvas
-                          id="cpuChart"
-                          class="d-block"
-                          data-id="chartMonitoramento"
-                        ></canvas>
-                        <canvas
-                          id="memoriaChart"
-                          class="d-none"
-                          data-id="chartMonitoramento"
-                        ></canvas>
-                        <canvas
-                          id="discoChart"
-                          class="d-none"
-                          data-id="chartMonitoramento"
-                        ></canvas>
-                        <canvas
-                          id="taxaUploadChart"
-                          class="d-none"
-                          data-id="chartMonitoramento"
-                        ></canvas>
-                        <canvas
-                          id="taxaDownloadChart"
-                          class="d-none"
-                          data-id="chartMonitoramento"
-                        ></canvas>
-                        <canvas
-                          id="ioDiscoChart"
-                          class="d-none"
-                          data-id="chartMonitoramento"
-                        ></canvas>
-                      </div>
-                    </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Prioridade</th>
+                          <th scope="col">Título</th>
+                          <th scope="col">Status do chamado</th>
+                        </tr>
+                      </thead>
+                      <tbody id="listagemServidores"></tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="chamado">
+          <div class="content-wrapper">
+            <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Chamados por Prioridade</h4>
+                  <canvas id="pieChart"></canvas>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Chamados abertos x fechados</h4>
+                  <canvas id="pieChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-wrapper">
             <div class="container">
               <h2>Abrir Chamado</h2>
               <form action="metodoAqui()" method="post">
@@ -501,7 +249,71 @@
     <!-- Custom js for this page-->
     <script src="../js/dashboard.js"></script>
     <!-- End custom js for this page-->
+    <script>
+      function abrirChamado() {
+        var titulo = emailUser.value;
+        var descricao = passUser.value;
+        var prioridade = prioridade.value;
+        var responsavel = localStorage.NOME_USUARIO;
 
-    <script src="js/load.js"></script>
+        if(titulo.length <= 0 || titulo.length > 150){
+            toastr.error("<b style='font-family: arial;'>Insira um titulo válido</b>")
+            erro = true;
+        } 
+        if(descricao.length <= 0 || descricao.length > 150){
+          toastr.error("<b style='font-family: arial;'>Insira uma descrição válida</b>")
+          erro = true;
+        }
+
+        else if(!erro){
+          abrir_chamado();
+        }
+
+        function abrir_chamado() {
+          fetch("/chamados/abrirChamado", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              tituloServer: titulo,
+              descricaoServer: descricao,
+              prioridadeServer: prioridade,
+              responsavelServer: responsavel
+            }),
+          })
+            .then(function (resposta) {
+              console.log("Resposta: " + resposta);
+              if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then((json) => {
+                  console.log(json);
+
+                  localStorage.CPF_USUARIO = json.cpf;
+                  localStorage.EMAIL_USUARIO = json.email;
+                  localStorage.NOME_USUARIO = json.nome;
+                  localStorage.ID_USUARIO = json.idUsuario;
+                  localStorage.FK_ADMIN = json.fkAdmin;
+                  localStorage.FK_EMPRESA = json.fkEmpresa;
+                  let redirecionamento = json.redirecionamento;
+
+                  window.location = redirecionamento;
+                });
+              } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then((texto) => {
+                  console.error(texto);
+                  alert(texto);
+                });
+              }
+            })
+            .catch(function (erro) {
+              console.log(erro);
+            });
+        }
+      }
+    </script>
   </body>
 </html>

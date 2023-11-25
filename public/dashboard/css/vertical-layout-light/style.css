@@ -25270,13 +25270,7 @@ body.avgrund-active {
 
 
 #Chamados
-.chamado{
-  width: 100vw;
-  gap: 0;
-  margin: 0;
-}
-
-.container {
+.content-wrapper .container {
   max-width: 60vw;
   margin: 50px auto;
   background-color: #fff;
@@ -25285,22 +25279,22 @@ body.avgrund-active {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.chamado h2 {
+.content-wrapper h2 {
   text-align: center;
   color: #333;
 }
 
-.chamado form {
+.content-wrapper form {
   display: flex;
   flex-direction: column;
 }
 
-.chamado label {
+.content-wrapper label {
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.chamado
+.content-wrapper
 input,
 textarea,
 select {
@@ -25310,7 +25304,7 @@ select {
   border-radius: 4px;
 }
 
-.chamado button {
+.content-wrapper button {
   background-color: #4caf50;
   color: #fff;
   padding: 10px;
@@ -25320,6 +25314,6 @@ select {
   font-size: 16px;
 }
 
-.chamado button:hover {
+.content-wrapper button:hover {
   background-color: #45a049;
 }
