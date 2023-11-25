@@ -1,7 +1,9 @@
 var database = require("../database/config");
 
 function totalChamados(){
-    const instrucao = `x`;
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
+
+    const instrucao = `SELECT * FROM chamados;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
@@ -39,6 +41,8 @@ function chamadoResolvido(idChamado) {
 }
 
 function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function totalChamados()");
+
     const instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
                             VALUES (${titulo}, ${descricao}, ${dataAtual}, TRUE, ${prioridade}, ${responsavel},)`;
 
@@ -51,5 +55,6 @@ function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
 
 
 module.exports = {
-    abrirChamado
+    abrirChamado,
+    totalChamados
 }
