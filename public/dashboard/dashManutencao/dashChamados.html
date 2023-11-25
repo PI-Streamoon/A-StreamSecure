@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Dashboard Chamados</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css" />
+    <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../css/vertical-layout-light/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../img/logo.ico" />
+  </head>
+
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div
+          class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
+        >
+          <a class="navbar-brand brand-logo" href="index.html"
+            ><img src="../../img/logo/nome-e-logo 1.png" alt="logo"
+          /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"
+            ><img src="../../img/logo.png" alt="logo"
+          /></a>
+          <button
+            class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex"
+            type="button"
+            data-toggle="minimize"
+          >
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+        <div
+          class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
+        >
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a
+                class="nav-link dropdown-toggle pl-0 pr-0"
+                href="#"
+                data-toggle="dropdown"
+                id="profileDropdown"
+              >
+                <i class="typcn typcn-user-outline mr-0"></i>
+                <span class="nav-profile-name"></span>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                aria-labelledby="profileDropdown"
+              >
+                <a href="logout.html" class="dropdown-item">
+                  <i class="typcn typcn-power text-primary"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+          <button
+            class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+            type="button"
+            data-toggle="offcanvas"
+          >
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <div class="d-flex sidebar-profile">
+                <div class="sidebar-profile-name">
+                  <p class="sidebar-name"></p>
+                  <p class="sidebar-designation">Bem Vindo (a)</p>
+                </div>
+              </div>
+
+              <p class="sidebar-menu-title">Dash menu</p>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="typcn typcn-device-desktop menu-icon"></i>
+                <span class="menu-title"
+                  >Dashboard
+                  <span class="badge badge-primary ml-3">Ao vivo</span></span
+                >
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="terminal.html">
+                <i class="typcn typcn-device-desktop menu-icon"></i>
+                <span class="menu-title">Terminal</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="dashChamados.html">
+                <i class="typcn typcn-device-desktop menu-icon"></i>
+                <span class="menu-title">Dashboard de Chamados</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-xl-12 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Lista de Servidores</h4>
+                    </div>
+
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">ID Servidor</th>
+                            <th scope="col">Local</th>
+                            <th scope="col">Estado do Servidor</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listagemServidores"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-6" id="infosServidor">
+                <h3 class="mb-0 font-weight-bold" id="nomeServidor"></h3>
+                <p>
+                  Atualizado a:
+                  <span id="tempoUltimoMonitoramento">0s atrás</span> de
+                  <span id="localidadeServidor"></span>
+                </p>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center justify-content-md-end">
+                  <div class="mb-3 mb-xl-0 pr-1">
+                    <div class="dropdown">
+                      <div
+                        class="btn bg-white btn-sm btn-icon-text border mr-2"
+                      >
+                        <i class="typcn typcn-time mr-2"></i>Tempo Real
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pr-1 mb-3 mr-2 mb-xl-0">
+                    <div class="dropdown">
+                      <button
+                        class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2"
+                        type="button"
+                        id="dropdownMenu3"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="typcn typcn-export mr-2"></i>Export
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuSizeButton3"
+                        data-x-placement="top-start"
+                      >
+                        <h6 class="dropdown-header">Export</h6>
+                        <a class="dropdown-item" href="#" onclick="exportPDF()"
+                          >Relatório de Falhas (PDF)</a
+                        >
+                        <a class="dropdown-item" href="#" onclick="exportCSV()"
+                          >Relatório de Dados (CSV)</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pr-1 mb-3 mb-xl-0">
+                    <button
+                      type="button"
+                      class="btn btn-sm bg-white btn-icon-text border"
+                    >
+                      <i class="typcn typcn-info-large-outline mr-2"></i>Ajuda
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-xl-12 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Status Componentes</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row align-items-center">
+                          <div class="col-6 col-lg-3">
+                            <div
+                              id="scoreServidor"
+                              class="progressbar-js-circle rounded p-3"
+                            ></div>
+                          </div>
+                          <div class="col-xl-9 col-lg-12">
+                            <div class="row" id="rowBanner">
+                              <div class="col-12 col-lg-6 col-xl-4">
+                                <div
+                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
+                                  onclick="changeComponente('cpuChart', 'CPU %', cpuChartDataset)"
+                                  id="Banner-CPU"
+                                >
+                                  <i class="fa fa-server fa-3x mr-2"></i>
+                                  <div
+                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <h3 class="mb-2">Uso da CPU</h3>
+                                    <h4 class="mb-0">
+                                      <span id="info-CPU"></span> %
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
+                                  onclick="changeComponente('taxaUploadChart', 'Taxa Upload MB/s', taxaUploadChartDataset)"
+                                  id="Banner-Upload"
+                                >
+                                  <i class="fa fa-upload fa-3x mr-2"></i>
+                                  <div
+                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <h3 class="mb-2">Taxa de Upload</h3>
+                                    <h4 class="mb-0">
+                                      <span id="info-Upload"></span> MB/s
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 col-lg-6 col-xl-4">
+                                <div
+                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
+                                  onclick="changeComponente('memoriaChart', 'Memoria %', memoriaChartDataset)"
+                                  id="Banner-Memoria"
+                                >
+                                  <i class="fa fa-memory fa-3x mr-2"></i>
+                                  <div
+                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <h3 class="mb-2">Uso da Memória</h3>
+                                    <h4 class="mb-0">
+                                      <span id="info-Memoria"></span> %
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
+                                  onclick="changeComponente('taxaDownloadChart', 'Taxa Download MB/s', taxaDownloadChartDataset)"
+                                  id="Banner-Download"
+                                >
+                                  <i class="fa fa-download fa-3x mr-2"></i>
+                                  <div
+                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <h3 class="mb-2">Taxa de Download</h3>
+                                    <h4 class="mb-0">
+                                      <span id="info-Download"></span> MB/s
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 col-lg-12 col-xl-4">
+                                <div
+                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
+                                  onclick="changeComponente('discoChart', 'Uso Disco %', discoChartDataset)"
+                                  id="Banner-Disco"
+                                >
+                                  <i class="fa fa-database fa-3x mr-2"></i>
+                                  <div
+                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <h3 class="mb-2">Uso do Disco</h3>
+                                    <h4 class="mb-0">
+                                      <span id="info-Disco"></span> %
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
+                                  onclick="changeComponente('ioDiscoChart', 'IO Disco MB/s', ioDiscoChartDataset)"
+                                  id="Banner-DiscoEntrada"
+                                >
+                                  <i class="fa fa-database fa-3x mr-2"></i>
+                                  <div
+                                    class="ms-3 d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <h3 class="mb-3">IO Disco</h3>
+                                    <h4 class="mb-0">
+                                      Entrada:
+                                      <span id="info-DiscoEntrada"></span> MB/s
+                                    </h4>
+                                    <h4 class="mt-2">
+                                      Saida:
+                                      <span id="info-DiscoSaida"></span> MB/s
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-3 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">
+                        10 Últimas Leituras
+                        <span data-id="titleComponente">CPU</span>
+                      </h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="d-flex justify-content-between mb-4">
+                              <div class="font-weight-medium">Data</div>
+                              <div class="font-weight-medium">Medida</div>
+                            </div>
+                            <div id="ultimas10Leituras"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-9 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">
+                        Monitoramento
+                        <span data-id="titleComponente">CPU %</span>
+                      </h4>
+                      <button type="button" class="btn btn-sm btn-light">
+                        Real Time
+                      </button>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div
+                          class="d-md-flex mb-4"
+                          id="legendaChartMonitoramento"
+                        ></div>
+                        <canvas
+                          id="cpuChart"
+                          class="d-block"
+                          data-id="chartMonitoramento"
+                        ></canvas>
+                        <canvas
+                          id="memoriaChart"
+                          class="d-none"
+                          data-id="chartMonitoramento"
+                        ></canvas>
+                        <canvas
+                          id="discoChart"
+                          class="d-none"
+                          data-id="chartMonitoramento"
+                        ></canvas>
+                        <canvas
+                          id="taxaUploadChart"
+                          class="d-none"
+                          data-id="chartMonitoramento"
+                        ></canvas>
+                        <canvas
+                          id="taxaDownloadChart"
+                          class="d-none"
+                          data-id="chartMonitoramento"
+                        ></canvas>
+                        <canvas
+                          id="ioDiscoChart"
+                          class="d-none"
+                          data-id="chartMonitoramento"
+                        ></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chamado">
+            <div class="container">
+              <h2>Abrir Chamado</h2>
+              <form action="metodoAqui()" method="post">
+                <label for="titulo">Título do Chamado:</label>
+                <input type="text" id="titulo" name="titulo" required />
+
+                <label for="descricao">Descrição do Chamado:</label>
+                <textarea
+                  id="descricao"
+                  name="descricao"
+                  rows="4"
+                  required
+                ></textarea>
+
+                <label for="prioridade">Prioridade:</label>
+                <select id="prioridade" name="prioridade" required>
+                  <option value="baixa">Baixa</option>
+                  <option value="media">Média</option>
+                  <option value="alta">Alta</option>
+                  <option value="urgente">Urgente</option>
+                </select>
+
+                <label for="responsavel">Responsável:</label>
+                <input
+                  type="text"
+                  id="responsavel"
+                  name="responsavel"
+                  required
+                />
+
+                <button type="submit">Abrir Chamado</button>
+              </form>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div
+              class="d-sm-flex justify-content-center justify-content-sm-between"
+            >
+              <span class="text-center text-sm-left d-block d-sm-inline-block"
+                >Copyright ©
+                <a href="https://www.bootstrapdash.com/" target="_blank"
+                  >bootstrapdash.com</a
+                >
+                2020</span
+              >
+              <span
+                class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                >Free
+                <a href="https://www.bootstrapdash.com/" target="_blank"
+                  >Bootstrap dashboard </a
+                >templates from Bootstrapdash.com</span
+              >
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../js/off-canvas.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
+    <script src="../js/template.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="../vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="../vendors/chart.js/Chart.min.js"></script>
+    <!-- Custom js for this page-->
+    <script src="../js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+
+    <script src="js/load.js"></script>
+  </body>
+</html>

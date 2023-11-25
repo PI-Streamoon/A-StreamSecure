@@ -38,7 +38,7 @@ function chamadoResolvido(idChamado) {
     
 }
 
-function abrirChamado() {
+function abrirChamado(titulo, descricao, statusChamado, dataAbertura) {
     const instrucao = `insert aqui`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
