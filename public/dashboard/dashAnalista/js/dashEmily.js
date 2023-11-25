@@ -12,71 +12,34 @@ var totalMemoria;
 
 var idServidorSelecionado = 1;
 
-setInterval(atualizarGraficoPredict, 3000)
 
-function atualizarGraficoPredict() {
-    fetch(`/medidas/predict?idServidor=${idServidorSelecionado}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
-
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsPredict.push(registro.dtHora);
-                    dadosPredictCpu.datasets[0].data.push(registro.cpu);
-                    // dadosPredictCpu.datasets[1].data.push(predict.uploadPredict);
-                }
-
-                if (labelsPredict.length > 5) {
-                    labelsPredict.shift()
-                    dadosPredictCpu.datasets[0].data.shift()
-                    // dadosPredictCpu.datasets[1].data.shift()
-                }
-
-                dashPredictCpu.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-    // fetch('/dados-vetor') // Faz uma solicitação GET para a rota '/dados-vetor' no servidor
-    //     .then(response => response.json()) // Analisa a resposta como JSON
-    //     .then(data => {
-    //         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    //         resposta.reverse();
-    //         // Recebe os dados do vetor de números do Python
-    //         const vetorNumeros = data.predictionUpload;
-
-    //         console.log(vetorNumeros); // Vetor de números recebido do servidor
-
-    //         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    //         resposta.reverse();
-
-    //         for (var i = 0; i < resposta.length; i++) {
-    //             var predict = resposta[i];
-    //             var registro = resposta[i];
-    //             labelsGeral.push(registro.Dia);
-    //             dadosPredictCpu.datasets[1].data.push(predict.uploadPredict);
-    //         }
-
-    //         if (labelsPredict.length > 8) {
-    //             labelsPredict.shift()
-    //             dadosPredictCpu.datasets[1].data.shift()
-    //         }
-
-    //         dashPredict.update()
-
-    //     })
-    //     .catch(error => {
-    //         console.error('Ocorreu um erro:', error);
-    //     });
-}
 
 // Dashboard Predict CPU
+
+setInterval(dashPredictCpu, 1000)
+
+function predictCPU() {
+    fetch(`/predicts/predictCPU`)
+        .then(function (response) {
+            console.log(response)
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var dado = resposta[i];
+                        labelsPredict.push(dado.dtHora);
+                        dadosPredictCpu.datasets[0].data.push(dado.dadoReal);
+                        dadosPredictCpu.datasets[1].data.push(dado.dadoPredict);
+                    }
+
+                    dashPredictCpu.update()
+                });
+            } else { console.error("Nenhum dado encontrado ou erro no fetch"); }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ cpu: ${error.message}`);
+        }); return false;
+}
 
 labelsPredict = []
 dadosPredictCpu = {
@@ -116,13 +79,9 @@ dashPredictCpu = new Chart(dashboardPredictCpu, {
     }
 });
 
-
-
-
-
 // Dashboard Predict Upload
 
-labelsPredict = []
+
 dadosPredictUpload = {
     labels: labelsPredict,
     datasets: [{
@@ -174,7 +133,7 @@ function exibirMemoria() {
 
                     dadoMemoriaTotal.push(`${MemoriaTotal}`)
                     dadoMemoriaTotal.push(`${MemoriaUsada}`)
-                    
+
                     console.log(`${dadoMemoriaTotal}`)
 
                     totalMemoria.update()
@@ -188,7 +147,7 @@ function exibirMemoria() {
                 `Erro na obtenção dos dados p / memória: ${error.message}`
             );
         });
-        
+
 }
 
 labelsTotalMemoria = []

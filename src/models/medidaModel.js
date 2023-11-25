@@ -49,33 +49,7 @@ function geral(idServidor) {
     return database.executar(instrucao);
 }
 
-function predict(idServidor) {
-    var instrucao = ``
-
-    if (process.env.AMBIENTE_PROCESSO == "producao") {
-        instrucao = `
-        SELECT DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
-           upload
-            FROM streamoon.registroColunar
-            WHERE idServidor = ${idServidor}
-            ORDER BY dtHora DESC LIMIT 1;
-        `;
-
-    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-
-        instrucao = `
-       
-        `
-    } else {
-        return
-    }
-
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
 module.exports = {
     plotarGrafico,
-    geral,
-    predict
+    geral
 }
