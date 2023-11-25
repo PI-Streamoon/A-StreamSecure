@@ -23,4 +23,8 @@ router.get("/totalChamados", function (req, res) {
     chamadosController.totalChamados(req, res);
 })
 
+router.get("/totalChamadosPorPrioridade", function (req, res) {
+    chamadosController.totalChamadosPorPrioridade(req, res);
+})
+
 module.exports = router;

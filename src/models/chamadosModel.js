@@ -38,8 +38,9 @@ function chamadoResolvido(idChamado) {
     
 }
 
-function abrirChamado(titulo, descricao, statusChamado, dataAbertura) {
-    const instrucao = `insert aqui`;
+function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
+    const instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
+                            VALUES (${titulo}, ${descricao}, ${dataAtual}, TRUE, ${prioridade}, ${responsavel},)`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
@@ -50,9 +51,5 @@ function abrirChamado(titulo, descricao, statusChamado, dataAbertura) {
 
 
 module.exports = {
-    totalChamados,
-    totalChamadosCritico,
-    totalChamadosResolvidos,
-    chamadoResolvido,
     abrirChamado
 }

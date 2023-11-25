@@ -144,7 +144,7 @@
                           <th scope="col">Status do chamado</th>
                         </tr>
                       </thead>
-                      <tbody id="listagemServidores"></tbody>
+                      <tbody id="listagemChamados"></tbody>
                     </table>
                   </div>
                 </div>
@@ -170,7 +170,7 @@
           <div class="content-wrapper">
             <div class="container">
               <h2>Abrir Chamado</h2>
-              <form action="metodoAqui()" method="post">
+              <form>
                 <label for="titulo">Título do Chamado:</label>
                 <input type="text" id="titulo" name="titulo" required />
 
@@ -184,10 +184,10 @@
 
                 <label for="prioridade">Prioridade:</label>
                 <select id="prioridade" name="prioridade" required>
-                  <option value="baixa">Baixa</option>
-                  <option value="media">Média</option>
-                  <option value="alta">Alta</option>
-                  <option value="urgente">Urgente</option>
+                  <option value="Baixa">Baixa</option>
+                  <option value="Média">Média</option>
+                  <option value="Alta">Alta</option>
+                  <option value="Urgente">Urgente</option>
                 </select>
 
                 <label for="responsavel">Responsável:</label>
@@ -198,7 +198,7 @@
                   required
                 />
 
-                <button type="submit">Abrir Chamado</button>
+                <button onclick="abrirChamado()">Abrir Chamado</button>
               </form>
             </div>
           </div>
@@ -249,23 +249,33 @@
     <!-- Custom js for this page-->
     <script src="../js/dashboard.js"></script>
     <!-- End custom js for this page-->
+    <script src="js/chamado.js"></script>
     <script>
       function abrirChamado() {
-        var titulo = emailUser.value;
-        var descricao = passUser.value;
-        var prioridade = prioridade.value;
-        var responsavel = localStorage.NOME_USUARIO;
+        var titulo = document.getElementById("titulo").value;
+        var descricao = document.getElementById("descricao").value;
+        var prioridade = document.getElementById("prioridade").value;
+        var responsavel = document.getElementById("responsavel").value;
+        var dataAtual = new Date();
 
-        if(titulo.length <= 0 || titulo.length > 150){
-            toastr.error("<b style='font-family: arial;'>Insira um titulo válido</b>")
-            erro = true;
-        } 
-        if(descricao.length <= 0 || descricao.length > 150){
-          toastr.error("<b style='font-family: arial;'>Insira uma descrição válida</b>")
+        if (titulo.length <= 0 || titulo.length > 150) {
+          toastr.error(
+            "<b style='font-family: arial;'>Insira um titulo válido</b>"
+          );
           erro = true;
         }
-
-        else if(!erro){
+        if (descricao.length <= 0 || descricao.length > 150) {
+          toastr.error(
+            "<b style='font-family: arial;'>Insira uma descrição válida</b>"
+          );
+          erro = true;
+        }
+        if (responsavel.length <= 0 || responsavel.length > 150) {
+          toastr.error(
+            "<b style='font-family: arial;'>Insira um responsável válido</b>"
+          );
+          erro = true;
+        } else if (!erro) {
           abrir_chamado();
         }
 
@@ -279,38 +289,25 @@
               tituloServer: titulo,
               descricaoServer: descricao,
               prioridadeServer: prioridade,
-              responsavelServer: responsavel
+              responsavelServer: responsavel,
+              dateServer: dataAtual,
             }),
           })
             .then(function (resposta) {
-              console.log("Resposta: " + resposta);
               if (resposta.ok) {
-                console.log(resposta);
-
                 resposta.json().then((json) => {
-                  console.log(json);
-
-                  localStorage.CPF_USUARIO = json.cpf;
-                  localStorage.EMAIL_USUARIO = json.email;
-                  localStorage.NOME_USUARIO = json.nome;
-                  localStorage.ID_USUARIO = json.idUsuario;
-                  localStorage.FK_ADMIN = json.fkAdmin;
-                  localStorage.FK_EMPRESA = json.fkEmpresa;
-                  let redirecionamento = json.redirecionamento;
-
-                  window.location = redirecionamento;
+                  console.log("Chamado aberto com sucesso:", json);
+                  // Adicione lógica de sucesso aqui
                 });
               } else {
-                console.log("Houve um erro ao tentar realizar o login!");
-
                 resposta.text().then((texto) => {
-                  console.error(texto);
+                  console.error("Erro ao tentar abrir o chamado:", texto);
                   alert(texto);
                 });
               }
             })
             .catch(function (erro) {
-              console.log(erro);
+              console.error("Erro na requisição:", erro);
             });
         }
       }

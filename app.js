@@ -35,6 +35,7 @@ app.use("/medidas", medidasRouter);
 app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
+app.use("/chamados", chamadosRouter);
 app.use("/exports", exportRouter);
 app.use("/MoonAssistant", moonAssistantRouter);
 app.use("/terminal", terminalRouter);
