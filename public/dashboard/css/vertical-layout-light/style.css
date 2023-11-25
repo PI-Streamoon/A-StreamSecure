@@ -23133,6 +23133,8 @@ body.avgrund-active {
   width: 255px;
   z-index: 11;
   position: fixed;
+  overflow-y: auto;
+  overflow-x: auto;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;

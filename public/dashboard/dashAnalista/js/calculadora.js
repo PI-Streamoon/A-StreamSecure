@@ -25,6 +25,7 @@ function carregarPagina() {
 
     nomeHeader.innerHTML = nome;
     nomeSidebar.innerHTML = nome;
+    cargo.innerHTML = "Analista de dados";
 
     carregarRegioes()
     carregarSO()
@@ -150,79 +151,43 @@ function carregarEC2(so, fkLocal, situacao, vt) {
 
     vt.length = 0;
 
-    if (situacao == 'simples') {
+    var div;
 
-        fetch(`/calculadora/mostrarInstancias/${so}/${fkLocal}`).then(function (resposta) {
+    switch (situacao) {
+        case 'simples':
+            div = dadosEC2Simples;
+            break;
+    
+        case 'comparada1':
+            div = dadosEC2Comparada1;
+            break;
 
-            if (resposta.ok) {
-
-                resposta.json().then(function (resposta) {
-
-                    for (let i = 0; i < resposta.length; i++) {
-
-                        vt.push(resposta[i])
-
-                        gerarLinhasTabela(vt, dadosEC2Simples, i)
-                    }
-                })
-
-            } else {
-                throw ('Houve um erro na API!');
-            }
-
-        }).catch(function (resposta) {
-            console.log(resposta);
-        })
-
-    } else if (situacao == 'comparada1') {
-
-
-        fetch(`/calculadora/mostrarInstancias/${so}/${fkLocal}`).then(function (resposta) {
-
-            if (resposta.ok) {
-
-                resposta.json().then(function (resposta) {
-
-                    for (let i = 0; i < resposta.length; i++) {
-
-                        vt.push(resposta[i])
-
-                        gerarLinhasTabela(vt, dadosEC2Comparada1, i)
-                    }
-                })
-
-            } else {
-                throw ('Houve um erro na API!');
-            }
-
-        }).catch(function (resposta) {
-            console.log(resposta);
-        })
-
-    } else if (situacao == 'comparada2') {
-
-        fetch(`/calculadora/mostrarInstancias/${so}/${fkLocal}`).then(function (resposta) {
-
-            if (resposta.ok) {
-
-                resposta.json().then(function (resposta) {
-
-                    for (let i = 0; i < resposta.length; i++) {
-
-                        vt.push(resposta[i])
-
-                        gerarLinhasTabela(vt, dadosEC2Comparada2, i)
-                    }
-                })
-
-            } else {
-                throw ('Houve um erro na API!');
-            }
-
-        }).catch(function (resposta) {
-            console.log(resposta);
-        })
+        case 'comparada2':
+            div = dadosEC2Comparada2;
+            break;
     }
+
+    fetch(`/calculadora/mostrarInstancias/${so}/${fkLocal}`).then(function (resposta) {
+
+        if (resposta.ok) {
+
+            resposta.json().then(function (resposta) {
+
+                for (let i = 0; i < resposta.length; i++) {
+
+                    vt.push(resposta[i])
+
+                    gerarLinhasTabela(vt, div, i)
+                }
+            })
+
+        } else {
+            throw ('Houve um erro na API!');
+        }
+
+    }).catch(function (resposta) {
+        console.log(resposta);
+    })
 
 }
 
@@ -272,84 +237,55 @@ function gerarLinhasTabela(vt, div, i) {
 
 function pesquisarNome(situacao) {
 
-    var buscaSimples = iptBuscaSimples.value;
-    var buscaComparacao1 = iptBuscaComparacao1.value;
-    var buscaComparacao2 = iptBuscaComparacao2.value;
+    var busca;
+    var vetor;
+    var div;
 
-    if (situacao == 'simples') {
+    switch (situacao) {
+        case 'simples':
+            busca = iptBuscaSimples.value;
+            vetor = vt_ec2simples;
+            div = dadosEC2Simples;
 
-        if (buscaSimples != "") {
+            break;
+    
+        case 'comparada1':
+            busca = iptBuscaComparacao1.value;
+            vetor = vt_ec2comparada1;
+            div = dadosEC2Comparada1;
 
+            break;
 
-            dadosEC2Simples.innerHTML = "";
+        case 'comparada2':
+            busca = iptBuscaComparacao2.value;
+            vetor = vt_ec2comparada2;
+            div = dadosEC2Comparada2;
 
-            for (let i = 0; i < vt_ec2simples.length; i++) {
-
-                if (vt_ec2simples[i].tipo.indexOf(buscaSimples.toLowerCase()) > -1) {
-
-                    gerarLinhasTabela(vt_ec2simples, dadosEC2Simples, i)
-                }
-            }
-
-        } else {
-
-            dadosEC2Simples.innerHTML = "";
-
-            for (let i = 0; i < vt_ec2simples.length; i++) {
-
-                gerarLinhasTabela(vt_ec2simples, dadosEC2Simples, i)
-            }
-        }
-
-    } else if (situacao == 'comparada1') {
-
-        if (buscaComparacao1 != "") {
-
-            dadosEC2Comparada1.innerHTML = "";
-
-            for (let i = 0; i < vt_ec2comparada1.length; i++) {
-
-                if (vt_ec2comparada1[i].tipo.indexOf(buscaComparacao1.toLowerCase()) > -1) {
-
-                    gerarLinhasTabela(vt_ec2comparada1, dadosEC2Comparada1, i)
-                }
-            }
-
-        } else {
-
-            dadosEC2Comparada1.innerHTML = "";
-
-            for (let i = 0; i < vt_ec2comparada1.length; i++) {
-
-                gerarLinhasTabela(vt_ec2comparada1, dadosEC2Comparada1, i)
-            }
-        }
-
-    } else if (situacao == 'comparada2') {
-
-        if (buscaComparacao2 != "") {
-
-            dadosEC2Comparada2.innerHTML = "";
-
-            for (let i = 0; i < vt_ec2comparada2.length; i++) {
-
-                if (vt_ec2comparada2[i].tipo.indexOf(buscaComparacao2.toLowerCase()) > -1) {
-
-                    gerarLinhasTabela(vt_ec2comparada2, dadosEC2Comparada2, i)
-                }
-            }
-
-        } else {
-
-            dadosEC2Comparada2.innerHTML = "";
-
-            for (let i = 0; i < vt_ec2comparada2.length; i++) {
-
-                gerarLinhasTabela(vt_ec2comparada2, dadosEC2Comparada2, i)
-            }
-        }
-
+            break;
     }
+
+        if (busca != "") {
+
+            div.innerHTML = "";
+
+            for (let i = 0; i < vetor.length; i++) {
+
+                if (vetor[i].tipo.indexOf(busca.toLowerCase()) > -1) {
+
+                    gerarLinhasTabela(vetor, div, i)
+                }
+            }
+
+        } else {
+
+            div.innerHTML = "";
+
+            for (let i = 0; i < vetor.length; i++) {
+
+                gerarLinhasTabela(vetor, div, i)
+            }
+        }
+
 }
 
 
@@ -387,11 +323,11 @@ function calculo(situacao) {
             
             tituloDiferencaTempo.innerHTML = `Diferença pelo tempo (${nomeInstancia})`;
 
-            gastoHora.innerHTML = `$: ${Number(opcaoSelecionada.value).toFixed(2)}`;
-            gastoDia.innerHTML = `$: ${Number(opcaoSelecionada.value * 24).toFixed(2)}`;
-            gastoSemana.innerHTML = `$: ${Number(opcaoSelecionada.value * 24 * 7).toFixed(2)}`;
-            gastoMes.innerHTML = `$: ${Number(opcaoSelecionada.value * 24 * 30).toFixed(2)}`;
-            gastoAno.innerHTML = `$: ${Number(opcaoSelecionada.value * 24 * 365).toFixed(2)}`;
+            gastoHora.innerHTML = `$ ${Number(opcaoSelecionada.value).toFixed(2)}`;
+            gastoDia.innerHTML = `$ ${Number(opcaoSelecionada.value * 24).toFixed(2)}`;
+            gastoSemana.innerHTML = `$ ${Number(opcaoSelecionada.value * 24 * 7).toFixed(2)}`;
+            gastoMes.innerHTML = `$ ${Number(opcaoSelecionada.value * 24 * 30).toFixed(2)}`;
+            gastoAno.innerHTML = `$ ${Number(opcaoSelecionada.value * 24 * 365).toFixed(2)}`;
 
 
         } else {
