@@ -3,6 +3,7 @@ const iptMessage = document.getElementById('ipt-message');
 const containerMessages = document.getElementById('messages');
 const buttonSendMessage = document.getElementById('buttonSendMessage');
 const spanButtonSendMessage = buttonSendMessage.getElementsByTagName('span')[0];
+const idUsuario = localStorage.ID_USUARIO;
 
 var isClosed = true;
 var hasDadosFalhas = false;
@@ -13,6 +14,27 @@ iptMessage.onkeyup = (e)=>{
     if (e.key === "Enter") {
         sendMessage();
     }
+}
+
+const loadChat = ()=>{
+    fetch(`/MoonAssistant/get?idUsuario=${idUsuario}`).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                resposta.forEach((linha)=>{
+                    console.warn(linha['msg'].replaceAll('\n', ''))
+                    
+                    message = tratarResposta(JSON.parse(linha['msg'].replaceAll('\n', '')));
+
+                    addMsgFront(linha['isBot'], message);
+    
+                });
+            });
+        }
+    })
+    .catch(function (error) {
+        addMsgFront(true, "Houve Um Erro. Por Favor tente mais tarde");
+        console.error(`Erro na obtenção dos dados`);
+    });
 }
 
 const turnModalMoonAssistant = (elementOrigin)=>{
@@ -95,7 +117,7 @@ const tratarResposta = (resposta) =>{
     var lastSimbolMarkdownImage = 0;
 
     images.forEach((link)=>{
-        let firstSimbolMarkdownImage = content.indexOf('[Image of', lastSimbolMarkdownImage);
+        let firstSimbolMarkdownImage = content.indexOf('[Imagem', lastSimbolMarkdownImage);
         lastSimbolMarkdownImage = content.indexOf(']', firstSimbolMarkdownImage)+2;
         content = inserirTextoPosicao(content, '!', firstSimbolMarkdownImage);
         content = inserirTextoPosicao(content, `(${link})`, lastSimbolMarkdownImage);
@@ -128,12 +150,12 @@ const sendMessage = ()=>{
             'messageServer': message,
             'hasMonitoramentoServer': hasDadosMonitoramento,
             'hasFalhasServer': hasDadosFalhas,
-            'idServidorServer': idServidorSelecionado
+            'idServidorServer': idServidorSelecionado,
+            'idUsuarioServer': idUsuario,
         })
         };
         
         fetch('/MoonAssistant/send', opcoesReq).then(function (response) {
-            console.log(response)
             if (response.ok) {
                 response.json().then(function (resposta) {
                     message = tratarResposta(resposta);
@@ -166,3 +188,5 @@ const sendMessage = ()=>{
         addMsgFront(true, "Por favor insira uma mensagem para que eu possa te ajudar.");
     }
 }
+
+loadChat()

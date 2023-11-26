@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const medidaModel = require("../models/medidaModel");
 const alertasModel = require("../models/alertasModel");
+const MoonAssistantModel = require("../models/MoonAssistantModel");
 
 const formatarData = (data)=>{
     const dia = String(data.getDate()).padStart(2, '0');
@@ -21,7 +22,7 @@ async function queryMedidas(idServidor, messageServer, res){
                 res.status(500).json("Texto Muito Longo")
             } 
             else {
-                res.status(500).json("Nenhum resultado encontrado!")
+                res.status(204).json("Nenhum resultado encontrado!")
             }
         }).catch(function (erro) {
             console.log(erro);
@@ -46,7 +47,7 @@ async function queryFalhas(idServidor, messageServer, res){
                 res.status(500).json("Texto Muito Longo")
             } 
             else {
-                res.status(500).json("Nenhum resultado encontrado!")
+                res.status(204).json("Nenhum resultado encontrado!")
             }
         }).catch(function (erro) {
             console.log(erro);
@@ -61,6 +62,7 @@ async function send(req, res){
     let hasFalhasServer = req.body.hasFalhasServer;
     let messageServer = req.body.messageServer;
     let idServidorServer = req.body.idServidorServer;
+    let idUsuarioServer = req.body.idUsuarioServer;
 
     let message = "";
 
@@ -87,6 +89,7 @@ async function send(req, res){
     },
     body: JSON.stringify({
         'message': message,
+        'idUsuario': idUsuarioServer,
     })
     };
     
@@ -98,7 +101,7 @@ async function send(req, res){
             });
         } else {
             console.log(response)
-            res.status(500).json('Nenhum dado encontrado ou erro na API');
+            res.status(204).json('Nenhum dado encontrado ou erro na API');
         }
     })
     .catch(function (error) {
@@ -106,6 +109,22 @@ async function send(req, res){
     });
 }
 
+function getPastMsgs(req, res){
+    const idUsuario = req.query.idUsuario;
+
+    MoonAssistantModel.getPastMsgs(idUsuario).then((response)=>{
+        if (response.length > 0) {
+            res.status(200).send(JSON.stringify(response));
+        } else {
+            console.log(response)
+            res.status(204).json('Nenhum dado encontrado ou erro na API');
+        }
+    }).catch(function (error) {
+        res.status(500).json(`Nenhum dado encontrado ou erro na API ${error}`);
+    });
+}
+
 module.exports = {
-    send
+    send,
+    getPastMsgs
 }

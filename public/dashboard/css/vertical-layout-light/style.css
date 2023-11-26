@@ -25305,15 +25305,9 @@ select {
 }
 
 .content-wrapper button {
-  background-color: #4caf50;
-  color: #fff;
   padding: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.content-wrapper button:hover {
-  background-color: #45a049;
 }

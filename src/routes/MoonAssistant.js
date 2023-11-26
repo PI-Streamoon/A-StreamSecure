@@ -7,5 +7,9 @@ router.post("/send", function (req, res) {
     MoonAssistantController.send(req, res);
 })
 
+router.get("/get", function (req, res) {
+    MoonAssistantController.getPastMsgs(req, res);
+})
+
 
 module.exports = router;
