@@ -40,9 +40,11 @@ function totalChamadosPorPrioridade(){
     
 }
 
-function chamadoResolvido(idChamado) {
+function atualizarStatusChamado(idChamado, novoStatus) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
     
-    const instrucao = `update aqui`;
+
+    const instrucao = `UPDATE Chamados SET isAberto = ${novoStatus} WHERE idChamado = ${idChamado}`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
@@ -70,5 +72,6 @@ module.exports = {
     abrirChamado,
     totalChamados,
     totalChamadosPorPrioridade,
-    totalChamadosAbertosResolvidos
+    totalChamadosAbertosResolvidos,
+    atualizarStatusChamado
 }

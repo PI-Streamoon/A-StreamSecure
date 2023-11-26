@@ -54,6 +54,30 @@ function totalChamados(req, res) {
     });
 }
 
+async function atualizarStatusChamado(req, res) {
+    const idChamado = req.params.idChamado;
+    const novoStatus = req.body.statusServer;
+
+    console.log(idChamado)
+    console.log(novoStatus)
+
+    chamadosModel.atualizarStatusChamado(idChamado, novoStatus)
+    .then(
+        function (resultado) {
+            res.json(resultado);
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao abrir o chamado! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
 function totalChamadosAbertosResolvidos(req, res) {
     chamadosModel.totalChamadosAbertosResolvidos().then(function (resultado) {
 
@@ -88,5 +112,6 @@ module.exports = {
     abrirChamado,
     totalChamados,
     totalChamadosPorPrioridade,
-    totalChamadosAbertosResolvidos
+    totalChamadosAbertosResolvidos,
+    atualizarStatusChamado
 }

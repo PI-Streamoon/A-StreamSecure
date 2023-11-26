@@ -34,16 +34,35 @@ const carregarChamadosTable = (listarChamados) => {
     }
 }
 
-const atualizarEstadoChamado = (listarChamados) => {
+const atualizarStatusChamado = (listarChamados) => {
     document.querySelectorAll('.checkboxChamado').forEach(checkbox => {
         checkbox.addEventListener('change', function () {
             const idChamado = this.id.split('-')[1];
             const indiceChamado = listarChamados.findIndex(chamado => chamado.idChamado == idChamado);
+            const novoStatus = this.checked;
 
             listarChamados[indiceChamado].isAberto = !listarChamados[indiceChamado].isAberto;
 
             const statusChamado = listarChamados[indiceChamado].isAberto ? 'Aberto' : 'Fechado';
             document.getElementById(`statusChamado-${indiceChamado+1}`).textContent = statusChamado;
+        
+            fetch(`/chamados/atualizarStatusChamado/${idChamado}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  statusServer: novoStatus,
+                }),
+              })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Aqui você pode tratar a resposta do servidor
+            })
+            .catch(error => {
+                console.error('Erro ao enviar requisição ao servidor:', error);
+            });
+        
         });
     });
 }
@@ -57,7 +76,7 @@ const totalChamados = () => {
                     console.log(resposta)
 
                     carregarChamadosTable(resposta);
-                    atualizarEstadoChamado(resposta);
+                    atualizarStatusChamado(resposta);
                 })
             } else {
                 console.error("Nenhum dado encontrado");
@@ -177,7 +196,7 @@ function openChamado() {
 
     
 
-    fetch("../../chamados/abrirChamado", {
+    fetch("/chamados/abrirChamado", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

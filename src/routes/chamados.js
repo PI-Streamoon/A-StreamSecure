@@ -11,8 +11,8 @@ router.get("/totalChamadosAbertosResolvidos", function (req, res) {
     chamadosController.totalChamadosAbertosResolvidos(req, res);
 })
 
-router.get("/atualizarStatus", function (req, res) {
-    chamadosController.atualizarStatus(req, res);
+router.post("/atualizarStatusChamado/:idChamado", function (req, res) {
+    chamadosController.atualizarStatusChamado(req, res);
 })
 
 router.get("/totalChamados", function (req, res) {
