@@ -688,9 +688,6 @@ function verifyMetrics() {
     }
     else if (!erro) {
         metricsUpdate();
-        toastr.success("<b style='font-family: arial;'>Métricas atualizadas!</b>")
-        ipt_alerta.value = '';
-        ipt_critico.value = '';
     }
 
     function metricsUpdate() {
@@ -712,6 +709,10 @@ function verifyMetrics() {
                 resposta.json().then(json => {
                     console.log(json);
                 });
+
+                toastr.success("<b style='font-family: arial;'>Métricas atualizadas!</b>")
+                ipt_alerta.value = '';
+                ipt_critico.value = '';
 
             } else {
 
