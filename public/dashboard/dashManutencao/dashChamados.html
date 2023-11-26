@@ -242,47 +242,7 @@
     <!-- End custom js for this page-->
     <script src="js/chamado.js"></script>
     <script>
-      function openChamado() {
-        var titulo = document.getElementById("titulo").value;
-        var descricao = document.getElementById("descricao").value;
-        var prioridade = document.getElementById("prioridade").value;
-        var responsavel = document.getElementById("responsavel").value;
-        var dataAtual = new Date();
-
-        console.log(titulo);
-        console.log(descricao);
-        console.log(prioridade);
-        console.log(responsavel);
-
-        
-
-        fetch("../../chamados/abrirChamado", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tituloServer: titulo,
-        descricaoServer: descricao,
-        prioridadeServer: prioridade,
-        dataServer: dataAtual,
-        responsavelServer: responsavel
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          alert("Chamado realizado com sucesso!");
-
-        } else {
-          throw "Houve um erro ao tentar realizar o chamado!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-      }
+      
     </script>
   </body>
 </html>

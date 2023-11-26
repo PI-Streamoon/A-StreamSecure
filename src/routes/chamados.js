@@ -3,16 +3,12 @@ var router = express.Router();
 
 var chamadosController = require("../controllers/chamadosController");
 
-router.get("/totalChamadosResolvidos", function (req, res) {
-    chamadosController.totalChamadosResolvidos(req, res);
-})
-
 router.post("/abrirChamado", function (req, res) {
     chamadosController.abrirChamado(req, res);
 })
 
-router.get("/totalChamadosAbertos", function (req, res) {
-    chamadosController.totalChamadosAbertos(req, res);
+router.get("/totalChamadosAbertosResolvidos", function (req, res) {
+    chamadosController.totalChamadosAbertosResolvidos(req, res);
 })
 
 router.get("/fecharChamado", function (req, res) {

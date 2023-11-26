@@ -50,14 +50,14 @@ function chamadoResolvido(idChamado) {
 function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function totalChamados()");
 
+
     const instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
-                            VALUES (?, ?, ?, TRUE, ?, ?)`;
+                            VALUES ('${titulo}', '${descricao}', '${dataAtual}', TRUE, '${prioridade}', '${responsavel}')`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
-    const dataFormatada = new Date(dataAtual).toISOString();
     
-    return database.executar(instrucao, [titulo, descricao, dataFormatada, prioridade, responsavel]);
+    return database.executar(instrucao);
     
 }
 

@@ -87,6 +87,63 @@ function plotarGraficoDonut(contagem) {
     });
 }
 
+function openChamado() {
+    var titulo = document.getElementById("titulo").value;
+    var descricao = document.getElementById("descricao").value;
+    var prioridade = document.getElementById("prioridade").value;
+    var responsavel = document.getElementById("responsavel").value;
+    var dataAtual = new Date();
+
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'UTC',
+    };
+
+    const dataFormatada = new Intl.DateTimeFormat('en-US', options).format(dataAtual);
+    const dataMySQLFormatada = dataFormatada.replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3-$1-$2 $4:$5:$6');
+
+    console.log(dataMySQLFormatada)
+    console.log(titulo);
+    console.log(descricao);
+    console.log(prioridade);
+    console.log(responsavel);
+
+    
+
+    fetch("../../chamados/abrirChamado", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    tituloServer: titulo,
+    descricaoServer: descricao,
+    prioridadeServer: prioridade,
+    dataServer: dataMySQLFormatada,
+    responsavelServer: responsavel,
+  }),
+})
+  .then(function (resposta) {
+    console.log("resposta: ", resposta);
+
+    if (resposta.ok) {
+      alert("Chamado realizado com sucesso!");
+
+    } else {
+      throw "Houve um erro ao tentar realizar o chamado!";
+    }
+  })
+  .catch(function (resposta) {
+    console.log(`#ERRO: ${resposta}`);
+  });
+  }
+
 
 
 const carregarNome = () => {
