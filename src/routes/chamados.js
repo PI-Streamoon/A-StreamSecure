@@ -7,7 +7,7 @@ router.get("/totalChamadosResolvidos", function (req, res) {
     chamadosController.totalChamadosResolvidos(req, res);
 })
 
-router.get("/abrirChamado", function (req, res) {
+router.post("/abrirChamado", function (req, res) {
     chamadosController.abrirChamado(req, res);
 })
 

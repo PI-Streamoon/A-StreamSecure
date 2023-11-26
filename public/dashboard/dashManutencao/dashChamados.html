@@ -157,13 +157,13 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Chamados por Prioridade</h4>
-                  <canvas id="pieChart"></canvas>
+                  <canvas id="doughnutChart"></canvas>
                 </div>
               </div>
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Chamados abertos x fechados</h4>
-                  <canvas id="pieChart"></canvas>
+                  <canvas id="Chart"></canvas>
                 </div>
               </div>
             </div>
@@ -173,18 +173,13 @@
               <h2>Abrir Chamado</h2>
               <form>
                 <label for="titulo">Título do Chamado:</label>
-                <input type="text" id="titulo" name="titulo" required />
+                <input type="text" id="titulo"/>
 
                 <label for="descricao">Descrição do Chamado:</label>
-                <textarea
-                  id="descricao"
-                  name="descricao"
-                  rows="4"
-                  required
-                ></textarea>
+                <textarea id="descricao" rows="4" ></textarea>
 
                 <label for="prioridade">Prioridade:</label>
-                <select id="prioridade" name="prioridade" required>
+                <select id="prioridade">
                   <option value="Baixa">Baixa</option>
                   <option value="Média">Média</option>
                   <option value="Alta">Alta</option>
@@ -192,14 +187,9 @@
                 </select>
 
                 <label for="responsavel">Responsável:</label>
-                <input
-                  type="text"
-                  id="responsavel"
-                  name="responsavel"
-                  required
-                />
+                <input type="text" id="responsavel"/>
 
-                <button onclick="abrirChamado()">Abrir Chamado</button>
+                <button onclick="openChamado()">Abrir Chamado</button>
               </form>
             </div>
           </div>
@@ -252,65 +242,46 @@
     <!-- End custom js for this page-->
     <script src="js/chamado.js"></script>
     <script>
-      function abrirChamado() {
+      function openChamado() {
         var titulo = document.getElementById("titulo").value;
         var descricao = document.getElementById("descricao").value;
         var prioridade = document.getElementById("prioridade").value;
         var responsavel = document.getElementById("responsavel").value;
         var dataAtual = new Date();
 
-        if (titulo.length <= 0 || titulo.length > 150) {
-          toastr.error(
-            "<b style='font-family: arial;'>Insira um titulo válido</b>"
-          );
-          erro = true;
-        }
-        if (descricao.length <= 0 || descricao.length > 150) {
-          toastr.error(
-            "<b style='font-family: arial;'>Insira uma descrição válida</b>"
-          );
-          erro = true;
-        }
-        if (responsavel.length <= 0 || responsavel.length > 150) {
-          toastr.error(
-            "<b style='font-family: arial;'>Insira um responsável válido</b>"
-          );
-          erro = true;
-        } else if (!erro) {
-          abrir_chamado();
-        }
+        console.log(titulo);
+        console.log(descricao);
+        console.log(prioridade);
+        console.log(responsavel);
 
-        function abrir_chamado() {
-          fetch("/chamados/abrirChamado", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              tituloServer: titulo,
-              descricaoServer: descricao,
-              prioridadeServer: prioridade,
-              responsavelServer: responsavel,
-              dateServer: dataAtual,
-            }),
-          })
-            .then(function (resposta) {
-              if (resposta.ok) {
-                resposta.json().then((json) => {
-                  console.log("Chamado aberto com sucesso:", json);
-                  // Adicione lógica de sucesso aqui
-                });
-              } else {
-                resposta.text().then((texto) => {
-                  console.error("Erro ao tentar abrir o chamado:", texto);
-                  alert(texto);
-                });
-              }
-            })
-            .catch(function (erro) {
-              console.error("Erro na requisição:", erro);
-            });
+        
+
+        fetch("../../chamados/abrirChamado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tituloServer: titulo,
+        descricaoServer: descricao,
+        prioridadeServer: prioridade,
+        dataServer: dataAtual,
+        responsavelServer: responsavel
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          alert("Chamado realizado com sucesso!");
+
+        } else {
+          throw "Houve um erro ao tentar realizar o chamado!";
         }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
       }
     </script>
   </body>
