@@ -170,126 +170,146 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item">
-            <div class="d-flex sidebar-profile">
-              <div class="sidebar-profile-image">
-                <img src="../images/faces/face10.jpg" alt="image">
-              </div>
-              <div class="sidebar-profile-name">
-                <p class="sidebar-name">
-                </p>
-                <p class="sidebar-designation">
-                  
-                </p>
-              </div>
-            </div>
-            <p class="sidebar-menu-title">Menu</p>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="typcn typcn-device-desktop menu-icon"></i>
-              <span class="menu-title">Geral</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="falhas.html">
-              <i class="typcn typcn-compass menu-icon"></i>
-              <span class="menu-title">Falhas</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-briefcase menu-icon"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="typcn typcn-chevron-right menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-              aria-controls="form-elements">
-              <i class="typcn typcn-film menu-icon"></i>
-              <span class="menu-title">Form elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Basic Elements</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
-              <span class="menu-title">Charts</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../pages/charts/chartjs.html">ChartJs</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-              <i class="typcn typcn-th-small-outline menu-icon"></i>
-              <span class="menu-title">Tables</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="tables">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../pages/tables/basic-table.html">Basic table</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="typcn typcn-compass menu-icon"></i>
-              <span class="menu-title">Icons</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="icons">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../pages/icons/mdi.html">Mdi icons</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="typcn typcn-user-add-outline menu-icon"></i>
-              <span class="menu-title">Equipe</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="cadastrarManutencao.html"> Adicionar funcionário
-                  </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="historicoAnalista.html">
-              <i class="typcn typcn-compass menu-icon"></i>
-              <span class="menu-title">Histórico</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cadastroManutencao.html">
-              <i class="typcn typcn-user-add-outline menu-icon"></i>
-              <span class="menu-title">Equipe</span>
-            </a>
-          </li>
+            <li class="nav-item">
+                <div class="d-flex sidebar-profile">
+                    <div class="sidebar-profile-image">
+                        <img src="../images/faces/face10.jpg" alt="image">
+                    </div>
+                    <div class="sidebar-profile-name">
+                        <p class="sidebar-name" id="nomeSidebar">
+                        </p>
+                        <p class="sidebar-designation" id="cargo">
+
+                        </p>
+                    </div>
+                </div>
+                <p class="sidebar-menu-title">Menu</p>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="typcn typcn-device-desktop menu-icon"></i>
+                    <span class="menu-title">Geral</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="falhas.html">
+                    <i class="typcn typcn-compass menu-icon"></i>
+                    <span class="menu-title">Falhas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="calculadora.html">
+                    <i class="typcn typcn-calculator menu-icon"></i>
+                    <span class="menu-title">Calculadora</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                    aria-controls="ui-basic">
+                    <i class="typcn typcn-briefcase menu-icon"></i>
+                    <span class="menu-title">UI Elements</span>
+                    <i class="typcn typcn-chevron-right menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link"
+                                href="../pages/ui-features/buttons.html">Buttons</a></li>
+                        <li class="nav-item"> <a class="nav-link"
+                                href="../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                        <li class="nav-item"> <a class="nav-link"
+                                href="../pages/ui-features/typography.html">Typography</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                    aria-controls="form-elements">
+                    <i class="typcn typcn-film menu-icon"></i>
+                    <span class="menu-title">Form elements</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="form-elements">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Basic
+                                Elements</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                    aria-controls="charts">
+                    <i class="typcn typcn-chart-pie-outline menu-icon"></i>
+                    <span class="menu-title">Charts</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="charts">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link"
+                                href="../pages/charts/chartjs.html">ChartJs</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                    aria-controls="tables">
+                    <i class="typcn typcn-th-small-outline menu-icon"></i>
+                    <span class="menu-title">Tables</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="tables">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="../pages/tables/basic-table.html">Basic
+                                table</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false"
+                    aria-controls="icons">
+                    <i class="typcn typcn-compass menu-icon"></i>
+                    <span class="menu-title">Icons</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="icons">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="../pages/icons/mdi.html">Mdi icons</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                    aria-controls="auth">
+                    <i class="typcn typcn-user-add-outline menu-icon"></i>
+                    <span class="menu-title">Equipe</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="auth">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="cadastrarManutencao.html"> Adicionar
+                                funcionário
+                            </a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="historicoAnalista.html">
+                    <i class="typcn typcn-compass menu-icon"></i>
+                    <span class="menu-title">Histórico</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="cadastroManutencao.html">
+                    <i class="typcn typcn-user-add-outline menu-icon"></i>
+                    <span class="menu-title">Equipe</span>
+                </a>
+            </li>
         </ul>
-      </nav>
+    </nav>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
