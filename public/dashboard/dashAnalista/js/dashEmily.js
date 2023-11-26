@@ -1,22 +1,21 @@
 const dashboardPredictCpu = document.getElementById('dashboardPredictCpu');
 const dashboardPredictUpload = document.getElementById('dashboardPredictUpload');
 const graficoTotalMemoria = document.getElementById('totalMemoria');
-var labelsPredict = [];
+
+var labelsPredictCpu = [];
+var labelsPredictUpload = [];
 var labelsTotalMemoria = [];
 var dadosPredictCpu = [];
 var dadosPredictUpload = [];
 var dadoMemoriaTotal = [];
+
 var dashPredictCpu;
 var dashPredictUpload;
 var totalMemoria;
 
-var idServidorSelecionado = 1;
-
-
 
 // Dashboard Predict CPU
-
-setInterval(dashPredictCpu, 1000)
+setInterval(predictCPU, 22000)
 
 function predictCPU() {
     fetch(`/predicts/predictCPU`)
@@ -26,11 +25,18 @@ function predictCPU() {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-                    for (var i = 0; i < resposta.length; i++) {
+                    for (var i = resposta.length - 1; i >= 0; i--) {
                         var dado = resposta[i];
-                        labelsPredict.push(dado.dtHora);
-                        dadosPredictCpu.datasets[0].data.push(dado.dadoReal);
+                        labelsPredictCpu.push(dado.dtHora);
+                        dadosPredictCpu.datasets[0].data.push(dado.registro);
                         dadosPredictCpu.datasets[1].data.push(dado.dadoPredict);
+                    }
+
+                    if (labelsPredictCpu.length > 10) {
+                        var newLength = labelsPredictCpu.length - 10;
+                        labelsPredictCpu.splice(0, newLength);
+                        dadosPredictCpu.datasets[0].data.splice(0, newLength);
+                        dadosPredictCpu.datasets[1].data.splice(0, newLength);
                     }
 
                     dashPredictCpu.update()
@@ -41,9 +47,9 @@ function predictCPU() {
         }); return false;
 }
 
-labelsPredict = []
+labelsPredictCpu = []
 dadosPredictCpu = {
-    labels: labelsPredict,
+    labels: labelsPredictCpu,
     datasets: [{
         label: "Dados reais",
         data: [],
@@ -64,26 +70,52 @@ dashPredictCpu = new Chart(dashboardPredictCpu, {
     type: "line",
     data: dadosPredictCpu,
     options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Comparação entre dados reais e previstos'
-            }
-        },
         scales: {
             y: {
-                beginAtZero: true
+                min: 0,
+                max: 100,
             }
-        }
+        },
+        responsive: true,
     }
 });
 
-// Dashboard Predict Upload
 
+// Dashboard Predict Upload
+setInterval(predictUpload, 22000)
+
+function predictUpload() {
+    fetch(`/predicts/predictUpload`)
+        .then(function (response) {
+            console.log(response)
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    for (var i = resposta.length - 1; i >= 0; i--) {
+                        var dado = resposta[i];
+                        labelsPredictUpload.push(dado.dtHora);
+                        dadosPredictUpload.datasets[0].data.push(dado.registro);
+                        dadosPredictUpload.datasets[1].data.push(dado.dadoPredict);
+                    }
+
+                    if (labelsPredictUpload.length > 10) {
+                        var newLength = labelsPredictUpload.length - 10;
+                        labelsPredictUpload.splice(0, newLength);
+                        dadosPredictUpload.datasets[0].data.splice(0, newLength);
+                        dadosPredictUpload.datasets[1].data.splice(0, newLength);
+                    }
+
+                    dashPredictUpload.update()
+                });
+            } else { console.error("Nenhum dado encontrado ou erro no fetch"); }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ upload: ${error.message}`);
+        }); return false;
+}
 
 dadosPredictUpload = {
-    labels: labelsPredict,
+    labels: labelsPredictUpload,
     datasets: [{
         label: "Dados reais",
         data: [],
@@ -104,22 +136,19 @@ dashPredictUpload = new Chart(dashboardPredictUpload, {
     type: "line",
     data: dadosPredictUpload,
     options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Comparação entre dados reais e previstos'
-            }
-        },
         scales: {
             y: {
-                beginAtZero: true
+                min: 0,
+                max: 300,
             }
-        }
+        },
+        responsive: true,
     }
 });
 
-setInterval(exibirMemoria, 3000)
+
+// Exibição da utilização da memória
+setInterval(exibirMemoria, 5000)
 
 function exibirMemoria() {
     fetch(`/predicts/exibirMemoria`)
@@ -127,14 +156,16 @@ function exibirMemoria() {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    dadoMemoriaTotal = resposta;
 
-                    const { MemoriaTotal, MemoriaUsada } = dadoMemoriaTotal[0];
+                    dadoMemoriaTotal.datasets.forEach(dataset => {
+                        dataset.data = [];
+                    });
 
-                    dadoMemoriaTotal.push(`${MemoriaTotal}`)
-                    dadoMemoriaTotal.push(`${MemoriaUsada}`)
-
-                    console.log(`${dadoMemoriaTotal}`)
+                    for (var i = 0; i < resposta.length; i++) {
+                        var dado = resposta[i];
+                        dadoMemoriaTotal.datasets[0].data.push(dado.MemoriaUsada);
+                        dadoMemoriaTotal.datasets[1].data.push(dado.MemoriaTotal);
+                    }
 
                     totalMemoria.update()
                 });
@@ -152,20 +183,18 @@ function exibirMemoria() {
 
 labelsTotalMemoria = []
 dadoMemoriaTotal = {
-    labels: [
-        'Espaço Utilizado',
-        'Espaço Disponível'
-    ],
+    labels: labelsTotalMemoria,
     datasets: [{
+        label: "Espaço Utilizado",
         data: [],
-        backgroundColor: [
-            'rgb(131,111,255)',
-            'rgb(221, 160, 221)'
-        ],
-        hoverOffset: 4
+        backgroundColor: "rgb(131,111,255)"
+    },
+    {
+        label: "Espaço disponível",
+        data: [],
+        backgroundColor: "rgb(221, 160, 221)"
     }]
 }
-
 
 totalMemoria = new Chart(graficoTotalMemoria, {
     type: 'pie',

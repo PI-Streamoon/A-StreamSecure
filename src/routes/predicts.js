@@ -7,6 +7,10 @@ router.get("/predictCPU", function (req, res) {
     predictController.predictCPU(req, res);
 });
 
+router.get("/predictUpload", function (req, res) {
+    predictController.predictUpload(req, res);
+});
+
 router.get("/exibirMemoria", function (req, res) {
     predictController.exibirMemoria(req, res);
 });
