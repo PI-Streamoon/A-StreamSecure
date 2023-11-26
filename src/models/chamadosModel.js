@@ -10,14 +10,17 @@ function totalChamados(){
     return database.executar(instrucao);
 }
 
-function totalChamadosCritico(){
+function totalChamadosAbertosResolvidos(){
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
 
-    const instrucao = `select aqui`;
+    const instrucao = `SELECT
+        SUM(CASE WHEN isAberto = TRUE THEN 1 ELSE 0 END) AS TotalAbertos,
+        SUM(CASE WHEN isAberto = FALSE THEN 1 ELSE 0 END) AS TotalFechados
+        FROM Chamados;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
     return database.executar(instrucao);
-    
 }
 
 function totalChamadosPorPrioridade(){
@@ -66,5 +69,6 @@ function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
 module.exports = {
     abrirChamado,
     totalChamados,
-    totalChamadosPorPrioridade
+    totalChamadosPorPrioridade,
+    totalChamadosAbertosResolvidos
 }

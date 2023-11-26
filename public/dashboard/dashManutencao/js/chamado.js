@@ -1,7 +1,10 @@
 const sidebarNomeUser = document.querySelector('#sidebar .sidebar-name');
 const navNomeUser = document.querySelector('#profileDropdown .nav-profile-name');
 const listagemChamados = document.querySelector('.table #listagemChamados');
-const interval = 10000;
+const interval = 2000;
+
+var labelsTotalChamadosAbertos = []
+var dadosTotalChamadosAbertos = []
 
 
 // setInterval(() => {
@@ -18,16 +21,32 @@ const carregarChamadosTable = (listarChamados) => {
         <tr>
             <th scope="row">${i + 1}</th>
             <td id="nomeChamado-${idChamado}"> ${listarChamados[i].titulo} </td>
-            <td> ${statusChamado} </td>
+            <td id="statusChamado-${idChamado}"> ${statusChamado} </td>
             <td id="estadoChamado-${idChamado}"> ${listarChamados[i].prioridade} </td>
             <td>
-                <input type="checkbox" id="checkboxChamado-${idChamado}" class="checkboxChamado" ${checkboxChecked}>
+                <input type="checkbox"
+                id="checkboxChamado-${idChamado}"
+                class="checkboxChamado" ${checkboxChecked} 
+                onchange="totalChamadosAbertosResolvidos()">
             </td>
         </tr>`    
         
     }
 }
 
+const atualizarEstadoChamado = (listarChamados) => {
+    document.querySelectorAll('.checkboxChamado').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const idChamado = this.id.split('-')[1];
+            const indiceChamado = listarChamados.findIndex(chamado => chamado.idChamado == idChamado);
+
+            listarChamados[indiceChamado].isAberto = !listarChamados[indiceChamado].isAberto;
+
+            const statusChamado = listarChamados[indiceChamado].isAberto ? 'Aberto' : 'Fechado';
+            document.getElementById(`statusChamado-${indiceChamado+1}`).textContent = statusChamado;
+        });
+    });
+}
 
 const totalChamados = () => {
     fetch(`/chamados/totalChamados`)
@@ -38,6 +57,7 @@ const totalChamados = () => {
                     console.log(resposta)
 
                     carregarChamadosTable(resposta);
+                    atualizarEstadoChamado(resposta);
                 })
             } else {
                 console.error("Nenhum dado encontrado");
@@ -68,6 +88,47 @@ const totalChamadosPorPrioridade = () => {
                 `Erro na obtenção dos dados p/ chamados: ${error.message}`
             );
         });
+}
+
+const totalChamadosAbertosResolvidos = () => {
+    fetch(`/chamados/totalChamadosAbertosResolvidos`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    
+                    console.log(resposta)
+
+                    
+
+                    plotarGraficoBarras(resposta);
+
+                })
+            } else {
+                console.error("Nenhum dado encontrado");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p/ chamados: ${error.message}`
+            );
+        });
+}
+
+function plotarGraficoBarras(contagem) {
+    const labels = Object.keys(contagem);
+    const data = Object.values(contagem);
+
+    const ctx = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data.map(value => parseInt(value, 10)),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+            }]
+        }
+    });
 }
 
 function plotarGraficoDonut(contagem) {
@@ -156,4 +217,5 @@ window.onload = () => {
     carregarNome();
     totalChamados();
     totalChamadosPorPrioridade();
+    totalChamadosAbertosResolvidos();
 }

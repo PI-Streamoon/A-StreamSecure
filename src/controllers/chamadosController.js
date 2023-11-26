@@ -54,6 +54,21 @@ function totalChamados(req, res) {
     });
 }
 
+function totalChamadosAbertosResolvidos(req, res) {
+    chamadosModel.totalChamadosAbertosResolvidos().then(function (resultado) {
+
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os chamados: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function totalChamadosPorPrioridade(req, res) {
     chamadosModel.totalChamadosPorPrioridade().then(function (resultado) {
 
@@ -72,5 +87,6 @@ function totalChamadosPorPrioridade(req, res) {
 module.exports = {
     abrirChamado,
     totalChamados,
-    totalChamadosPorPrioridade
+    totalChamadosPorPrioridade,
+    totalChamadosAbertosResolvidos
 }
