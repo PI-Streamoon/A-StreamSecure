@@ -14,8 +14,8 @@ function totalChamadosAbertosResolvidos(){
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
 
     const instrucao = `SELECT
-        SUM(CASE WHEN isAberto = TRUE THEN 1 ELSE 0 END) AS TotalAbertos,
-        SUM(CASE WHEN isAberto = FALSE THEN 1 ELSE 0 END) AS TotalFechados
+        SUM(CASE WHEN isAberto = 1 THEN 1 ELSE 0 END) AS TotalAbertos,
+        SUM(CASE WHEN isAberto = 0 THEN 1 ELSE 0 END) AS TotalFechados
         FROM Chamados;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);

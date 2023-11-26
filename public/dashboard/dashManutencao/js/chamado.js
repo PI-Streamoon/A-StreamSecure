@@ -1,15 +1,15 @@
 const sidebarNomeUser = document.querySelector('#sidebar .sidebar-name');
 const navNomeUser = document.querySelector('#profileDropdown .nav-profile-name');
 const listagemChamados = document.querySelector('.table #listagemChamados');
-const interval = 2000;
+const interval = 1000;
 
 var labelsTotalChamados = []
 var dadosTotalChamados = []
-var dashboardBar;
+
 
 
 // setInterval(() => {
-//     atualizarGraficoBarra();
+//     atualizarStatus();
 // }, interval);
 
 const carregarChamadosTable = (listarChamados) => {
@@ -40,14 +40,15 @@ const atualizarStatusChamado = (listarChamados) => {
         checkbox.addEventListener('change', function () {
             const idChamado = this.id.split('-')[1];
             const indiceChamado = listarChamados.findIndex(chamado => chamado.idChamado == idChamado);
-            const novoStatus = this.checked;
-
+            
             listarChamados[indiceChamado].isAberto = !listarChamados[indiceChamado].isAberto;
-
+            
             const statusChamado = listarChamados[indiceChamado].isAberto ? 'Aberto' : 'Fechado';
+            const novoStatus = statusChamado === 'Aberto' ? 'TRUE' : 'FALSE';
+
             document.getElementById(`statusChamado-${indiceChamado+1}`).textContent = statusChamado;
         
-            fetch(`/chamados/atualizarStatusChamado/${idChamado}`, {
+            fetch(`/chamados/atualizarStatusChamado/${indiceChamado}`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -78,6 +79,30 @@ const totalChamados = () => {
 
                     carregarChamadosTable(resposta);
                     atualizarStatusChamado(resposta);
+                    
+                })
+            } else {
+                console.error("Nenhum dado encontrado");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p/ chamados: ${error.message}`
+            );
+        });
+}
+
+const atualizarStatus = () => {
+    fetch(`/chamados/totalChamados`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    
+                    console.log(resposta)
+
+                    atualizarStatusChamado(resposta);
+                    totalChamadosAbertosResolvidos();
+                    
                 })
             } else {
                 console.error("Nenhum dado encontrado");
@@ -97,7 +122,7 @@ const totalChamadosPorPrioridade = () => {
                 response.json().then(function (resposta) {
 
                     plotarGraficoDonut(resposta[0])
-
+                    
                 })
             } else {
                 console.error("Nenhum dado encontrado");
@@ -118,9 +143,8 @@ const totalChamadosAbertosResolvidos = () => {
                     
                     console.log(resposta)
 
+                    plotarGraficoPie(resposta[0]);
                     
-
-                    plotarGraficoBarras(resposta);
 
                 })
             } else {
@@ -132,23 +156,6 @@ const totalChamadosAbertosResolvidos = () => {
                 `Erro na obtenção dos dados p/ chamados: ${error.message}`
             );
         });
-}
-
-function plotarGraficoBarras(contagem) {
-    const labels = Object.keys(contagem);
-    const data = Object.values(contagem);
-
-    const ctx = document.getElementById('barChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data.map(value => parseInt(value, 10)),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
-            }]
-        }
-    });
 }
 
 function plotarGraficoDonut(contagem) {
@@ -168,49 +175,32 @@ function plotarGraficoDonut(contagem) {
     });
 }
 
-function atualizarGraficoBarra() {
-    fetch(`/chamados/totalChamadosAbertosResolvidos`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
+function plotarGraficoPie(contagem) {
+    const labels = Object.keys(contagem);
+    const data = Object.values(contagem);
 
-                console.log(resposta)
+    const pieChartElement = document.getElementById('pieChart');
 
-                for (var i = 0; i < resposta.length; i++) {
-                    var registro = resposta[i];
-                    labelsTotalChamados.push(registro.keys);
-                    dadosTotalChamados.datasets[0].data.push(registro[i]);
-                }
-
-                dashboardBar.update()
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-    labelsTotalChamados = []
-    dadosTotalChamados = {
-        labels: labelsTotalChamados,
-        datasets: [{
-            data: [],
-            backgroundColor: "#000000",
-            borderColor: "#6248AE"
-        }]
+    if (dashboardPie) {
+        dashboardPie.destroy();
     }
 
-    dashboardBar = new Chart(barChart, {
-        type: "bar",
-        data: dadosTotalChamados,
-        options: {
-            responsive: true
+    const ctx = pieChartElement.getContext('2d');
+    dashboardPie = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data.map(value => parseInt(value, 10)),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+            }]
         }
     });
+}
+
+let dashboardPie;
+
+
 
 function openChamado() {
     var titulo = document.getElementById("titulo").value;
