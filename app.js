@@ -6,6 +6,7 @@ var cors = require("cors");
 var path = require("path");
 const IP = require('ip');
 const { spawn } = require("child_process");
+const bodyParser = require('body-parser');
 var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 8080;
 
 var app = express();
@@ -22,6 +23,7 @@ var exportRouter = require('./src/routes/exports');
 var moonAssistantRouter = require('./src/routes/MoonAssistant');
 var terminalRouter = require("./src/routes/terminal");
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -35,9 +37,11 @@ app.use("/medidas", medidasRouter);
 app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
+app.use("/chamados", chamadosRouter);
 app.use("/exports", exportRouter);
 app.use("/MoonAssistant", moonAssistantRouter);
 app.use("/terminal", terminalRouter);
+app.use(bodyParser.json());
 
 const ipAddress = IP.address();
 
