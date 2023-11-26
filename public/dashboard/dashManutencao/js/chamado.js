@@ -3,12 +3,13 @@ const navNomeUser = document.querySelector('#profileDropdown .nav-profile-name')
 const listagemChamados = document.querySelector('.table #listagemChamados');
 const interval = 2000;
 
-var labelsTotalChamadosAbertos = []
-var dadosTotalChamadosAbertos = []
+var labelsTotalChamados = []
+var dadosTotalChamados = []
+var dashboardBar;
 
 
 // setInterval(() => {
-//     totalChamadosPorPrioridade();
+//     atualizarGraficoBarra();
 // }, interval);
 
 const carregarChamadosTable = (listarChamados) => {
@@ -57,7 +58,7 @@ const atualizarStatusChamado = (listarChamados) => {
               })
             .then(response => response.json())
             .then(data => {
-                console.log(data); // Aqui você pode tratar a resposta do servidor
+                console.log(data);
             })
             .catch(error => {
                 console.error('Erro ao enviar requisição ao servidor:', error);
@@ -166,6 +167,50 @@ function plotarGraficoDonut(contagem) {
         }
     });
 }
+
+function atualizarGraficoBarra() {
+    fetch(`/chamados/totalChamadosAbertosResolvidos`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                console.log(resposta)
+
+                for (var i = 0; i < resposta.length; i++) {
+                    var registro = resposta[i];
+                    labelsTotalChamados.push(registro.keys);
+                    dadosTotalChamados.datasets[0].data.push(registro[i]);
+                }
+
+                dashboardBar.update()
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+    labelsTotalChamados = []
+    dadosTotalChamados = {
+        labels: labelsTotalChamados,
+        datasets: [{
+            data: [],
+            backgroundColor: "#000000",
+            borderColor: "#6248AE"
+        }]
+    }
+
+    dashboardBar = new Chart(barChart, {
+        type: "bar",
+        data: dadosTotalChamados,
+        options: {
+            responsive: true
+        }
+    });
 
 function openChamado() {
     var titulo = document.getElementById("titulo").value;
