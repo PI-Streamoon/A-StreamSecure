@@ -118,8 +118,8 @@ const tratarResposta = (resposta) =>{
 
     images.forEach((link)=>{
         let firstSimbolMarkdownImage = content.indexOf('[Imagem', lastSimbolMarkdownImage);
-        lastSimbolMarkdownImage = content.indexOf(']', firstSimbolMarkdownImage)+2;
-        content = inserirTextoPosicao(content, '!', firstSimbolMarkdownImage);
+        lastSimbolMarkdownImage = content.indexOf(']', firstSimbolMarkdownImage)+6;
+        content = inserirTextoPosicao(content, '<br>!', firstSimbolMarkdownImage);
         content = inserirTextoPosicao(content, `(${link})`, lastSimbolMarkdownImage);
     })
 
