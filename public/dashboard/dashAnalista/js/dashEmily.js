@@ -57,14 +57,15 @@ dadosPredictCpu = {
     datasets: [{
         label: "Dados reais",
         data: [],
-        backgroundColor: "rgb(221, 160, 221)",
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderWidth: 1
     },
     {
         label: "Dados previstos",
         data: [],
-        borderColor: "rgb(131,111,255)",
-        backgroundColor: "rgb(131,111,255)",
+        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderWidth: 1
     }
     ]
@@ -123,14 +124,15 @@ dadosPredictUpload = {
     datasets: [{
         label: "Dados reais",
         data: [],
-        backgroundColor: "rgb(221, 160, 221)",
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderWidth: 1
     },
     {
         label: "Dados previstos",
         data: [],
-        borderColor: "rgb(131,111,255)",
-        backgroundColor: "rgb(131,111,255)",
+        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderWidth: 1
     }
     ]
@@ -191,9 +193,9 @@ dadoMemoriaTotal = {
         label: "Memória RAM",
         data: [],
         backgroundColor: [
-            "rgb(131,111,255)",
-            "rgb(221, 160, 221)"
-    ],
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+        ],
     }]
 };
 
@@ -243,9 +245,9 @@ dadosInfoDisco = {
         label: "Disco",
         data: [],
         backgroundColor: [
-            "rgb(131,111,255)",
-            "rgb(221, 160, 221)"
-    ],
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+        ],
     }]
 };
 
