@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Dashboard Analista</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../img/logo.ico" />
+</head>
+
+<style>
+  .tituloGraficos {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 15%;
+    color: white;
+    font-size: large;
+    margin-bottom: 2%;
+  }
+
+  .status_circle_normal {
+    width: 20vh;
+    height: 20vh;
+    background-color: greenyellow;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70%;
+    display: flex;
+    border: 2px black solid;
+  }
+
+  .status_circle_alerta {
+    width: 20vh;
+    height: 20vh;
+    background-color: yellow;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70%;
+    display: flex;
+    border: 2px black solid;
+  }
+
+  .status_circle_critico {
+    width: 20vh;
+    height: 20vh;
+    background-color: red;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70%;
+    display: flex;
+    border: 2px black solid;
+  }
+
+  .status_funcionario_alerta_normal {
+    width: 20vh;
+    height: 20vh;
+    background-color: greenyellow;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70%;
+    display: flex;
+    border: 2px black solid;
+  }
+
+  .status_funcionario_alerta_alerta {
+    width: 20vh;
+    height: 20vh;
+    background-color: yellow;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70%;
+    display: flex;
+    border: 2px black solid;
+  }
+
+  .status_funcionario_alerta_critico {
+    width: 20vh;
+    height: 20vh;
+    background-color: red;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70%;
+    display: flex;
+    border: 2px black solid;
+  }
+
+  .divisoria_status {
+    display: flex;
+    width: 50%;
+    justify-items: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .divisoria_grafico {
+    display: flex;
+    width: 50%;
+  }
+
+  .divisoria_status p {
+    font-size: smaller;
+  }
+
+  .divisoria_status b {
+    background-color: black;
+  }
+
+  .card_funcionario_alerta_left{
+    display: flex;
+    border: lightblue 1vh solid;
+    padding: 5vh;
+    width: 40%;
+    background-color: rgb(75, 192, 192);
+    color: white;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card_funcionario_alerta_right{
+    display: flex;
+    border: lightcoral 1vh solid;
+    padding: 5vh;
+    width: 40%;
+    background-color: rgb(199, 52, 52);
+    color: white;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .label_funcionario{
+    display: flex;
+    border: lightblue 1vh solid;
+    padding: 3%;
+    width: 1%;
+    background-color: rgb(75, 192, 192); 
+    height: 1vh;
+  }
+
+  .label_alerta{
+    display: flex;
+    border: lightcoral 1vh solid;
+    padding: 3%;
+    width: 1%;
+    background-color: rgb(199, 52, 52); 
+    height: 1vh;
+  }
+
+  .centralizacao{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+</style>
+
+<body onload="obterAlertas(), obterDadosFuncionarioAlertas()">
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo" href="index.html"><img src="../../img/logo/nome-e-logo 1.png"
+            alt="logo" /></a>
+        <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../img/logo.png" alt="logo"/></a> -->
+        <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+          data-toggle="minimize">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item  d-none d-lg-flex">
+            <a class="nav-link active" href="#">
+              Geral
+            </a>
+          </li>
+          <li class="nav-item  d-none d-lg-flex">
+            <a class="nav-link" href="#">
+              Métricas
+            </a>
+          </li>
+          <li class="nav-item  d-none d-lg-flex">
+            <a class="nav-link" href="#">
+              Employee
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown d-flex">
+            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
+              id="messageDropdown" href="#" data-toggle="dropdown">
+              <i class="typcn typcn-message-typing"></i>
+              <span class="count bg-success">2</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="messageDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow">
+                  <h6 class="preview-subject ellipsis font-weight-normal">David Grey
+                  </h6>
+                  <p class="font-weight-light small-text mb-0">
+                    The meeting is cancelled
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow">
+                  <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
+                  </h6>
+                  <p class="font-weight-light small-text mb-0">
+                    New product launch
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow">
+                  <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
+                  </h6>
+                  <p class="font-weight-light small-text mb-0">
+                    Upcoming board meeting
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item dropdown  d-flex">
+            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+              id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="typcn typcn-bell mr-0"></i>
+              <span class="count bg-danger">2</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="typcn typcn-info-large mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0">
+                    Just now
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="typcn typcn-cog mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="typcn typcn-user-outline mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
+              <i class="typcn typcn-user-outline mr-0"></i>
+              <span class="nav-profile-name">Suzy</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a onclick="logout()" class="dropdown-item">
+                <i class="typcn typcn-power text-primary"></i>
+                Sair
+              </a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <div class="d-flex sidebar-profile">
+              <div class="sidebar-profile-image">
+                <img src="../images/faces/face10.jpg" alt="image">
+              </div>
+              <div class="sidebar-profile-name">
+                <p class="sidebar-name">Suzy
+                </p>
+                <p class="sidebar-designation">
+                  Analista de dados
+                </p>
+              </div>
+            </div>
+            <div class="nav-search">
+              <!-- <div class="input-group">
+                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="search">
+                    <i class="typcn typcn-zoom"></i>
+                  </span>
+                </div>
+              </div> -->
+            </div>
+            <p class="sidebar-menu-title">Menu</p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="typcn typcn-device-desktop menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-briefcase menu-icon"></i>
+              <span class="menu-title">UI Elements</span>
+              <i class="typcn typcn-chevron-right menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/buttons.html">Buttons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/typography.html">Typography</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+              aria-controls="form-elements">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Form elements</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Basic Elements</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
+              <span class="menu-title">Charts</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../pages/charts/chartjs.html">ChartJs</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="typcn typcn-th-small-outline menu-icon"></i>
+              <span class="menu-title">Tables</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../pages/tables/basic-table.html">Basic table</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="typcn typcn-compass menu-icon"></i>
+              <span class="menu-title">Icons</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../pages/icons/mdi.html">Mdi icons</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="typcn typcn-user-add-outline menu-icon"></i>
+              <span class="menu-title">Equipe</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../pages/samples/register.html"> Adicionar funcionário
+                  </a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row  mt-3">
+            <div class="col-xl-5 d-flex grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body" style="background-color: lightgray; border: white 2px solid;">
+                  <div class="tituloGraficos">
+                    <h2>Análise em relação a performance da equipe</h2>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <div class="col-lg-6 grid-margin stretch-card">
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">Alertas enviados no slack &upuparrows;</h4>
+                          <canvas id="grafico_alertas_totais"></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; width: 48%; background-color: whitesmoke; padding: 2vh; height: 41vh;">
+
+                      <div class="divisoria_status" style="justify-content: center; align-items: center;">
+                        <b style="color: greenyellow; border: 1px solid greenyellow;">Normal</b>
+                        <p>Menos de 60% dos alertas são enciados para os analistas</p>
+                        <b style="color: yellow; border: 1px solid yellow;">Alerta</b>
+                        <p>Mais de 60% dos alertas são enviados para os analistas</p>
+                        <b style="color: red; border: 1px solid red;">Crítico</b>
+                        <p>Mais de 80% dos alertas são enviados para os analistas</p>
+                      </div>
+
+                      <div class="divisoria_grafico"
+                        style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+                        <div
+                          style="margin-bottom: 2vh; background-color: black; color: white; padding: 2vh; font-size: medium;">
+                          <b>Estado Atual:</b>
+                        </div>
+                        <div id="status_equipe" class="status_circle_normal">
+                          <b>Normal</b>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-5 d-flex grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body" style="background-color: lightgray; border: white 2px solid;">
+                  <div class="tituloGraficos">
+                    <h2>Análise em relação a quantidade de funcionários</h2>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <div class="col-lg-6 grid-margin stretch-card">
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">Funcionários X Alertas &upuparrows;</h4>
+
+                          <div style="display: flex;">
+                            <div class="label_funcionario"></div>
+                            <p>Quantidade de funcionários</p>
+                            <div class="label_alerta"></div>
+                            <p>Quantidade de alertas</p>
+                          </div>
+                          <div
+                            style="width: 100%; height: 18vh; justify-content: space-around; align-items: center; display: flex;">
+
+                            <div id="card_funcionario" class="card_funcionario_alerta_left">
+                              0
+                            </div>
+
+                            <div id="card_alerta" class="card_funcionario_alerta_right">
+                              0
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; width: 48%; background-color: whitesmoke; padding: 2vh; height: 44.5vh;">
+
+                      <div class="divisoria_status" style="justify-content: center; align-items: center;">
+                        <b style="color: greenyellow; border: 1px solid greenyellow;">Normal</b>
+                        <p>5 alertas ou menos para cada funcionário resolver</p>
+                        <b style="color: yellow; border: 1px solid yellow;">Alerta</b>
+                        <p>5 a 8 alertas para cada funcionário resolver</p>
+                        <b style="color: red; border: 1px solid red;">Crítico</b>
+                        <p>Mais de 8 alertas para cada funcionário resolver</p>
+                      </div>
+
+                      <div class="divisoria_grafico centralizacao">
+
+                        <div
+                          style="margin-bottom: 2vh; background-color: black; color: white; padding: 2vh; font-size: medium;">
+                          <b>Estado Atual:</b>
+                        </div>
+                        <div id="status_funcionario_alerta" class="status_funcionario_alerta_normal">
+                          <b>Normal</b>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a
+                  href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a
+                  href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from
+                Bootstrapdash.com</span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../js/off-canvas.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
+    <script src="../js/template.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="../vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="../vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="../js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+    <script>
+
+      let proximaAtualizacao;
+
+      setTimeout(() => obterAlertas(), 5000);
+
+      function logout() {
+        delete localStorage.CPF_USUARIO;
+        delete localStorage.EMAIL_USUARIO;
+        delete localStorage.NOME_USUARIO;
+        delete localStorage.ID_USUARIO;
+        delete localStorage.FK_ADMIN;
+        delete localStorage.FK_EMPRESA;
+
+        window.location = "../../index.html";
+      }
+
+      function obterAlertas() {
+
+        if (proximaAtualizacao != undefined) {
+          clearTimeout(proximaAtualizacao);
+        }
+
+        fetch(`/slack/qtdAlertasPorPersona`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+            response.json().then(function (resposta) {
+              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+              resposta.reverse();
+
+              plotarGrafico(resposta);
+
+            });
+          } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+          }
+        })
+          .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+      }
+
+      function obterDadosFuncionarioAlertas() {
+
+        if (proximaAtualizacao != undefined) {
+          clearTimeout(proximaAtualizacao);
+        }
+
+        fetch(`/slack/qtdFuncionariosAlertas`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+            response.json().then(function (resposta) {
+              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+              resposta.reverse();
+
+              plotarGraficoFuncionariosAlertas(resposta);
+
+            });
+          } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+          }
+        })
+          .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+      }
+
+      function plotarGrafico(resposta) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+          labels: labels,
+          datasets: [{
+            label: 'Manutencão',
+            data: [],
+            backgroundColor: 'rgb(75, 192, 192)',
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          },
+          {
+            label: 'Analista',
+            data: [],
+            backgroundColor: 'rgb(199, 52, 52)',
+            fill: true,
+            borderColor: 'rgb(199, 52, 52)',
+            tension: 0.1
+          }]
+        };
+
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+          var registro = resposta[i];
+          labels.push("Qtd Alertas")
+          dados.datasets[0].data.push(registro.alertasManutencao);
+          dados.datasets[1].data.push(registro.alertasAnalista);
+        }
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+          type: 'bar',
+          data: dados,
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        };
+
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+          document.getElementById(`grafico_alertas_totais`),
+          config
+        );
+
+        //Chamando a função de análise da equipe
+        var qtdAlertasManutencao = resposta[0].alertasManutencao;
+        var qtdAlertasAnalista = resposta[0].alertasAnalista;
+        analisarEquipe(qtdAlertasManutencao, qtdAlertasAnalista);
+        setTimeout(() => atualizarGraficoAlertasPorPersona(dados, myChart), 10000);
+
+      }
+
+
+      // PLOTAGEM DO SEGUNDO GRAFICO
+      function plotarGraficoFuncionariosAlertas(resposta) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        var qtdFuncionarios = 0;
+        var qtdAlertas = 0;
+
+        for (i = 0; i < resposta.length; i++) {
+          var registro = resposta[i];
+          qtdFuncionarios = (registro.qtdFuncionarios);
+          qtdAlertas = (registro.qtdAlertas);
+          card_funcionario.innerHTML=`<b>${qtdFuncionarios}</b>`
+          card_alerta.innerHTML=`<b>${qtdAlertas}</b>`
+        }
+
+        analisarEquipeXAlertas(qtdFuncionarios, qtdAlertas);
+        setTimeout(() => obterDadosFuncionarioAlertas(), 10000);
+
+      }
+
+      function analisarEquipe(alertasManutencao, alertasAnalista) {
+
+        var porcentagemAlertasManutencao = (alertasAnalista / alertasManutencao) * 100
+        if (alertasAnalista == 0) {
+          status_equipe.classList.remove('status_circle_alerta')
+          status_equipe.classList.remove('status_circle_critico')
+          status_equipe.classList.add('status_circle_normal')
+          status_equipe.innerHTML = `<b>Normal</b>`
+
+        } else if (porcentagemAlertasManutencao < 60) {
+          status_equipe.classList.remove('status_circle_alerta')
+          status_equipe.classList.remove('status_circle_critico')
+          status_equipe.classList.add('status_circle_normal')
+          status_equipe.innerHTML = `<b>Normal</b>`
+
+        } else if (porcentagemAlertasManutencao < 80) {
+          status_equipe.classList.remove('status_circle_normal')
+          status_equipe.classList.remove('status_circle_critico')
+          status_equipe.classList.add('status_circle_alerta')
+          status_equipe.innerHTML = `<b>Alerta</b>`
+
+        } else {
+          status_equipe.classList.remove('status_circle_alerta')
+          status_equipe.classList.remove('status_circle_normal')
+          status_equipe.classList.add('status_circle_critico')
+          status_equipe.innerHTML = `<b>Crítico</b>`
+
+        }
+
+      }
+
+      function analisarEquipeXAlertas(qtdFuncionarios, qtdAlertas) {
+
+        var qtdAlertas = Number((qtdAlertas / 3).toFixed(0))
+        var qtdAlertasPorFuncionario = Number((qtdAlertas / qtdFuncionarios).toFixed(0))
+
+        if (qtdAlertasPorFuncionario == 0) {
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_alerta')
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_critico')
+          status_funcionario_alerta.classList.add('status_funcionario_alerta_normal')
+          status_funcionario_alerta.innerHTML = `<b>Normal</b>`
+
+        } else if (qtdAlertasPorFuncionario <= 5) {
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_alerta')
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_critico')
+          status_funcionario_alerta.classList.add('status_funcionario_alerta_normal')
+          status_funcionario_alerta.innerHTML = `<b>Normal</b>`
+
+        } else if (qtdAlertasPorFuncionario <= 8) {
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_normal')
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_critico')
+          status_funcionario_alerta.classList.add('status_funcionario_alerta_alerta')
+          status_funcionario_alerta.innerHTML = `<b>Alerta</b>`
+
+        } else {
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_alerta')
+          status_funcionario_alerta.classList.remove('status_funcionario_alerta_normal')
+          status_funcionario_alerta.classList.add('status_funcionario_alerta_critico')
+          status_funcionario_alerta.innerHTML = `<b>Crítico</b>`
+
+        }
+
+      }
+
+      function atualizarGraficoAlertasPorPersona(dados, myChart) {
+        fetch(`/slack/qtdAlertasRecente`, { cache: 'no-store' }).then(function (response) {
+
+          if (response.ok) {
+            response.json().then(function (novoRegistro) {
+
+              //obterAlertas(idAquario);
+              console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+              console.log(`Dados atuais do gráfico:`);
+              console.log(dados);
+
+              // tirando e colocando valores no gráfico
+
+              dados.labels.shift();
+              dados.labels.push("qtdAlertas");
+
+              dados.datasets[0].data.shift();
+              dados.datasets[0].data.push(novoRegistro[0].alertasManutencao);
+
+              dados.datasets[1].data.shift();
+              dados.datasets[1].data.push(novoRegistro[0].alertasAnalista);
+
+              var qtdAlertasManutencao = novoRegistro[0].alertasManutencao;
+              var qtdAlertasAnalista = novoRegistro[0].alertasAnalista;
+              analisarEquipe(qtdAlertasManutencao, qtdAlertasAnalista);
+
+              myChart.update();
+
+              proximaAtualizacao = setTimeout(() => atualizarGraficoAlertasPorPersona(dados, myChart), 10000);
+            });
+          } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+            proximaAtualizacao = setTimeout(() => atualizarGraficoAlertasPorPersona(dados, myChart), 10000);
+          }
+        })
+          .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+      }
+
+    </script>
+</body>
+
+</html>
