@@ -69,7 +69,7 @@ function changePermission(fkAdmin, idUsuario) {
 function buscarFuncionarios() {
     tbodyFuncionarios.innerHTML = "";
 
-    fetch(`/usuarios/listar?fkAdmin=${localStorage.ID_USUARIO}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/usuarios/listar/fkAdmin=${localStorage.ID_USUARIO}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
                 resposta.forEach(linha => {
