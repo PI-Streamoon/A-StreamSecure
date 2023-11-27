@@ -1,23 +1,46 @@
 var database = require("../database/config");
+var ambiente = process.env.AMBIENTE_PROCESSO
 
 function plotarGrafico(idServidor = "0 OR TRUE", limit) {
-    const instrucao = `
-    SELECT idServidor,
-        DATE_FORMAT(MomentoRegistro, '%H:%i:%s') AS dtHora,
-        CPU,
-        FrequenciaCPU,
-        Memoria,
-        MemoriaUsada,
-        MemoriaTotal,
-        Disco,
-        Upload,
-        Download,
-        DiscoEntrada,
-        DiscoSaida
-        FROM streamoon.registroColunar
-        WHERE idServidor = ${idServidor}
-        ORDER BY MomentoRegistro DESC LIMIT ${limit};
-    `
+    var instrucao = ``
+    if(ambiente == "desenvolvimento"){
+        instrucao = `
+            SELECT idServidor,
+                DATE_FORMAT(MomentoRegistro, '%H:%i:%s') AS dtHora,
+                CPU,
+                FrequenciaCPU,
+                Memoria,
+                MemoriaUsada,
+                MemoriaTotal,
+                Disco,
+                Upload,
+                Download,
+                DiscoEntrada,
+                DiscoSaida
+                FROM registroColunar
+                WHERE idServidor = ${idServidor}
+                ORDER BY MomentoRegistro DESC LIMIT ${limit};
+        `
+    }else{
+        instrucao = `
+            SELECT TOP ${limit}
+                idServidor,
+                FORMAT(MomentoRegistro, 'HH:mm:ss') AS dtHora,
+                CPU,
+                FrequenciaCPU,
+                Memoria,
+                MemoriaUsada,
+                MemoriaTotal,
+                Disco,
+                Upload,
+                Download,
+                DiscoEntrada,
+                DiscoSaida
+                FROM registroColunar
+                WHERE idServidor = ${idServidor}
+                ORDER BY MomentoRegistro DESC;
+        `
+    }
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
@@ -28,18 +51,26 @@ function plotarGrafico(idServidor = "0 OR TRUE", limit) {
 function geral(idServidor) {
     var instrucao = ``
 
-    if (process.env.AMBIENTE_PROCESSO == "producao") {
+    if (ambiente == "producao") {
         instrucao = `
-        `;
-
-    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-
-        instrucao = `
-        SELECT DATE_FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
+        SELECT TOP 1 
+            FORMAT(MomentoRegistro, 'dd-MM-yyyy HH:mm:ss') AS dtHora,
            CPU,
            Memoria,
            Disco
-            FROM streamoon.registroColunar
+            FROM registroColunar
+            WHERE idServidor = ${idServidor}
+            ORDER BY dtHora DESC;
+        `
+
+    } else if (ambiente == "desenvolvimento") {
+
+        instrucao = `
+        SELECT FORMAT(MomentoRegistro, '%d-%m-%Y %H:%i:%s') AS dtHora,
+           CPU,
+           Memoria,
+           Disco
+            FROM registroColunar
             WHERE idServidor = ${idServidor}
             ORDER BY dtHora DESC LIMIT 1;
         `
