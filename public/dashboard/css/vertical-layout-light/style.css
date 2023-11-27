@@ -23134,6 +23134,7 @@ body.avgrund-active {
   z-index: 11;
   position: fixed;
   overflow-y: auto;
+  max-height: 100%;
   overflow-x: auto;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
