@@ -5403,3 +5403,99 @@ term.on('paste', function (data, ev) {
   comandoDigitado += data // CASO A PESSOA DER CTRL+V ELE VAI PEGAR O DADO (data) DO QUE FOI
   // COLADO E COLOCA NO comandoDigitado
 });
+
+
+// Plotagem dos gráficos 
+// 10 Últimos estados servidor
+
+    function status() {
+      fetch(`/servidor/status`)
+        .then(function (response) {
+
+          if (response.ok) {
+            response.json().then(function (resposta) {
+
+              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+              var listaIdServidores = resposta
+
+              idServidorSelecionado = listaIdServidores[0].idServidor;
+
+
+              for (let i = 0; i < listaIdServidores.length; i++) {
+                let idServidor = listaIdServidores[i].idServidor;
+
+                listagemDosServidores.innerHTML += `
+                <div class="d-flex justify-content-between mb-4">
+                              <div class="text-secondary font-weight-medium">${listaIdServidores[i].MomentoRegistro}</div>
+                              <div class="font-weight-medium">${listaIdServidores[i].status}</div>
+                            </div>    
+                `
+              }
+            });
+          } else {
+            console.error("Nenhum dado encontrado");
+          }
+        })
+        .catch(function (error) {
+          console.error(
+            `Erro na obtenção dos dados p/ locais dos servidores: ${error.message}`
+          );
+        });
+
+    }
+
+// CPU %
+
+var graficoCPU = document.getElementById('ServidorChart').getContext('2d');
+   
+
+    var grafico = new Chart(graficoCPU, {
+      type: 'bar',
+      data: {
+          labels: [],
+          datasets: [{
+            label: [],
+            data: [],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1,
+            fill: false
+          }]
+      },
+      options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          legend: {
+            display: false
+          },
+          elements: {
+            point: {
+              radius: 0
+            }
+          }
+      
+        }
+      });
+
+
+      function gerarGrafico(dados, labels) {  
+
+        grafico.data.datasets[0].data = dados;
+        grafico.data.labels = labels;
+
+        grafico.update();
+    }
+
+
