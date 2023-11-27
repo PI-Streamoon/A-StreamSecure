@@ -6,7 +6,7 @@ var cors = require("cors");
 var path = require("path");
 const IP = require('ip');
 const { spawn } = require("child_process");
-var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 8080;
+var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 80;
 
 var app = express();
 
@@ -19,6 +19,7 @@ var servidorRouter = require("./src/routes/servidor");
 var alertasRouter = require("./src/routes/alertas");
 var calculadoraRouter = require("./src/routes/calculadora");
 var chamadosRouter = require("./src/routes/chamados");
+var slackRouter = require("./src/routes/slack");
 var metricasRouter = require("./src/routes/metricas");
 var predictsRouter = require("./src/routes/predicts");
 
@@ -35,6 +36,7 @@ app.use("/medidas", medidasRouter);
 app.use("/empresas", empresasRouter);
 app.use("/servidor", servidorRouter);
 app.use("/alertas", alertasRouter);
+app.use("/slack", slackRouter);
 app.use("/calculadora", calculadoraRouter);
 app.use("/metricas", metricasRouter);
 app.use("/predicts", predictsRouter);
