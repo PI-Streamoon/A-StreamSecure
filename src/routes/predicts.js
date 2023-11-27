@@ -15,4 +15,8 @@ router.get("/exibirMemoria", function (req, res) {
     predictController.exibirMemoria(req, res);
 });
 
+router.get("/exibirDisco", function (req, res) {
+    predictController.exibirDisco(req, res);
+});
+
 module.exports = router;

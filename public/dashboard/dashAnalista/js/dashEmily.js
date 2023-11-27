@@ -1,17 +1,21 @@
 const dashboardPredictCpu = document.getElementById('dashboardPredictCpu');
 const dashboardPredictUpload = document.getElementById('dashboardPredictUpload');
 const graficoTotalMemoria = document.getElementById('totalMemoria');
+const graficoInfoDisco = document.getElementById('infoDisco');
 
 var labelsPredictCpu = [];
 var labelsPredictUpload = [];
 var labelsTotalMemoria = [];
+var labelsInfoDisco = [];
 var dadosPredictCpu = [];
 var dadosPredictUpload = [];
 var dadoMemoriaTotal = [];
+var dadosInfoDisco = [];
 
 var dashPredictCpu;
 var dashPredictUpload;
 var totalMemoria;
+var infoDisco;
 
 
 // Dashboard Predict CPU
@@ -163,8 +167,7 @@ function exibirMemoria() {
 
                     for (var i = 0; i < resposta.length; i++) {
                         var dado = resposta[i];
-                        dadoMemoriaTotal.datasets[0].data.push(dado.MemoriaUsada);
-                        dadoMemoriaTotal.datasets[1].data.push(dado.MemoriaTotal);
+                        dadoMemoriaTotal.datasets[0].data.push(dado.MemoriaUsada, dado.MemoriaTotal);
                     }
 
                     totalMemoria.update()
@@ -181,22 +184,72 @@ function exibirMemoria() {
 
 }
 
-labelsTotalMemoria = []
+labelsTotalMemoria = ["Espaço Utilizado", "Espaço Total"]
 dadoMemoriaTotal = {
     labels: labelsTotalMemoria,
     datasets: [{
-        label: "Espaço Utilizado",
+        label: "Memória RAM",
         data: [],
-        backgroundColor: "rgb(131,111,255)"
-    },
-    {
-        label: "Espaço disponível",
-        data: [],
-        backgroundColor: "rgb(221, 160, 221)"
+        backgroundColor: [
+            "rgb(131,111,255)",
+            "rgb(221, 160, 221)"
+    ],
     }]
-}
+};
 
 totalMemoria = new Chart(graficoTotalMemoria, {
     type: 'pie',
-    data: dadoMemoriaTotal
+    data: dadoMemoriaTotal,
+});
+
+
+// Exibição da entrada e saída do disco
+setInterval(exibirDisco, 5000)
+
+function exibirDisco() {
+    fetch(`/predicts/exibirDisco`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    dadosInfoDisco.datasets.forEach(dataset => {
+                        dataset.data = [];
+                    });
+
+                    for (var i = 0; i < resposta.length; i++) {
+                        var dado = resposta[i];
+                        dadosInfoDisco.datasets[0].data.push(dado.DiscoEntrada, dado.DiscoSaida);
+                    }
+
+                    infoDisco.update()
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro na API");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p / disco: ${error.message}`
+            );
+        });
+
+}
+
+labelsInfoDisco = ["Entrada", "Saída"]
+dadosInfoDisco = {
+    labels: labelsInfoDisco,
+    datasets: [{
+        label: "Disco",
+        data: [],
+        backgroundColor: [
+            "rgb(131,111,255)",
+            "rgb(221, 160, 221)"
+    ],
+    }]
+};
+
+infoDisco = new Chart(graficoInfoDisco, {
+    type: 'pie',
+    data: dadosInfoDisco,
 });

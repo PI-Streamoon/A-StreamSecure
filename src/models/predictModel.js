@@ -45,8 +45,20 @@ function exibirMemoria() {
     return database.executar(instrucaoSQL);
 }
 
+function exibirDisco() {
+    const instrucaoSQL = `
+        SELECT DiscoEntrada, DiscoSaida 
+        FROM streamoon.registroColunar 
+        ORDER BY MomentoRegistro DESC LIMIT 1;
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSQL);
+    return database.executar(instrucaoSQL);
+}
+
 module.exports = {
-    exibirMemoria,
     predictCPU,
-    predictUpload
+    predictUpload,
+    exibirMemoria,
+    exibirDisco
 }
