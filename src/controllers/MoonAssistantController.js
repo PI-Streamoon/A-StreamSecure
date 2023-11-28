@@ -80,7 +80,7 @@ async function send(req, res){
 
     console.log(message)
 
-    const apiMoonAssistant = 'http://127.0.0.1:5555/MoonAssistant/send';
+    const apiMoonAssistant = 'http://54.160.205.63:5555/MoonAssistant/send';
       
     const opcoesReq = {
     method: 'POST',
