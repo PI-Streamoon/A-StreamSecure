@@ -1,5 +1,5 @@
 var database = require("../database/config");
-var ambiente = process.env.AMBIENTE_PROCESSO;
+var ambiente = process.env.AMBIENTE_PROCESSO
 
 function plotarGrafico(idServidor = "0 OR TRUE", limit) {
     var instrucao = ``

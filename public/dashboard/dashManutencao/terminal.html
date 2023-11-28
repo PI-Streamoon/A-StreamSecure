@@ -10,52 +10,18 @@
   <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/terminal.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../img/logo.ico" />
 </head>
 
 <body>
-  <button class="moonAssistant-button pulse-anim" onclick="turnModalMoonAssistant(this)">
-    <img width="40" height="40" src="https://img.icons8.com/ios/50/ffffff/astronaut.png" class="icon"
-      alt="MoonAssistant Button" />
-  </button>
-
-  <div class="moonAssistant-modal-container d-flex align-items-center justify-content-center" id="moonAssistant-Modal">
-    <div class="container w-100 h-90 d-flex flex-column justify-content-end pb-2">
-      <div class="chat w-100 h-100 p-3 overflow-auto" id="messages">
-        <div
-          class="d-flex flex-column overflow-hidden text-black font-weight-bold float-left bg-white mt-3 box-message">
-          <img class="moonAssistant-icon" src="https://img.icons8.com/ios/50/ffffff/astronaut.png">
-          <span class="m-3">Olá, eu sou o Assistente de Monitoramento e Otimização para Servidores de Streaming! Estou
-            aqui para oferecer suporte especializado na análise contínua do hardware dos seus servidores, garantindo que
-            tudo funcione de forma eficiente e confiável.</span>
-          <span class="fa fa-2x fa-info-circle font-weight-bolder text-center mb-3 pointer" onclick="showInfo()"></span>
-        </div>
-
-      </div>
-      <div class="chat-input-text-container card d-flex flex-column align-items-center justify-content-center p-2">
-        <div class="d-flex">
-          <div class="badge badge-light mr-3 pointer font-weight-bolder" onclick="turnDadosMonitoramento(this)">Dados
-            Monitoramento</div>
-          <div class="badge badge-light pointer font-weight-bolder" onclick="turnDadosFalhas(this)">Dados Falhas</div>
-        </div>
-        <div class="d-flex align-items-center justify-content-center w-100">
-          <input id="ipt-message" type="text" placeholder="Digite Aqui" class="text-input mt-3 mr-3 w-75" />
-          <button class="mt-3" id="buttonSendMessage" onclick="sendMessage()"><span
-              class="fa fa-1x fa-arrow-right text-white"></span></button>
-        </div>
-        <a class="text-black-50 font-italic mt-1" target="_blank" href="https://bard.google.com/">Powered By Bard</a>
-      </div>
-    </div>
-  </div>
-
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -262,7 +228,7 @@
               </div>
             </div>
           </div>
-          <div class="row mt-3">
+<!--           <div class="row mt-3">
             <div class="col-sm-6" id="infosServidor">
               <h3 class="mb-0 font-weight-bold" id="nomeServidor"></h3>
               <p>Atualizado a: <span id="tempoUltimoMonitoramento">0s atrás</span> de <span
@@ -278,17 +244,8 @@
                   </div>
                 </div>
                 <div class="pr-1 mb-3 mr-2 mb-xl-0">
-                  <div class="dropdown">
-                    <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2" type="button"
-                      id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="typcn typcn-export mr-2"></i>Export
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" data-x-placement="top-start">
-                      <h6 class="dropdown-header">Export</h6>
-                      <a class="dropdown-item" href="#" onclick="exportPDF()">Relatório de Falhas (PDF)</a>
-                      <a class="dropdown-item" href="#" onclick="exportCSV()">Relatório de Dados (CSV)</a>
-                    </div>
-                  </div>
+                  <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i
+                      class="typcn typcn-arrow-forward-outline mr-2"></i>Export</button>
                 </div>
                 <div class="pr-1 mb-3 mb-xl-0">
                   <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i
@@ -296,8 +253,9 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row mt-3">
+          </div> -->
+
+<!--           <div class="row mt-3">
             <div class="col-xl-12 d-flex grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -312,78 +270,67 @@
                         </div>
                         <div class="col-xl-9 col-lg-12">
                           <div class="row" id="rowBanner">
-                            <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="col-12 col-lg-4">
 
-                              <div
-                                class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                onclick="changeComponente('cpuChart', 'CPU %', cpuChartDataset)" id="Banner-CPU">
-                                <i class="fa fa-server fa-3x mr-2"></i>
-                                <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
-                                  <h3 class="mb-2">Uso da CPU</h3>
-                                  <h4 class="mb-0"><span id="info-CPU"></span> %</h4>
-                                </div>
+                              <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
+                                  onclick="changeComponente('cpuChart', 'CPU %')" id="Banner-CPU">
+                                  <i class="fa fa-server fa-3x mr-2"></i>
+                                  <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
+                                      <h3 class="mb-2">Uso da CPU</h3>
+                                      <h4 class="mb-0"><span id="info-CPU"></span> %</h4>
+                                  </div>
                               </div>
 
-                              <div
-                                class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                onclick="changeComponente('taxaUploadChart', 'Taxa Upload MB/s', taxaUploadChartDataset)"
-                                id="Banner-Upload">
-                                <i class="fa fa-upload fa-3x mr-2"></i>
-                                <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
-                                  <h3 class="mb-2">Taxa de Upload</h3>
-                                  <h4 class="mb-0"><span id="info-Upload"></span> MB/s</h4>
-                                </div>
+                              <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
+                                  onclick="changeComponente('taxaUploadChart', 'Taxa Upload MB/s')" id="Banner-Upload">
+                                  <i class="fa fa-upload fa-3x mr-2"></i>
+                                  <div class="ms-3 d-flex flex-column align-items-center justify-content-center"> 
+                                      <h3 class="mb-2">Taxa de Upload</h3>
+                                      <h4 class="mb-0"><span id="info-Upload"></span> MB/s</h4>
+                                  </div>
                               </div>
 
                             </div>
-                            <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="col-12 col-lg-4">
 
-                              <div
-                                class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                onclick="changeComponente('memoriaChart', 'Memoria %', memoriaChartDataset)"
-                                id="Banner-Memoria">
-                                <i class="fa fa-memory fa-3x mr-2"></i>
-                                <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
-                                  <h3 class="mb-2">Uso da Memória</h3>
-                                  <h4 class="mb-0"><span id="info-Memoria"></span> %</h4>
-                                </div>
+                              <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
+                                  onclick="changeComponente('memoriaChart', 'Memoria %')" id="Banner-Memoria">
+                                  <i class="fa fa-memory fa-3x mr-2"></i>
+                                  <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
+                                      <h3 class="mb-2">Uso da Memória</h3>
+                                      <h4 class="mb-0"><span id="info-Memoria"></span> %</h4>
+                                  </div>
                               </div>
 
-                              <div
-                                class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                onclick="changeComponente('taxaDownloadChart', 'Taxa Download MB/s', taxaDownloadChartDataset)"
-                                id="Banner-Download">
-                                <i class="fa fa-download fa-3x mr-2"></i>
-                                <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
-                                  <h3 class="mb-2">Taxa de Download</h3>
-                                  <h4 class="mb-0"><span id="info-Download"></span> MB/s</h4>
-                                </div>
+                              <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
+                                  onclick="changeComponente('taxaDownloadChart', 'Taxa Download MB/s')" id="Banner-Download">
+                                  <i class="fa fa-download fa-3x mr-2"></i>
+                                  <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
+                                      <h3 class="mb-2">Taxa de Download</h3>
+                                      <h4 class="mb-0"><span id="info-Download"></span> MB/s</h4>
+                                  </div>
                               </div>
 
                             </div>
-                            <div class="col-12 col-lg-12 col-xl-4">
-
-                              <div
-                                class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
-                                onclick="changeComponente('discoChart', 'Uso Disco %', discoChartDataset)"
-                                id="Banner-Disco">
-                                <i class="fa fa-database fa-3x mr-2"></i>
-                                <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
-                                  <h3 class="mb-2">Uso do Disco</h3>
-                                  <h4 class="mb-0"><span id="info-Disco"></span> %</h4>
-                                </div>
+                            <div class="col-12 col-lg-4">
+                              
+                              <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder pointer"
+                                  onclick="changeComponente('discoChart', 'Uso Disco %')" id="Banner-Disco">
+                                  <i class="fa fa-database fa-3x mr-2"></i>
+                                  <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
+                                      <h3 class="mb-2">Uso do Disco</h3>
+                                      <h4 class="mb-0"><span id="info-Disco"></span> %</h4>
+                                  </div>
                               </div>
 
-                              <div
-                                class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
-                                onclick="changeComponente('ioDiscoChart', 'IO Disco MB/s', ioDiscoChartDataset)"
-                                id="Banner-DiscoEntrada">
-                                <i class="fa fa-database fa-3x mr-2"></i>
-                                <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
-                                  <h3 class="mb-3">IO Disco</h3>
-                                  <h4 class="mb-0">Entrada: <span id="info-DiscoEntrada"></span> MB/s</h4>
-                                  <h4 class="mt-2">Saida: <span id="info-DiscoSaida"></span> MB/s</h4>
-                                </div>
+                              <div class="bg-success rounded d-flex align-items-center justify-content-between p-4 text-white font-weight-bolder mt-2 pointer"
+                                  onclick="changeComponente('ioDiscoChart', 'IO Disco MB/s')" id="Banner-DiscoEntrada">
+                                  <i class="fa fa-database fa-3x mr-2"></i>
+                                  <div class="ms-3 d-flex flex-column align-items-center justify-content-center">
+                                      <h3 class="mb-3">IO Disco</h3>
+                                      <h4 class="mb-0" >Entrada: <span id="info-DiscoEntrada"></span> mb/s</h4>
+                                      <h4 class="mt-2" >Saida: <span id="info-DiscoSaida"></span> mb/s</h4>
+                                  </div>
                               </div>
 
                             </div>
@@ -395,13 +342,17 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
+          <br><br><br>
+          <div id="terminal-container"></div> 
+          <br><br><br>        
           <div class="row">
             <div class="col-xl-3 d-flex grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">10 Últimas Leituras <span data-id="titleComponente">CPU</span></h4>
+                    <h4 class="card-title mb-3">10 Últimos Estados <span data-id="labelComponente">Servidor</span></h4>
+                    
                   </div>
                   <div class="row">
                     <div class="col-12">
@@ -412,7 +363,10 @@
                             <div class="font-weight-medium">Medida</div>
                           </div>
                           <div id="ultimas10Leituras">
-
+                            <div class="d-flex justify-content-between mb-4">
+                              <div class="text-secondary font-weight-medium">17/11/2023</div>
+                              <div class="font-weight-medium">Normal</div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -425,37 +379,26 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Monitoramento <span data-id="titleComponente">CPU %</span></h4>
-                    <button type="button" class="btn btn-sm btn-light">Real Time</button>
+                    <h4 class="card-title mb-3">Monitoramento <span data-id="labelComponente">CPU% Servidor - Ao vivo</span></h4>
+                    <canvas id="ServidorChart" class="d-block"></canvas>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <div class="d-md-flex mb-4" id="legendaChartMonitoramento">
-
-                      </div>
-                      <canvas id="cpuChart" class="d-block" data-id="chartMonitoramento"></canvas>
-                      <canvas id="memoriaChart" class="d-none" data-id="chartMonitoramento"></canvas>
-                      <canvas id="discoChart" class="d-none" data-id="chartMonitoramento"></canvas>
-                      <canvas id="taxaUploadChart" class="d-none" data-id="chartMonitoramento"></canvas>
-                      <canvas id="taxaDownloadChart" class="d-none" data-id="chartMonitoramento"></canvas>
-                      <canvas id="ioDiscoChart" class="d-none" data-id="chartMonitoramento"></canvas>
                     </div>
+                    <canvas id="areaChart"></canvas>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
+
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a
-                href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a
-                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from
-              Bootstrapdash.com</span>
+            <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a target="_blank">Streamoon</a> 2023</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Todos os <a target="_blank">direitos reservados </a></span>
           </div>
         </footer>
         <!-- partial -->
@@ -501,12 +444,11 @@
     var taxaDownloadChartDataset;
     var ioDiscoChart;
     var ioDiscoChartDataset;
-    var datasetsSelecionado;
   </script>
 
   <script src="js/load.js"></script>
   <script src="js/update.js"></script>
-  <script src="js/MoonAssistant.js"></script>
+  <script src="js/terminal.js"></script>
   <script src="../dashAnalista/js/comandosUniversais.js"></script>
 </body>
 

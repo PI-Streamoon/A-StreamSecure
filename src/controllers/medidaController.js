@@ -2,8 +2,9 @@ var medidaModel = require("../models/medidaModel");
 
 function plotarGrafico(req, res) {
     var idServidor = req.query.idServidor;
+    var limit = req.query.limit;
 
-    medidaModel.plotarGrafico(idServidor).then(function (resultado) {
+    medidaModel.plotarGrafico(idServidor, limit).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

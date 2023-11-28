@@ -1,34 +1,30 @@
-// (function($) {
-//   'use strict';
-//   $(function() {
-//     // Remove pro banner on close
-//     document.querySelector('#bannerClose').addEventListener('click',function() {
-//       document.querySelector('#proBanner').classList.add('d-none');
-//     });
-//     if ($('#circleProgress6').length) {
-//       var bar = new ProgressBar.Circle(circleProgress6, {
-//         color: '#001737',
-//         // This has to be the same size as the maximum width to
-//         // prevent clipping
-//         strokeWidth: 10,
-//         trailWidth: 10,
-//         easing: 'easeInOut',
-//         duration: 1400,
-//         text: {
-//           autoStyleContainer: false
-//         },
-//         from: {
-//           color: '#aaa',
-//           width: 10
-//         },
-//         to: {
-//           color: '#2617c9',
-//           width: 10
-//         },
-//         // Set default step function for all animate calls
-//         step: function(state, circle) {
-//           circle.path.setAttribute('stroke', state.color);
-//           circle.path.setAttribute('stroke-width', state.width);
+(function($) {
+  'use strict';
+  $(function() {
+    if ($('#circleProgress6').length) {
+      var bar = new ProgressBar.Circle(circleProgress6, {
+        color: '#001737',
+        // This has to be the same size as the maximum width to
+        // prevent clipping
+        strokeWidth: 10,
+        trailWidth: 10,
+        easing: 'easeInOut',
+        duration: 1400,
+        text: {
+          autoStyleContainer: false
+        },
+        from: {
+          color: '#aaa',
+          width: 10
+        },
+        to: {
+          color: '#2617c9',
+          width: 10
+        },
+        // Set default step function for all animate calls
+        step: function(state, circle) {
+          circle.path.setAttribute('stroke', state.color);
+          circle.path.setAttribute('stroke-width', state.width);
   
 //           var value = '<p class="text-center mb-0">Score</p>' + Math.round(circle.value() * 100) + "%";
 //           if (value === 0) {

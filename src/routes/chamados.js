@@ -3,26 +3,24 @@ var router = express.Router();
 
 var chamadosController = require("../controllers/chamadosController");
 
-router.get("/totalChamadosResolvidos", function (req, res) {
-    chamadosController.totalChamadosResolvidos(req, res);
+router.post("/abrirChamado", function (req, res) {
+    chamadosController.abrirChamado(req, res);
 })
 
-router.get("/abrirChamado", function (req, res) {
-    chamadosController.totalPDia(req, res);
+router.get("/totalChamadosAbertosResolvidos", function (req, res) {
+    chamadosController.totalChamadosAbertosResolvidos(req, res);
 })
 
-router.get("/totalChamadosCriticos", function (req, res) {
-    chamadosController.totalChamadosCriticos(req, res);
-})
-
-router.get("/chamadoResolvido", function (req, res) {
-    chamadosController.chamadoResolvido(req, res);
+router.post("/atualizarStatusChamado/:idChamado", function (req, res) {
+    chamadosController.atualizarStatusChamado(req, res);
 })
 
 router.get("/totalChamados", function (req, res) {
-    chamadosController.totalChamadosCriticos(req, res);
+    chamadosController.totalChamados(req, res);
 })
 
-
+router.get("/totalChamadosPorPrioridade", function (req, res) {
+    chamadosController.totalChamadosPorPrioridade(req, res);
+})
 
 module.exports = router;

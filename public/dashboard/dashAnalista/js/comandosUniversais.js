@@ -5,7 +5,7 @@ function carregarPagina() {
 
     nomeHeader.innerHTML = nome;
     nomeSidebar.innerHTML = nome;
-    cargo.innerHTML = "Analista de dados";
+    cargo.innerHTML = "Bem vindo(a)";
 }
 
 function logout() {

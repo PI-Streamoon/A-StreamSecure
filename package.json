@@ -12,12 +12,18 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "date-fns": "^2.30.0",
     "express": "^4.17.1",
     "ip": "^1.1.8",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.7.1",
     "mssql": "^7.1.3",
     "mysql2": "^2.2.5",
-    "nodemon": "^2.0.7",
-    "path": "^0.12.7"
+    "node-fetch": "^2.7.0",
+    "nodemon": "^1.10.2",
+    "path": "^0.12.7",
+    "temp": "^0.9.4",
+    "terminal.css": "^0.7.2"
   }
 }

@@ -3,7 +3,7 @@ var sql = require('mssql');
 
 // CONEXÃO DO SQL SERVER - AZURE (NUVEM)
 var sqlServerConfig = {
-    server: "127.0.0.1",
+    server: "18.208.1.120",
     port: 1433,
     database: "streamoon",
     user: "StreamoonUser",
@@ -34,7 +34,7 @@ function executar(instrucao) {
             sql.connect(sqlServerConfig).then(function () {
                 return sql.query(instrucao);
             }).then(function (resultados) {
-                console.log(resultados);
+                //console.log(resultados);
                 resolve(resultados.recordset);
             }).catch(function (erro) {
                 reject(erro);
@@ -53,7 +53,7 @@ function executar(instrucao) {
                 if (erro) {
                     reject(erro);
                 }
-                console.log(resultados);
+                //console.log(resultados);
                 resolve(resultados);
             });
             conexao.on('error', function (erro) {
