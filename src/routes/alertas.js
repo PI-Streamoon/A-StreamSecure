@@ -15,6 +15,9 @@ router.get("/total", function (req, res) {
     falhasController.total(req, res);
 })
 
+router.get("/realTime", function (req, res) {
+    falhasController.realTime(req, res);
+})
 
 
 module.exports = router;

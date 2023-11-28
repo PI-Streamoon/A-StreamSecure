@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Dashboard Analista</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../img/logo.ico" />
+
+  <!-- Template Stylesheet -->
+  <link rel="stylesheet" href="css/styleAnalytic.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="predictCPU(), predictUpload()">
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href="index.html"><img src="../../img/logo/nome-e-logo 1.png"
+                  alt="logo" /></a>
+          <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../img/logo.png" alt="logo"/></a> -->
+          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+              data-toggle="minimize">
+              <span class="typcn typcn-th-menu"></span>
+          </button>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item  d-none d-lg-flex">
+            <a class="nav-link active" href="index.html">
+              Geral
+            </a>
+          </li>
+          <li class="nav-item  d-none d-lg-flex">
+            <a id="metricas" class="nav-link" onclick="metricsAdjustment()">
+              Métricas
+            </a>
+          </li>
+        </ul>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <ul class="navbar-nav navbar-nav-right">
+              <li class="nav-item dropdown d-flex">
+                  <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
+                      id="messageDropdown" href="#" data-toggle="dropdown">
+                      <i class="typcn typcn-message-typing"></i>
+                      <span class="count bg-success">2</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                      aria-labelledby="messageDropdown">
+                      <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+                      <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                              <img src="../images/faces/face4.jpg" alt="image" class="profile-pic">
+                          </div>
+                          <div class="preview-item-content flex-grow">
+                              <h6 class="preview-subject ellipsis font-weight-normal">David Grey
+                              </h6>
+                              <p class="font-weight-light small-text mb-0">
+                                  The meeting is cancelled
+                              </p>
+                          </div>
+                      </a>
+                      <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                              <img src="../images/faces/face2.jpg" alt="image" class="profile-pic">
+                          </div>
+                          <div class="preview-item-content flex-grow">
+                              <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
+                              </h6>
+                              <p class="font-weight-light small-text mb-0">
+                                  New product launch
+                              </p>
+                          </div>
+                      </a>
+                      <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                              <img src="../images/faces/face3.jpg" alt="image" class="profile-pic">
+                          </div>
+                          <div class="preview-item-content flex-grow">
+                              <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
+                              </h6>
+                              <p class="font-weight-light small-text mb-0">
+                                  Upcoming board meeting
+                              </p>
+                          </div>
+                      </a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown  d-flex">
+                  <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+                      id="notificationDropdown" href="#" data-toggle="dropdown">
+                      <i class="typcn typcn-bell mr-0"></i>
+                      <span class="count bg-danger">2</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                      aria-labelledby="notificationDropdown">
+                      <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                      <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                              <div class="preview-icon bg-success">
+                                  <i class="typcn typcn-info-large mx-0"></i>
+                              </div>
+                          </div>
+                          <div class="preview-item-content">
+                              <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                              <p class="font-weight-light small-text mb-0">
+                                  Just now
+                              </p>
+                          </div>
+                      </a>
+                      <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                              <div class="preview-icon bg-warning">
+                                  <i class="typcn typcn-cog mx-0"></i>
+                              </div>
+                          </div>
+                          <div class="preview-item-content">
+                              <h6 class="preview-subject font-weight-normal">Settings</h6>
+                              <p class="font-weight-light small-text mb-0">
+                                  Private message
+                              </p>
+                          </div>
+                      </a>
+                      <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                              <div class="preview-icon bg-info">
+                                  <i class="typcn typcn-user-outline mx-0"></i>
+                              </div>
+                          </div>
+                          <div class="preview-item-content">
+                              <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                              <p class="font-weight-light small-text mb-0">
+                                  2 days ago
+                              </p>
+                          </div>
+                      </a>
+                  </div>
+              </li>
+              <li class="nav-item nav-profile dropdown">
+                  <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown"
+                      id="profileDropdown">
+                      <i class="typcn typcn-user-outline mr-0"></i>
+                      <span class="nav-profile-name" id="nomeHeader"></span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                      aria-labelledby="profileDropdown">
+                      <a onclick="logout()" class="dropdown-item">
+                          <i class="typcn typcn-power text-primary"></i>
+                          Sair
+                      </a>
+                  </div>
+              </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+              data-toggle="offcanvas">
+              <span class="typcn typcn-th-menu"></span>
+          </button>
+      </div>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+              <li class="nav-item">
+                  <div class="d-flex sidebar-profile">
+                      <div class="sidebar-profile-image">
+                          <img src="../images/faces/face1.jpg" alt="image">
+                      </div>
+                      <div class="sidebar-profile-name">
+                          <p class="sidebar-name" id="nomeSidebar">
+                          </p>
+                          <p class="sidebar-designation" id="cargo">
+
+                          </p>
+                      </div>
+                  </div>
+                  <p class="sidebar-menu-title">Menu</p>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="index.html">
+                      <i class="typcn typcn-device-desktop menu-icon"></i>
+                      <span class="menu-title">Geral</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="falhas.html">
+                      <i class="typcn typcn-info menu-icon"></i>
+                      <span class="menu-title">Falhas</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="calculadora.html">
+                      <i class="typcn typcn-calculator menu-icon"></i>
+                      <span class="menu-title">Calculadora</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="dashSlack.html">
+                      <i class="typcn typcn-chart-pie-outline menu-icon"></i>
+                      <span class="menu-title">Gerenciamento de equipe</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="historicoAnalista.html">
+                      <i class="typcn typcn-compass menu-icon"></i>
+                      <span class="menu-title">Histórico</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="cadastroManutencao.html">
+                      <i class="typcn typcn-user-add-outline menu-icon"></i>
+                      <span class="menu-title">Equipe</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../dashManutencao/dashChamados.html">
+                    <i class="typcn typcn-clipboard menu-icon"></i>
+                    <span class="menu-title">Chamados</span>
+                </a>
+            </li>
+          </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12 d-flex grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Tendências Previstas para a CPU</h4>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <div class="d-sm-flex justify-content-between">
+                        <div>
+                          <h8>Estimativas da CPU com Base em Modelo de Previsão correlacionando CPU e Memória RAM</h8><br>
+                          <h8>(dados atualizados a cada 20 segundos)</h8>
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-sm btn-light mr-2">Day</button>
+                        </div>
+                      </div>
+                      <div class="chart-container mt-4">
+                        <canvas id="dashboardPredictCpu"></canvas>
+                      </div> <br><br><br>
+                      <div class="d-flex flex-wrap justify-content-between">
+                        <h4 class="card-title mb-3">Tendências Previstas para o Upload da Rede</h4>
+                      </div>
+                      <div class="d-sm-flex justify-content-between">
+                        <div>
+                          <h8>Estimativas de Upload da Rede com Base em Modelo de Previsão corrrelacionando Upload e Download da Rede</h8><br>
+                          <h8>(dados atualizados a cada 20 segundos)</h8>
+                        </div>
+                      </div>
+                      <div class="chart-container mt-4">
+                        <canvas id="dashboardPredictUpload"></canvas>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <h3>Estado atual do servidor: 
+                            <div class="text-success font-weight-bold"><h4>Outbound</h4></div>
+                          </h3>
+                        </div>
+                        <div class="ms-3">
+                          <p>A diferença entre os dados reais e previstos é </p>
+                          <p id="situacaoPredictCpu"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="font-weight-medium">Current</div>
+                          <div class="text-muted">458.77M</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="font-weight-medium">Average</div>
+                          <div class="text-muted">1.45K</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="font-weight-medium">Maximum</div>
+                          <div class="text-muted">15.50K</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="font-weight-bold"><h3>Entrada e saída do Disco</h3></div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <canvas id="infoDisco"></canvas>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="mt-4">
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="font-weight-bold">
+                            <h3>Utilização da Memória</h3>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <canvas id="totalMemoria"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="font-weight-medium">Average</div>
+                          <div class="text-muted">38.34M</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © <a
+                href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com</a> 2020</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Free <a
+                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard </a>templates from
+              Bootstrapdash.com</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+  <div id="metrics_adjustment" class="metrics">
+    <div id="container">
+      <div class="row">
+        <h1>Ajuste de métricas</h1>
+        <h4>Otimize o desempenho dos seus componentes ajustando as métricas conforme suas necessidades.</h4>
+        <ul>
+          <li id="cpu">CPU</li>
+          <li id="ram">Memória RAM</li>
+          <li id="disk">Disco</li>
+          <li id="upload">Upload</li>
+          <li id="download">Download</li>
+          <li id="freqCPU">Frequência da CPU</li>
+        </ul>
+        <div id="inputs" class="hidden" style="display: none;">
+          <h4>Ajuste dos Limites de Alerta e Crítico <br>
+            <span id="nomeComponente" style="font-size: 16px;"></span>
+          </h4>
+          <label for="alerta">Mínimo valor que indicará estado de <span class="spanAlerta">alerta</span> do
+            servidor:</label>
+          <br>
+          <input type="number" id="ipt_alerta"><br><br>
+          <label for="critico">Mínimo valor que indicará estado <span class="spanCritico">crítico</span> do
+            servidor:</label>
+          <br>
+          <input type="number" id="ipt_critico">
+          <br>
+          <button id="aplicarMetricas" onclick="verifyMetrics()">Aplicar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- container-scroller -->
+  <!-- base:js -->
+  <script src="../vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="../js/off-canvas.js"></script>
+  <script src="../js/hoverable-collapse.js"></script>
+  <script src="../js/template.js"></script>
+  <script src="../js/settings.js"></script>
+  <script src="../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- plugin js for this page -->
+  <script src="../vendors/progressbar.js/progressbar.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <!-- <script src="../js/dashboard.js"></script> -->
+  <!-- End custom js for this page-->
+
+  <!-- Template Javascript -->
+  <script src="js/dashboardAnalista.js"></script>
+  <script src="js/dashEmily.js"></script>
+  <script src="../../js/main.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script src="js/jquery.mask.min.js"></script>
+  <script>
+    $('#filtroDataInic').mask('00-00-0000');
+    $('#filtroDataFinal').mask('00-00-0000');
+  </script>
+
+  <script>
+
+    const metricas = document.getElementById('metrics_adjustment');
+
+    function metricsAdjustment() {
+      metricas.style.display = 'flex';
+    }
+
+    const listaItems = document.querySelectorAll('#metrics_adjustment ul li');
+    const inputsDiv = document.getElementById('inputs');
+    const nomeComponenteSpan = document.getElementById('nomeComponente');
+    var fkComponenteServidor = 0;
+
+    listaItems.forEach(item => {
+      item.addEventListener('click', () => {
+        listaItems.forEach(li => {
+          li.style.fontWeight = 'normal';
+        });
+        item.style.fontWeight = 'bold';
+        inputsDiv.style.display = 'block';
+        nomeComponenteSpan.textContent = item.textContent;
+        if (nomeComponenteSpan.textContent == "CPU") {
+          fkComponenteServidor = 1;
+        } else if (nomeComponenteSpan.textContent == "Frequência da CPU") {
+          fkComponenteServidor = 2;
+        } else if (nomeComponenteSpan.textContent == "Memória RAM") {
+          fkComponenteServidor = 3;
+        } else if (nomeComponenteSpan.textContent == "Disco") {
+          fkComponenteServidor = 6;
+        } else if (nomeComponenteSpan.textContent == "Upload") {
+          fkComponenteServidor = 9;
+        } else if (nomeComponenteSpan.textContent == "Download") {
+          fkComponenteServidor = 10;
+        }
+      });
+    });
+
+  </script>
+
+  <script src="js/comandosUniversais.js"></script>
+</body>
+
+</html>

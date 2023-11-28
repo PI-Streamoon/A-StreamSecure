@@ -3,17 +3,19 @@ var sql = require('mssql');
 
 // CONEXÃO DO SQL SERVER - AZURE (NUVEM)
 var sqlServerConfig = {
-    server: "SEU_SERVIDOR",
-    database: "SEU_BANCO_DE_DADOS",
-    user: "SEU_USUARIO",
-    password: "SUA_SENHA",
+    server: "18.208.1.120",
+    port: 1433,
+    database: "streamoon",
+    user: "StreamoonUser",
+    password: "Moon2023",
     pool: {
         max: 10,
         min: 0,
         idleTimeoutMillis: 30000
     },
     options: {
-        encrypt: true, // for azure
+        encrypt: false, // for azure
+        trustServerCertificate: true,
     }
 }
 
@@ -32,7 +34,7 @@ function executar(instrucao) {
             sql.connect(sqlServerConfig).then(function () {
                 return sql.query(instrucao);
             }).then(function (resultados) {
-                console.log(resultados);
+                //console.log(resultados);
                 resolve(resultados.recordset);
             }).catch(function (erro) {
                 reject(erro);
@@ -51,7 +53,7 @@ function executar(instrucao) {
                 if (erro) {
                     reject(erro);
                 }
-                console.log(resultados);
+                //console.log(resultados);
                 resolve(resultados);
             });
             conexao.on('error', function (erro) {

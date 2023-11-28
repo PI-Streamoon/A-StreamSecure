@@ -13,4 +13,8 @@ router.get("/status", function (req, res) {
     servidorController.status(req, res);
 });
 
+router.get("/estadoServidor", function (req, res) {
+    servidorController.estadoServidor(req, res);
+});
+
 module.exports = router;
