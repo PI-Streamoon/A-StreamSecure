@@ -44,7 +44,7 @@ const atualizarStatusChamado = (listarChamados) => {
             listarChamados[indiceChamado].isAberto = !listarChamados[indiceChamado].isAberto;
             
             const statusChamado = listarChamados[indiceChamado].isAberto ? 'Aberto' : 'Fechado';
-            const novoStatus = statusChamado === 'Aberto' ? 'TRUE' : 'FALSE';
+            const novoStatus = statusChamado === 'Aberto' ? 1 : 0;
 
             document.getElementById(`statusChamado-${indiceChamado+1}`).textContent = statusChamado;
         
