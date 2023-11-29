@@ -12,7 +12,7 @@ function mostrarInstancias(so, fkLocal) {
 function mostrarRegioes() {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function exibirPerfil()");
     var instrucao = `
-    SELECT * FROM locais WHERE fkEmpresa = 1;
+    SELECT * FROM locais WHERE fkEmpresa = 484020;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
