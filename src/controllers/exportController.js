@@ -59,6 +59,7 @@ function exportCSV(req, res){
 
     medidaModel.plotarGrafico(idServidor, 900000).then(function (resultado) {
         if (resultado.length > 0) {
+            resultado.reverse()
 
             createTempCsvFile(resultado)
             .then((tempFilePath) => {
@@ -109,7 +110,7 @@ function exportPDF(req, res){
 
     alertasModel.totalPDia(dataFinal, dataInic, idServidor).then(function (resultado) {
         if (resultado.length > 0) {
-
+            resultado.reverse()
             var pdf = createPDFFile(resultado);
             res.status(200).json({pdf: pdf.output()});
 

@@ -1,9 +1,14 @@
 var database = require("../database/config");
+var ambiente = process.env.AMBIENTE_PROCESSO
+
 
 function totalChamados(){
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
 
-    const instrucao = `SELECT * FROM chamados;`;
+    var instrucao = `SELECT * FROM chamados;`;
+
+    
+
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
@@ -55,9 +60,15 @@ function atualizarStatusChamado(idChamado, novoStatus) {
 function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function totalChamados()");
 
-
-    const instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
-                            VALUES ('${titulo}', '${descricao}', '${dataAtual}', TRUE, '${prioridade}', '${responsavel}')`;
+    var instrucao = ``
+    
+    if(ambiente == "desenvolvimento"){
+        instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
+        VALUES ('${titulo}', '${descricao}', '${dataAtual}', TRUE, '${prioridade}', '${responsavel}')`;
+    } else {
+        instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
+        VALUES ('${titulo}', '${descricao}', GETDATE(), 1, '${prioridade}', '${responsavel}')`;
+    }                        
 
     console.log("Executando a instrução SQL: \n" + instrucao);
 
