@@ -44,7 +44,7 @@ function estadoServidor() {
     if(ambiente == "desenvolvimento"){
         instrucao = `
             SELECT idServidor, 
-                DATE_FORMAT(MomentoRegistro, '%d/%m/%Y %H:%i:%s') MomentoRegistro,
+                DATE_FORMAT(MomentoRegistro, '%d/%m/%Y') MomentoRegistro,
                 Status
             FROM situacaoServidor 
             GROUP BY idServidor, MomentoRegistro LIMIT 10;
@@ -53,7 +53,7 @@ function estadoServidor() {
         instrucao = `
         SELECT TOP 10
             idServidor, 
-            FORMAT(MomentoRegistro, 'dd/MM/yyyy HH:mm:ss') AS MomentoRegistro,
+            FORMAT(MomentoRegistro, 'dd/MM/yyyy') AS MomentoRegistro,
             Status
         FROM situacaoServidor 
         GROUP BY idServidor, MomentoRegistro;
