@@ -5316,7 +5316,7 @@ var shellprompt = '$ ';
 term.prompt = function () {
   term.write('\r\n' + shellprompt);
 };
-
+term.writeln('');
 term.writeln('Bem vindo ao terminal Web da Streamoon!');
 term.writeln('');
 term.writeln('Aqui você pode digitar comandos e se comunicar com seu servidor AWS.');
@@ -5326,7 +5326,7 @@ term.prompt();
 
 term.on('key', function (key, ev) {
   var printable = (
-    !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
+    !ev.altKey && !ev.altGraphKey
   );
 
   if (ev.keyCode == 13 && comandoDigitado.length > 0) {
@@ -5349,7 +5349,7 @@ term.on('key', function (key, ev) {
       console.log(response)
       if (response.ok) {
         response.json().then(function (resposta) {
-
+          console.warn(resposta)
 
           loopSearchCommand = setInterval(() => {
             fetch('/terminal/lerComando?idTerminal=' + resposta.insertId).then(function (reponseLerComando) {
@@ -5397,10 +5397,13 @@ term.on('key', function (key, ev) {
   }
 });
 
-term.on('paste', function (data, ev) {
-  term.write(data);
+terminalContainer.addEventListener('paste', function (evt) {
+  evt.preventDefault();
 
-  comandoDigitado += data // CASO A PESSOA DER CTRL+V ELE VAI PEGAR O DADO (data) DO QUE FOI
+  let paste = (evt.clipboardData || window.clipboardData).getData("text");
+  term.write(paste);
+
+  comandoDigitado += paste // CASO A PESSOA DER CTRL+V ELE VAI PEGAR O DADO (data) DO QUE FOI
   // COLADO E COLOCA NO comandoDigitado
 });
 
