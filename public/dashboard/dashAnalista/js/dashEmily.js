@@ -155,7 +155,7 @@ dashPredictUpload = new Chart(dashboardPredictUpload, {
 
 
 // Exibição da utilização da memória
-setInterval(exibirMemoria, 5000)
+setInterval(exibirMemoria, 6000)
 
 function exibirMemoria() {
     fetch(`/predicts/exibirMemoria`)
@@ -207,7 +207,7 @@ totalMemoria = new Chart(graficoTotalMemoria, {
 
 
 // Exibição da entrada e saída do disco
-setInterval(exibirDisco, 5000)
+setInterval(exibirDisco, 6000)
 
 function exibirDisco() {
     fetch(`/predicts/exibirDisco`)
