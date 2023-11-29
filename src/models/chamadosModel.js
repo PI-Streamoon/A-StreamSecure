@@ -67,7 +67,7 @@ function abrirChamado(titulo, descricao, prioridade, responsavel, dataAtual) {
         VALUES ('${titulo}', '${descricao}', '${dataAtual}', TRUE, '${prioridade}', '${responsavel}')`;
     } else {
         instrucao = `INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
-        VALUES ('${titulo}', '${descricao}', GETDATE(), TRUE, '${prioridade}', '${responsavel}')`;
+        VALUES ('${titulo}', '${descricao}', GETDATE(), 1, '${prioridade}', '${responsavel}')`;
     }                        
 
     console.log("Executando a instrução SQL: \n" + instrucao);
