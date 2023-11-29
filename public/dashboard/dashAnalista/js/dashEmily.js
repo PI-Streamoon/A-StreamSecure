@@ -19,7 +19,7 @@ var infoDisco;
 
 
 // Dashboard Predict CPU
-setInterval(predictCPU, 22000)
+setInterval(predictCPU, 66000)
 
 function predictCPU() {
     fetch(`/predicts/predictCPU`)
@@ -59,14 +59,15 @@ dadosPredictCpu = {
         data: [],
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderWidth: 1
+        borderWidth: 1,
+        fill: true
     },
     {
         label: "Dados previstos",
         data: [],
         borderColor: 'rgba(255,99,132,1)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderWidth: 1
+        borderWidth: 2
     }
     ]
 }
@@ -87,7 +88,7 @@ dashPredictCpu = new Chart(dashboardPredictCpu, {
 
 
 // Dashboard Predict Upload
-setInterval(predictUpload, 22000)
+setInterval(predictUpload, 66000)
 
 function predictUpload() {
     fetch(`/predicts/predictUpload`)
@@ -145,7 +146,7 @@ dashPredictUpload = new Chart(dashboardPredictUpload, {
         scales: {
             y: {
                 min: 0,
-                max: 300,
+                max: 500,
             }
         },
         responsive: true,
