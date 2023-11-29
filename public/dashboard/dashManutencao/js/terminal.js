@@ -5404,12 +5404,15 @@ term.on('paste', function (data, ev) {
   // COLADO E COLOCA NO comandoDigitado
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+estadoServidor()
 
 // Plotagem dos gráficos 
 // 10 Últimos estados servidor
 
-    function status() {
-      fetch(`/servidor/status`)
+    function estadoServidor() {
+      fetch(`/servidor/estadoServidor`)
         .then(function (response) {
 
           if (response.ok) {
@@ -5425,10 +5428,10 @@ term.on('paste', function (data, ev) {
               for (let i = 0; i < listaIdServidores.length; i++) {
                 let idServidor = listaIdServidores[i].idServidor;
 
-                listagemDosServidores.innerHTML += `
+                ultimas10Leituras.innerHTML += `
                 <div class="d-flex justify-content-between mb-4">
                               <div class="text-secondary font-weight-medium">${listaIdServidores[i].MomentoRegistro}</div>
-                              <div class="font-weight-medium">${listaIdServidores[i].status}</div>
+                              <div class="font-weight-medium">${listaIdServidores[i].Status}</div>
                             </div>    
                 `
               }
