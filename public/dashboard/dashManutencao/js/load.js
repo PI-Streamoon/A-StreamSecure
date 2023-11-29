@@ -395,7 +395,9 @@ const loadScoreServidor = () => {
             } else if (percentage >= 60 && percentage < 99) {
                 // If between 50% (inclusive) and 99%, set color to yellow
                 circle.path.setAttribute('stroke', 'orange');
-            } else {
+            } else if(percentage == 100) {
+                circle.path.setAttribute('stroke', '#00de6b');
+            }else{
                 circle.path.setAttribute('stroke', 'black');
             }
 

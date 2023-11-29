@@ -194,12 +194,20 @@ const checarFalhas = ()=>{
                         mudarBackgroundBanners(linha);
                     }
                     
-                    let nivelAlerta;
+                    let nivelAlerta = "success";
 
                     for(let key in linha){
-                        nivelAlerta = getNivelAlerta(linha[key]);
-                    }
+                        let nivelAlertaTemp = getNivelAlerta(linha[key]);
 
+                        if(nivelAlertaTemp == "danger"){
+                            nivelAlerta = nivelAlertaTemp
+                            break;
+                        }
+
+                        if(nivelAlertaTemp != "success"){
+                            nivelAlerta = getNivelAlerta(linha[key]);
+                        }
+                    }
                     atualizarStatusServidor(linha.idServidor, nivelAlerta);
                 })
 
