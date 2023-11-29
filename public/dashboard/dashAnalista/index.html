@@ -255,29 +255,43 @@
                       <div>
                         <div class="d-flex justify-content-between mb-3">
                           <h3>Estado atual do servidor:
-                            <div class="font-weight-bold">
-                              <h4 id="estadoServidor"></h4>
+                            <div class="font-weight-bold" style="margin-top: 1vh;">
+                              <h3 id="estadoServidor"></h3>
                             </div>
                           </h3>
                         </div>
                         <hr>
-                        <div class="d-flex justify-content-between mb-3">
-                          <h3>A diferença entre os dados reais e previstos é </h3>
-                          <h4 id="situacaoPredictCpu"></h4>
-                        </div>
-                        <hr>
                         <!-- <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Current</div>
-                          <div class="text-muted">458.77M</div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Average</div>
-                          <div class="text-muted">1.45K</div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Maximum</div>
-                          <div class="text-muted">15.50K</div>
+                          <h3>Dentro do intervalo de tempo:
+                            <span id="dataInicioPredict">11/11/111</span> - 
+                            <span id="dataFinalPredict">11/11/111</span>a maior diferença entre os dados foi de 
+                            <span id="diferencaDados">11</span>
+                          </h3> 
                         </div> -->
+                        <div class="d-flex justify-content-between mb-3">
+                          <div class="card-body" style="padding: 1vh;">
+                            <h4 class="card-title">Basic Table</h4>
+                            <p class="card-description" id="inicioPredict">
+                              Add class 
+                            </p>
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Dado Real</th>
+                                    <th>Previsto</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Jacob</td>
+                                    <td>53275531</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
                         <hr>
                         <div class="d-flex justify-content-between mb-3">
                           <div class="font-weight-bold">
@@ -299,6 +313,7 @@
                           <canvas id="infoDisco"></canvas>
                         </div>
                       </div>
+                   
                     </div>
                   </div>
                 </div>

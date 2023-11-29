@@ -257,3 +257,28 @@ infoDisco = new Chart(graficoInfoDisco, {
     type: 'doughnut',
     data: dadosInfoDisco,
 });
+
+var arrayEstadoServidor = [];
+
+function estadoServidor() {
+    fetch(`/predicts/estadoServidor`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    arrayEstadoServidor = resposta;
+                    estadoServidor.innerHTML += `<p>${arrayEstadoServidor[0].Status}</p>`
+
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p / estadoServidor: ${error.message}`
+            );
+        });
+
+}
