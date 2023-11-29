@@ -89,11 +89,23 @@ function exibirMemoria() {
 }
 
 function exibirDisco() {
-    const instrucaoSQL = `
+    var instrucaoSQL = ``;
+
+    if(ambiente == "desenvolvimento"){
+        instrucaoSQL = `
         SELECT DiscoEntrada, DiscoSaida 
         FROM streamoon.registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
-    `;
+        `;
+    
+    }else{
+        instrucaoSQL = `
+        SELECT TOP 1
+        DiscoEntrada, DiscoSaida 
+        FROM streamoon.registroColunar 
+        ORDER BY MomentoRegistro DESC;
+        `;
+    }
 
     console.log("Executando a instrução SQL: \n" + instrucaoSQL);
     return database.executar(instrucaoSQL);
