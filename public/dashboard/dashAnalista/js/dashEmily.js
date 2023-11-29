@@ -170,7 +170,7 @@ function exibirMemoria() {
 
                     for (var i = 0; i < resposta.length; i++) {
                         var dado = resposta[i];
-                        dadoMemoriaTotal.datasets[0].data.push(dado.MemoriaUsada, dado.MemoriaTotal);
+                        dadoMemoriaTotal.datasets[0].data.push(dado.Memoria, dado.MemoriaUsada, dado.MemoriaTotal);
                     }
 
                     totalMemoria.update()
@@ -187,7 +187,7 @@ function exibirMemoria() {
 
 }
 
-labelsTotalMemoria = ["Espaço Utilizado", "Espaço Total"]
+labelsTotalMemoria = ["Porcentagem Atual", "Espaço Utilizado", "Espaço Total"]
 dadoMemoriaTotal = {
     labels: labelsTotalMemoria,
     datasets: [{
@@ -195,13 +195,14 @@ dadoMemoriaTotal = {
         data: [],
         backgroundColor: [
             'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)'
+            'rgba(54, 162, 235, 1)',
+            'rgb(255, 205, 86)'
         ],
     }]
 };
 
 totalMemoria = new Chart(graficoTotalMemoria, {
-    type: 'pie',
+    type: 'doughnut',
     data: dadoMemoriaTotal,
 });
 
@@ -253,6 +254,6 @@ dadosInfoDisco = {
 };
 
 infoDisco = new Chart(graficoInfoDisco, {
-    type: 'pie',
+    type: 'doughnut',
     data: dadosInfoDisco,
 });
