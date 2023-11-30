@@ -295,12 +295,13 @@ function calculo(situacao) {
 
         const tabela = document.getElementById('dadosEC2Simples');
         const opcaoSelecionada = tabela.querySelector('input[name="ec2s"]:checked')
-        var nomeInstancia = vt_ec2simples[opcaoSelecionada.id].tipo
+        var nomeInstancia = vt_ec2simples[opcaoSelecionada.id].tipo;
+        var soInstancia = vt_ec2simples[opcaoSelecionada.id].so;
 
         if (opcaoSelecionada) {
             
             
-            tituloDiferencaTempo.innerHTML = `Diferença pelo tempo (${nomeInstancia})`;
+            tituloDiferencaTempo.innerHTML = `Diferença pelo tempo (${nomeInstancia} ${soInstancia})`;
 
             gastoHora.innerHTML = `$ ${Number(opcaoSelecionada.value).toFixed(2)}`;
             gastoDia.innerHTML = `$ ${Number(opcaoSelecionada.value * 24).toFixed(2)}`;
@@ -317,10 +318,12 @@ function calculo(situacao) {
 
         const tabela1 = document.getElementById('dadosEC2Comparada1');
         const tabela2 = document.getElementById('dadosEC2Comparada2');
-        const opcaoSelecionadac1 = tabela1.querySelector('input[name="ec2c1"]:checked')
-        const opcaoSelecionadac2 = tabela2.querySelector('input[name="ec2c2"]:checked')
-        const nomeInstInicial = vt_ec2comparada1[opcaoSelecionadac1.id].tipo
-        const nomeInstFinal = vt_ec2comparada2[opcaoSelecionadac2.id].tipo
+        const opcaoSelecionadac1 = tabela1.querySelector('input[name="ec2c1"]:checked');
+        const opcaoSelecionadac2 = tabela2.querySelector('input[name="ec2c2"]:checked');
+        const nomeInstInicial = vt_ec2comparada1[opcaoSelecionadac1.id].tipo;
+        const nomeInstFinal = vt_ec2comparada2[opcaoSelecionadac2.id].tipo;
+        const soInstInicial = vt_ec2comparada1[opcaoSelecionadac1.id].so;
+        const soInstFinal = vt_ec2comparada2[opcaoSelecionadac2.id].so;
 
         if (opcaoSelecionadac1 && opcaoSelecionadac2) {
 
@@ -355,8 +358,8 @@ function calculo(situacao) {
 
             }
 
-            instAtual.innerHTML = nomeInstInicial;
-            InstFinal.innerHTML = nomeInstFinal;
+            instAtual.innerHTML = nomeInstInicial + " " + soInstInicial;
+            InstFinal.innerHTML = nomeInstInicial + " " + soInstInicial;
 
             diferenca.innerHTML = `${Number(percentDiferenca).toFixed(2).replace(".", ",")}%`;
 
@@ -364,14 +367,14 @@ function calculo(situacao) {
 
             tituloDiferencaTempo.innerHTML = "Diferença anual entre instâncias"
 
-            valorInstInicial.innerHTML = nomeInstInicial;
-            valorInstFinal.innerHTML = nomeInstFinal;
+            valorInstInicial.innerHTML = nomeInstInicial + " " + soInstInicial;
+            valorInstFinal.innerHTML = nomeInstInicial + " " + soInstInicial;
 
             valorAnoAtual.innerHTML = "$ "+ Number(opcaoSelecionadac1.value * 24 * 365).toFixed(2).replace(".", ",");
             valorAnoFinal.innerHTML = "$ "+ Number(opcaoSelecionadac2.value * 24 * 365).toFixed(2).replace(".", ",");
             diferencaComp.innerHTML = `${Number(percentDiferenca).toFixed(2).replace(".",",")}% em relação a Instância inicial`;
 
-            var nomesInstancias = [nomeInstInicial, nomeInstFinal];
+            var nomesInstancias = [nomeInstInicial + " " + soInstInicial, nomeInstFinal+" "+soInstFinal];
 
             grafico(dadosPreco, nomesInstancias);
 
