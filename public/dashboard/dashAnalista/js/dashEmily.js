@@ -19,7 +19,7 @@ var infoDisco;
 
 
 // Dashboard Predict CPU
-setInterval(predictCPU, 22000)
+setInterval(predictCPU, 66000)
 
 function predictCPU() {
     fetch(`/predicts/predictCPU`)
@@ -57,15 +57,17 @@ dadosPredictCpu = {
     datasets: [{
         label: "Dados reais",
         data: [],
-        backgroundColor: "rgb(221, 160, 221)",
-        borderWidth: 1
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderWidth: 1,
+        fill: true
     },
     {
         label: "Dados previstos",
         data: [],
-        borderColor: "rgb(131,111,255)",
-        backgroundColor: "rgb(131,111,255)",
-        borderWidth: 1
+        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderWidth: 2
     }
     ]
 }
@@ -86,7 +88,7 @@ dashPredictCpu = new Chart(dashboardPredictCpu, {
 
 
 // Dashboard Predict Upload
-setInterval(predictUpload, 22000)
+setInterval(predictUpload, 66000)
 
 function predictUpload() {
     fetch(`/predicts/predictUpload`)
@@ -123,14 +125,15 @@ dadosPredictUpload = {
     datasets: [{
         label: "Dados reais",
         data: [],
-        backgroundColor: "rgb(221, 160, 221)",
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderWidth: 1
     },
     {
         label: "Dados previstos",
         data: [],
-        borderColor: "rgb(131,111,255)",
-        backgroundColor: "rgb(131,111,255)",
+        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderWidth: 1
     }
     ]
@@ -143,7 +146,7 @@ dashPredictUpload = new Chart(dashboardPredictUpload, {
         scales: {
             y: {
                 min: 0,
-                max: 300,
+                max: 500,
             }
         },
         responsive: true,
@@ -152,7 +155,7 @@ dashPredictUpload = new Chart(dashboardPredictUpload, {
 
 
 // Exibição da utilização da memória
-setInterval(exibirMemoria, 5000)
+setInterval(exibirMemoria, 6000)
 
 function exibirMemoria() {
     fetch(`/predicts/exibirMemoria`)
@@ -167,7 +170,7 @@ function exibirMemoria() {
 
                     for (var i = 0; i < resposta.length; i++) {
                         var dado = resposta[i];
-                        dadoMemoriaTotal.datasets[0].data.push(dado.MemoriaUsada, dado.MemoriaTotal);
+                        dadoMemoriaTotal.datasets[0].data.push(dado.Memoria, dado.MemoriaUsada, dado.MemoriaTotal);
                     }
 
                     totalMemoria.update()
@@ -184,27 +187,28 @@ function exibirMemoria() {
 
 }
 
-labelsTotalMemoria = ["Espaço Utilizado", "Espaço Total"]
+labelsTotalMemoria = ["Porcentagem Atual", "Espaço Utilizado", "Espaço Total"]
 dadoMemoriaTotal = {
     labels: labelsTotalMemoria,
     datasets: [{
         label: "Memória RAM",
         data: [],
         backgroundColor: [
-            "rgb(131,111,255)",
-            "rgb(221, 160, 221)"
-    ],
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgb(255, 205, 86)'
+        ],
     }]
 };
 
 totalMemoria = new Chart(graficoTotalMemoria, {
-    type: 'pie',
+    type: 'doughnut',
     data: dadoMemoriaTotal,
 });
 
 
 // Exibição da entrada e saída do disco
-setInterval(exibirDisco, 5000)
+setInterval(exibirDisco, 6000)
 
 function exibirDisco() {
     fetch(`/predicts/exibirDisco`)
@@ -243,13 +247,38 @@ dadosInfoDisco = {
         label: "Disco",
         data: [],
         backgroundColor: [
-            "rgb(131,111,255)",
-            "rgb(221, 160, 221)"
-    ],
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+        ],
     }]
 };
 
 infoDisco = new Chart(graficoInfoDisco, {
-    type: 'pie',
+    type: 'doughnut',
     data: dadosInfoDisco,
 });
+
+var arrayEstadoServidor = [];
+
+function estadoServidor() {
+    fetch(`/predicts/estadoServidor`)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    arrayEstadoServidor = resposta;
+                    estadoServidor.innerHTML += `<p>${arrayEstadoServidor[0].Status}</p>`
+
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro");
+            }
+        })
+        .catch(function (error) {
+            console.error(
+                `Erro na obtenção dos dados p / estadoServidor: ${error.message}`
+            );
+        });
+
+}

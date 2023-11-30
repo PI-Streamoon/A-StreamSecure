@@ -243,29 +243,29 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Tendências Previstas para a CPU</h4>
+                    <h4 class="card-title mb-3" style="font-size: 25px;">Tendências Previstas para a CPU</h4>
                   </div>
                   <div class="row">
                     <div class="col-lg-9">
                       <div class="d-sm-flex justify-content-between">
                         <div>
-                          <h8>Estimativas da CPU com Base em Modelo de Previsão correlacionando CPU e Memória RAM</h8><br>
-                          <h8>(dados atualizados a cada 20 segundos)</h8>
-                        </div>
-                        <div>
-                          <button type="button" class="btn btn-sm btn-light mr-2">Day</button>
+                          <h7 style="font-size: 19px;">Estimativas da CPU com Base em Modelo de Previsão correlacionando
+                            CPU e Memória RAM</h7><br>
+                          <h7 style="font-size: 18px;">(dados atualizados a cada 1 minuto)</h7>
                         </div>
                       </div>
                       <div class="chart-container mt-4">
                         <canvas id="dashboardPredictCpu"></canvas>
-                      </div> <br><br><br>
+                      </div> <br><br>
                       <div class="d-flex flex-wrap justify-content-between">
-                        <h4 class="card-title mb-3">Tendências Previstas para o Upload da Rede</h4>
+                        <h4 class="card-title mb-3" style="font-size: 25px; margin-top: 5vh;">Tendências Previstas para
+                          o Upload da Rede</h4>
                       </div>
                       <div class="d-sm-flex justify-content-between">
                         <div>
-                          <h8>Estimativas de Upload da Rede com Base em Modelo de Previsão corrrelacionando Upload e Download da Rede</h8><br>
-                          <h8>(dados atualizados a cada 20 segundos)</h8>
+                          <h7 style="font-size: 19px;">Estimativas de Upload da Rede com Base em Modelo de Previsão
+                            corrrelacionando Upload e Download da Rede</h7><br>
+                          <h7 style="font-size: 18px;">(dados atualizados a cada 1 minuto)</h7>
                         </div>
                       </div>
                       <div class="chart-container mt-4">
@@ -275,35 +275,45 @@
                     <div class="col-lg-3">
                       <div>
                         <div class="d-flex justify-content-between mb-3">
-                          <h3>Estado atual do servidor: 
-                            <div class="text-success font-weight-bold"><h4>Outbound</h4></div>
+                          <h3>Estado atual do servidor:
+                            <div class="font-weight-bold" style="margin-top: 1vh;">
+                              <h3 id="estadoServidor"></h3>
+                            </div>
                           </h3>
                         </div>
-                        <div class="ms-3">
-                          <p>A diferença entre os dados reais e previstos é </p>
-                          <p id="situacaoPredictCpu"></p>
-                        </div>
+                        <hr>
+                        <!-- <div class="d-flex justify-content-between mb-3">
+                          <h3>Dentro do intervalo de tempo:
+                            <span id="dataInicioPredict">11/11/111</span> - 
+                            <span id="dataFinalPredict">11/11/111</span>a maior diferença entre os dados foi de 
+                            <span id="diferencaDados">11</span>
+                          </h3> 
+                        </div> -->
                         <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Current</div>
-                          <div class="text-muted">458.77M</div>
+                          <div class="card-body" style="padding: 1vh;">
+                            <h4 class="card-title">Basic Table</h4>
+                            <p class="card-description" id="inicioPredict">
+                              Add class 
+                            </p>
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Dado Real</th>
+                                    <th>Previsto</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Jacob</td>
+                                    <td>53275531</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
                         </div>
-                        <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Average</div>
-                          <div class="text-muted">1.45K</div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Maximum</div>
-                          <div class="text-muted">15.50K</div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-bold"><h3>Entrada e saída do Disco</h3></div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                          <canvas id="infoDisco"></canvas>
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="mt-4">
+                        <hr>
                         <div class="d-flex justify-content-between mb-3">
                           <div class="font-weight-bold">
                             <h3>Utilização da Memória</h3>
@@ -312,11 +322,19 @@
                         <div class="d-flex justify-content-between mb-3">
                           <canvas id="totalMemoria"></canvas>
                         </div>
+                      </div>
+                      <hr>
+                      <div class="mt-4">
                         <div class="d-flex justify-content-between mb-3">
-                          <div class="font-weight-medium">Average</div>
-                          <div class="text-muted">38.34M</div>
+                          <div class="font-weight-bold">
+                            <h3>Entrada e saída do Disco</h3>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                          <canvas id="infoDisco"></canvas>
                         </div>
                       </div>
+                   
                     </div>
                   </div>
                 </div>
