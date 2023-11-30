@@ -19,4 +19,8 @@ router.get("/exibirDisco", function (req, res) {
     predictController.exibirDisco(req, res);
 });
 
+router.get("/estadoServidor", function (req, res) {
+    predictController.estadoServidor(req, res);
+});
+
 module.exports = router;

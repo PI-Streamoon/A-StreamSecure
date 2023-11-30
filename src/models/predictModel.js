@@ -66,11 +66,11 @@ function predictUpload() {
 }
 
 function exibirMemoria() {
-    var instrucao = ``;
+    var instrucaoSQL = ``;
 
     if(ambiente == "desenvolvimento"){
         instrucaoSQL = `
-        SELECT MemoriaTotal, MemoriaUsada 
+        SELECT Memoria, MemoriaTotal, MemoriaUsada 
         FROM streamoon.registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
@@ -89,19 +89,53 @@ function exibirMemoria() {
 }
 
 function exibirDisco() {
-    const instrucaoSQL = `
+    var instrucaoSQL = ``;
+
+    if(ambiente == "desenvolvimento"){
+        instrucaoSQL = `
         SELECT DiscoEntrada, DiscoSaida 
         FROM streamoon.registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
-    `;
+        `;
+    
+    }else{
+        instrucaoSQL = `
+        SELECT TOP 1
+        DiscoEntrada, DiscoSaida 
+        FROM streamoon.registroColunar 
+        ORDER BY MomentoRegistro DESC;
+        `;
+    }
 
     console.log("Executando a instrução SQL: \n" + instrucaoSQL);
     return database.executar(instrucaoSQL);
+}
+
+function estadoServidor() {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
+    var instrucao = ``
+    if(ambiente == "desenvolvimento"){
+        instrucao = `
+            SELECT Status
+            FROM situacaoServidor 
+            GROUP BY MomentoRegistro LIMIT 1;
+        `;
+    }else{
+        instrucao = `
+        SELECT TOP 1
+            Status
+        FROM situacaoServidor 
+        GROUP BY MomentoRegistro;
+        `;
+    }
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
 }
 
 module.exports = {
     predictCPU,
     predictUpload,
     exibirMemoria,
-    exibirDisco
+    exibirDisco,
+    estadoServidor
 }

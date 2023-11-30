@@ -8,7 +8,11 @@ function inserirComando(req, res) {
     console.log(comandoDigitado)
 
     terminalModel.inserirComando(comandoDigitado, idServidorSelecionado).then(function (resultado) {
-        console.log(resultado.insertId)
+        if(process.env.AMBIENTE_PROCESSO == "producao"){
+            res.status(200).json({
+                "insertId" : resultado[0].insertId
+            });
+        }
         res.status(200).json(resultado);
     }).catch(function (erro) {
         console.log(erro);

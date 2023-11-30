@@ -1,9 +1,15 @@
 var database = require("../database/config");
+var ambiente = process.env.AMBIENTE_PROCESSO
 
 function inserirComando(comandoDigitado, idServidorSelecionado) {
     var instrucao = `
-        INSERT INTO terminal (comando, fkServidor) VALUES ('${comandoDigitado}', ${idServidorSelecionado} );
     `;
+
+    if(ambiente == "desenvolvimento"){
+        instrucao = `INSERT INTO terminal (comando, fkServidor) VALUES ('${comandoDigitado}', ${idServidorSelecionado} );`
+    }else{
+        instrucao = `INSERT INTO terminal (comando, fkServidor) VALUES ('${comandoDigitado}', ${idServidorSelecionado} ); SELECT SCOPE_IDENTITY() AS insertId;`
+    }
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }

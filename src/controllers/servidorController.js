@@ -48,5 +48,6 @@ function estadoServidor(req, res) {
 
 module.exports = {
     listarServidores,
-    status
+    status,
+    estadoServidor
 }

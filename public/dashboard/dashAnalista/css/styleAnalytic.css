@@ -56,79 +56,15 @@ select.filtro {
   cursor: pointer;
   font-size: 16px;
   padding: 1vh;
-  background-color: #e1e0e0;
+  background-color: #fff;
+  border-color: #6248AE;
   width: 14vh;
   text-align: start;
+  margin-bottom: 2vh;
 }
 
 .text-center.tituloServidor {
   margin-top: 3vh;
-}
-
-#kpis {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  height: 30%;
-}
-
-#analytic {
-  padding: 3%;
-  height: fit-content;
-}
-
-#kpi {
-  background-color: #141414;
-  width: 25%;
-  height: 100%;
-  border-radius: 15px;
-}
-
-#alertas {
-  width: 100%;
-  height: 60%;
-  justify-content: center;
-}
-
-#alerta-container {
-  width: 92%;
-  margin: 4%;
-  height: fit-content;
-  background-color: #141414;
-  border-radius: 15px;
-}
-
-#analytic-container {
-  height: max-content;
-}
-
-#alerta {
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  padding: 2%;
-}
-
-#texto-alerta {
-  padding-left: 2%;
-  text-align: start;
-}
-
-.button-dash {
-  width: 50px;
-  height: 50px;
-  background-color: #6248AE;
-  border-radius: 50%;
-  border: solid 1px #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.button-dash:hover span {
-  transform: rotate(180deg);
 }
 
 .metrics {
