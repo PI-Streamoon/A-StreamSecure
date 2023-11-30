@@ -71,7 +71,7 @@ function exibirMemoria() {
     if (ambiente == "desenvolvimento") {
         instrucaoSQL = `
         SELECT Memoria, MemoriaTotal, MemoriaUsada 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
 
@@ -79,7 +79,7 @@ function exibirMemoria() {
         instrucaoSQL = `
         SELECT TOP 1
         MemoriaTotal, MemoriaUsada 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC;
         `;
     }
@@ -94,7 +94,7 @@ function exibirDisco() {
     if (ambiente == "desenvolvimento") {
         instrucaoSQL = `
         SELECT DiscoEntrada, DiscoSaida 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
 
@@ -102,7 +102,7 @@ function exibirDisco() {
         instrucaoSQL = `
         SELECT TOP 1
         DiscoEntrada, DiscoSaida 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC;
         `;
     }
@@ -117,14 +117,14 @@ function estadoServidor() {
     if (ambiente == "desenvolvimento") {
         instrucao = `
             SELECT Status
-            FROM streamoon.situacaoServidor 
+            FROM situacaoServidor 
             ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
     } else {
         instrucao = `
         SELECT TOP 1
             Status
-        FROM streamoon.situacaoServidor 
+        FROM situacaoServidor 
         GROUP BY MomentoRegistro DESC;
         `;
     }
