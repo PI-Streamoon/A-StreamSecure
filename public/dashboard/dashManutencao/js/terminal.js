@@ -1,3 +1,96 @@
+var idServidorSelecionado = 2222;
+
+const configLineCharts = {
+  scales: {
+      responsive: true,
+      y: {
+          min: 0,
+          max: 100
+      },
+      yAxes: [{
+          display: true,
+          gridLines: {
+              drawBorder: false,
+              display: true,
+          },
+          ticks: {
+              display: true,
+              beginAtZero: true,
+          }
+      }],
+      xAxes: [{
+          display: true,
+          position: 'bottom',
+          gridLines: {
+              drawBorder: false,
+              display: false,
+          },
+          ticks: {
+              display: true,
+              beginAtZero: true,
+              stepSize: 10
+          }
+      }],
+
+  },
+  legend: {
+      display: false,
+      labels: {
+          boxWidth: 0,
+      }
+  },
+  elements: {
+      point: {
+          radius: 5,
+          backgroundColor: 'white',
+          borderColor: '#6248AE',
+          borderWidth: 2,
+
+      },
+      line: {
+          tension: .4,
+      },
+  },
+  tooltips: {
+      backgroundColor: '#6248AE',
+  },
+};
+
+const loadCpuChart = () => {
+  cpuChartDataset = {
+      labels: [],
+      datasets: [{
+          label: 'CPU',
+          unMedida: '%',
+          data: [],
+          borderColor: [
+              '#6248AE',
+          ],borderWidth: 3,
+          fill: true,
+      },
+      {
+          label: '',
+          data: [],
+          borderWidth: 0,
+          fill: false,
+          borderColor: 'rgba(0,0,0,0)',
+          pointBackgroundColor: 'rgba(0,0,0,0)',
+          pointRadius: 0,
+      }
+      ],
+  };
+
+  var lineChartCanvas = document.getElementById('cpuChart').getContext("2d");
+  cpuChart = new Chart(lineChartCanvas, {
+      type: 'line',
+      data: cpuChartDataset,
+      options: configLineCharts
+  });
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 (function (f) {
   if (typeof exports === "object" && typeof module !== "undefined") {
     module.exports = f()
@@ -5453,55 +5546,37 @@ estadoServidor()
 
 // CPU %
 
-var graficoCPU = document.getElementById('ServidorChart').getContext('2d');
-   
+const medidasServidor = ()=>{
+  fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}&limit=${11-cpuChartDataset.labels.length}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+          response.json().then(function (resposta) {
+              
+              resposta.reverse()
+              
+              resposta.forEach((linha)=>{
+                  console.warn(linha.idServidor)
+                  cpuChartDataset.labels.push(linha.dtHora)
+                  cpuChartDataset.datasets[0].data.push(linha.CPU)
 
-    var grafico = new Chart(graficoCPU, {
-      type: 'bar',
-      data: {
-          labels: [],
-          datasets: [{
-            label: [],
-            data: [],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)'
-            ],
-            borderWidth: 1,
-            fill: false
-          }]
-      },
-      options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          },
-          legend: {
-            display: false
-          },
-          elements: {
-            point: {
-              radius: 0
-            }
-          }
-      
-        }
-      });
+                  if (cpuChartDataset.labels.length >= 10) {
+                    cpuChartDataset.datasets[0].data.shift();  
+                    cpuChartDataset.labels.shift();  
+                } 
+                  cpuChart.update()
+              })
+          });
+      } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+      }
+  })
+  .catch(function (error) {
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+  });
+}
 
-
-      function gerarGrafico(dados, labels) {  
-
-        grafico.data.datasets[0].data = dados;
-        grafico.data.labels = labels;
-
-        grafico.update();
-    }
+loadCpuChart();
+setInterval(()=>{
+  medidasServidor()
+  },2000)
 
 
