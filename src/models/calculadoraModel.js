@@ -25,7 +25,8 @@ function mostrarSO() {
         so,
         COUNT(*) as repeticoes
     FROM dadosec2
-    GROUP BY so;
+    GROUP BY so 
+    ORDER BY repeticoes DESC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
