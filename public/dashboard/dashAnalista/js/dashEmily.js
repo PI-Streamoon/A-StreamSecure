@@ -2,6 +2,7 @@ const dashboardPredictCpu = document.getElementById('dashboardPredictCpu');
 const dashboardPredictUpload = document.getElementById('dashboardPredictUpload');
 const graficoTotalMemoria = document.getElementById('totalMemoria');
 const graficoInfoDisco = document.getElementById('infoDisco');
+var estadoServidor = document.getElementById('estadoServidor');
 
 var labelsPredictCpu = [];
 var labelsPredictUpload = [];
@@ -19,7 +20,7 @@ var infoDisco;
 
 
 // Dashboard Predict CPU
-setInterval(predictCPU, 66000)
+setInterval(predictCPU, 31000)
 
 function predictCPU() {
     fetch(`/predicts/predictCPU`)
@@ -88,7 +89,7 @@ dashPredictCpu = new Chart(dashboardPredictCpu, {
 
 
 // Dashboard Predict Upload
-setInterval(predictUpload, 66000)
+setInterval(predictUpload, 31000)
 
 function predictUpload() {
     fetch(`/predicts/predictUpload`)
@@ -260,7 +261,7 @@ infoDisco = new Chart(graficoInfoDisco, {
 
 var arrayEstadoServidor = [];
 
-function estadoServidor() {
+function exibirEstadoServidor() {
     fetch(`/predicts/estadoServidor`)
         .then(function (response) {
             if (response.ok) {

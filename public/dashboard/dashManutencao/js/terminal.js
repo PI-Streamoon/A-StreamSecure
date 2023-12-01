@@ -5547,11 +5547,10 @@ estadoServidor()
 // CPU %
 
 const medidasServidor = ()=>{
-  fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}&limit=${11-cpuChartDataset.labels.length}`, { cache: 'no-store' }).then(function (response) {
+  fetch(`/medidas/ultimas?idServidor=${idServidorSelecionado}&limit=${10-cpuChartDataset.labels.length}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
           response.json().then(function (resposta) {
               
-              resposta.reverse()
               
               resposta.forEach((linha)=>{
                   console.warn(linha.idServidor)

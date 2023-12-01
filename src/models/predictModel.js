@@ -4,7 +4,7 @@ var ambiente = process.env.AMBIENTE_PROCESSO;
 function predictCPU() {
     var instrucaoSQL = ``;
 
-    if(ambiente == "desenvolvimento"){
+    if (ambiente == "desenvolvimento") {
         instrucaoSQL = `
             SELECT r.registro,
             p.dadoPredict,
@@ -15,8 +15,8 @@ function predictCPU() {
             ORDER BY r.dtHora DESC
             LIMIT 10;
         `;
-    
-    }else{
+
+    } else {
         instrucaoSQL = `
             SELECT TOP 10
             r.registro,
@@ -36,7 +36,7 @@ function predictCPU() {
 function predictUpload() {
     var instrucaoSQL = ``;
 
-    if(ambiente == "desenvolvimento"){
+    if (ambiente == "desenvolvimento") {
         instrucaoSQL = `
             SELECT r.registro,
             p.dadoPredict,
@@ -47,8 +47,8 @@ function predictUpload() {
             ORDER BY r.dtHora DESC
             LIMIT 10;
         `;
-    
-    }else{
+
+    } else {
         instrucaoSQL = `
         SELECT TOP 10
         r.registro,
@@ -68,18 +68,18 @@ function predictUpload() {
 function exibirMemoria() {
     var instrucaoSQL = ``;
 
-    if(ambiente == "desenvolvimento"){
+    if (ambiente == "desenvolvimento") {
         instrucaoSQL = `
         SELECT Memoria, MemoriaTotal, MemoriaUsada 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
-    
-    }else{
+
+    } else {
         instrucaoSQL = `
         SELECT TOP 1
         MemoriaTotal, MemoriaUsada 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC;
         `;
     }
@@ -91,18 +91,18 @@ function exibirMemoria() {
 function exibirDisco() {
     var instrucaoSQL = ``;
 
-    if(ambiente == "desenvolvimento"){
+    if (ambiente == "desenvolvimento") {
         instrucaoSQL = `
         SELECT DiscoEntrada, DiscoSaida 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
-    
-    }else{
+
+    } else {
         instrucaoSQL = `
         SELECT TOP 1
         DiscoEntrada, DiscoSaida 
-        FROM streamoon.registroColunar 
+        FROM registroColunar 
         ORDER BY MomentoRegistro DESC;
         `;
     }
@@ -114,18 +114,18 @@ function exibirDisco() {
 function estadoServidor() {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pegarLocal()");
     var instrucao = ``
-    if(ambiente == "desenvolvimento"){
+    if (ambiente == "desenvolvimento") {
         instrucao = `
             SELECT Status
             FROM situacaoServidor 
-            GROUP BY MomentoRegistro LIMIT 1;
+            ORDER BY MomentoRegistro DESC LIMIT 1;
         `;
-    }else{
+    } else {
         instrucao = `
         SELECT TOP 1
             Status
         FROM situacaoServidor 
-        GROUP BY MomentoRegistro;
+        GROUP BY MomentoRegistro DESC;
         `;
     }
     console.log("Executando a instrução SQL: \n" + instrucao);

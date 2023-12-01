@@ -7,7 +7,7 @@ var path = require("path");
 const IP = require('ip');
 const { spawn } = require("child_process");
 const bodyParser = require('body-parser');
-var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 8080;
+var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 80;
 
 var app = express();
 
