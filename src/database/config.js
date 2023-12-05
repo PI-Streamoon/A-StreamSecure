@@ -3,7 +3,7 @@ var sql = require('mssql');
 
 // CONEXÃO DO SQL SERVER - AZURE (NUVEM)
 var sqlServerConfig = {
-    server: "172.31.61.154",
+    server: "34.227.101.49",
     port: 1433,
     database: "streamoon",
     user: "StreamoonUser",
